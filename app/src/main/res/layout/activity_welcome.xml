@@ -5,23 +5,42 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/WelcomeImage"
+        android:scaleType="centerCrop"
+        android:src="@drawable/welcome_background"
+        />
+
     <Button
         android:id="@+id/loginButton"
-        android:layout_width="188dp"
-        android:layout_height="42dp"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="24dp"
+        android:backgroundTint="#D8CCA8"
+        android:fontFamily="@font/montserrat_alternates"
         android:text="Login"
-        tools:ignore="MissingConstraints"
-        tools:layout_editor_absoluteX="111dp"
-        tools:layout_editor_absoluteY="637dp" />
+        android:textColor="@color/black"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:ignore="MissingConstraints" />
 
     <TextView
         android:id="@+id/welcomeText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:fontFamily="@font/montserrat_alternates"
         android:text="Welcome to your Recipe App!"
-        android:textSize="25sp"
-        tools:layout_editor_absoluteX="42dp"
-        tools:layout_editor_absoluteY="266dp"
+        android:textColor="@color/white"
+        android:textSize="27sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/WelcomeImage"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
         tools:ignore="MissingConstraints" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
