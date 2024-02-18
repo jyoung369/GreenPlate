@@ -6,19 +6,27 @@
     android:layout_height="match_parent"
     tools:context=".ShoppingList">
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Shopping List Screen"
+        android:layout_alignParentTop="true"
+        android:id="@+id/ShoppingLabel"
+        />
     <EditText
+        android:id="@+id/addItem"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/addItem"
+        android:layout_marginEnd="75dp"
         android:hint="Enter Item:"
-        android:maxLines="1"
+        android:layout_marginTop="15dp"
         android:inputType="textCapWords"
-        android:layout_marginEnd="8dp"
-        />
+        android:maxLines="1" />
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/addButton"
+        android:layout_marginTop="15dp"
         android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true"
         android:text="Add"
