@@ -1,12 +1,10 @@
-package com.example.recipeapp.views;
+package com.example.recipeapp;
 
 import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.recipeapp.R;
-
-public class RecipeScreenActivity extends AppCompatActivity {
+public class RecipeScreen extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstance) {

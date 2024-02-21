@@ -10,7 +10,7 @@
         android:layout_width="294dp"
         android:layout_height="54dp"
         android:fontFamily="casual"
-        android:text="Input Meal Screen"
+        android:text="Input Meal"
         android:textAlignment="center"
         android:textSize="34sp"
         android:textStyle="bold"

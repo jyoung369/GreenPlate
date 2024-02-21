@@ -1,16 +1,14 @@
-package com.example.recipeapp.views;
+package com.example.recipeapp;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 
-import com.example.recipeapp.R;
-
-public class InputMealActivity extends AppCompatActivity {
+public class ShoppingList extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_input_meal);
+        setContentView(R.layout.activity_shopping_list);
     }
 }

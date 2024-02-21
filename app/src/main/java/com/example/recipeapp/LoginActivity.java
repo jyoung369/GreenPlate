@@ -1,4 +1,4 @@
-package com.example.recipeapp.views;
+package com.example.recipeapp;
 
 import static android.content.ContentValues.TAG;
 
@@ -10,8 +10,6 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-
-import com.example.recipeapp.R;
 
 public class LoginActivity extends AppCompatActivity{
     @Override
