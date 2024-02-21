@@ -9,6 +9,6 @@ public class InputMeal extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.input_meal);
+        setContentView(R.layout.activity_input_meal);
     }
 }
