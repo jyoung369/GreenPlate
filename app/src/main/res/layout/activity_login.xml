@@ -41,7 +41,6 @@
                 android:layout_height="wrap_content"
                 android:ems="10"
                 android:hint="Username"
-                android:height="48dp"
                 android:inputType="text" />
 
             <EditText
@@ -50,7 +49,6 @@
                 android:layout_height="wrap_content"
                 android:ems="10"
                 android:hint="Password"
-                android:height="50dp"
                 android:inputType="textPassword" />
 
             <Button
@@ -59,15 +57,11 @@
                 android:layout_height="wrap_content"
                 android:text="Login" />
 
-            <TextView
-                android:id="@+id/linkToAccountCreation"
+            <Button
+                android:id="@+id/accountCreation"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:clickable="true"
-                android:onClick="createAccountPage"
-                android:text="Create an account"
-                android:height="48dp"
-                android:textAlignment="center" />
+                android:text="Create an account" />
 
         </LinearLayout>
     </androidx.cardview.widget.CardView>
