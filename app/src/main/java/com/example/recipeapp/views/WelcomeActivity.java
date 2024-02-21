@@ -1,10 +1,12 @@
-package com.example.recipeapp;
+package com.example.recipeapp.views;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
+
+import com.example.recipeapp.R;
 
 public class WelcomeActivity extends AppCompatActivity {
 
