@@ -33,5 +33,10 @@ public class LoginActivity extends AppCompatActivity{
         createAnAccount.setOnClickListener(view -> {
             Log.d(TAG, "Go to account creation page");
         });
+
+        Button exitButton = findViewById(R.id.exitApp);
+        exitButton.setOnClickListener(view -> {
+            finishAffinity();
+        });
     }
 }
