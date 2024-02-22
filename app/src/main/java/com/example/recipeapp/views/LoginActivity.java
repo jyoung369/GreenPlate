@@ -23,9 +23,8 @@ public class LoginActivity extends AppCompatActivity{
         signinButton.setOnClickListener(view -> {
             EditText username = findViewById(R.id.emailUsername);
             EditText password = findViewById(R.id.editTextTextPassword);
-            if (username.getText().toString().isEmpty() || password.getText().toString().isEmpty() || username == null || password == null) {
-                // don't do anything
-
+            if (username.getText().toString().trim().isEmpty() || password.getText().toString().trim().isEmpty() || username == null || password == null) {
+                // in the future, place a toast message here to tell them to enter credentials correctly
             } else {
                 // go to firebase: attempt to log in user
 
