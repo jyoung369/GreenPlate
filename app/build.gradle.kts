@@ -39,7 +39,7 @@ dependencies {
     implementation("com.google.android.gms:play-services-auth:21.0.0") // added for one tap sign in
     // config
 
-    
+    implementation("androidx.core:core-splashscreen:1.0.0")
 
 
     testImplementation("junit:junit:4.13.2")
