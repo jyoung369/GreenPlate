@@ -25,15 +25,16 @@ public class LoginActivity extends AppCompatActivity{
             EditText password = findViewById(R.id.editTextTextPassword);
             if (username.getText().toString().isEmpty() || password.getText().toString().isEmpty() || username == null || password == null) {
                 // don't do anything
-                Log.d(TAG, "enter your credentials");
+
             } else {
                 // go to firebase: attempt to log in user
-                Log.d(TAG, "Try to log in user");
+
             }
         });
         Button createAnAccount = findViewById(R.id.accountCreation);
         createAnAccount.setOnClickListener(view -> {
-            Log.d(TAG, "Go to account creation page");
+            Intent intent = new Intent(LoginActivity.this, SignUpActivity.class);
+            startActivity(intent);
         });
 
         Button exitButton = findViewById(R.id.exitApp);
