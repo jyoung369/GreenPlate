@@ -33,10 +33,14 @@ dependencies {
     implementation("androidx.appcompat:appcompat:1.6.1")
     implementation("com.google.android.material:material:1.11.0")
     implementation("androidx.constraintlayout:constraintlayout:2.1.4")
-    implementation("com.google.firebase:firebase-database:20.3.0")
 
-    implementation("com.google.android.gms:play-services-auth:21.0.0") // added this dependency for
-    // one tap sign in
+    implementation(platform("com.google.firebase:firebase-bom:32.7.2")) // changed firebase dependency
+    //other firebase dependencies we need?
+    implementation("com.google.android.gms:play-services-auth:21.0.0") // added for one tap sign in
+    // config
+
+    
+
 
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
