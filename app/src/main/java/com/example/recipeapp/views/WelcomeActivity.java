@@ -10,6 +10,7 @@ import android.widget.Button;
 import com.example.recipeapp.HomeFragment;
 import com.example.recipeapp.InputMealFragment;
 import com.example.recipeapp.R;
+import com.example.recipeapp.RecipeFragment;
 import com.example.recipeapp.ShoppingListFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
@@ -19,6 +20,7 @@ public class WelcomeActivity extends AppCompatActivity implements BottomNavigati
     HomeFragment homeFragment = new HomeFragment();
     InputMealFragment inputMealFragment = new InputMealFragment();
     ShoppingListFragment shoppingListFragment = new ShoppingListFragment();
+    RecipeFragment recipeFragment = new RecipeFragment();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,6 +56,12 @@ public class WelcomeActivity extends AppCompatActivity implements BottomNavigati
             getSupportFragmentManager()
                     .beginTransaction()
                     .replace(R.id.flFragment, inputMealFragment)
+                    .commit();
+            return true;
+        } else if (viewId == R.id.recipeNavbarIcon){
+            getSupportFragmentManager()
+                    .beginTransaction()
+                    .replace(R.id.flFragment, recipeFragment)
                     .commit();
             return true;
         } else {

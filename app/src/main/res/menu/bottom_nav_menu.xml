@@ -10,6 +10,10 @@
         android:title="Input Meal"
         android:id="@+id/inputMealNavbarIcon" />
     <item
+        android:icon="@drawable/recipe_foreground"
+        android:title="Recipe"
+        android:id="@+id/recipeNavbarIcon" />
+    <item
         android:icon="@drawable/shopping_list_foreground"
         android:title="Shopping List"
         android:id="@+id/shopping_listNavbarIcon"/>
