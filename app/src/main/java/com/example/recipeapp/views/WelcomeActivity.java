@@ -47,13 +47,6 @@ public class WelcomeActivity extends AppCompatActivity implements BottomNavigati
                     .commit();
             return true;
 
-        } else if (viewId == R.id.shopping_listNavbarIcon){
-            getSupportFragmentManager()
-                    .beginTransaction()
-                    .replace(R.id.flFragment, shoppingListFragment)
-                    .commit();
-            return true;
-
         } else if (viewId == R.id.inputMealNavbarIcon){
             getSupportFragmentManager()
                     .beginTransaction()
@@ -72,6 +65,13 @@ public class WelcomeActivity extends AppCompatActivity implements BottomNavigati
                     .replace(R.id.flFragment, ingredientFragment)
                     .commit();
             return true;
+        } else if (viewId == R.id.shopping_listNavbarIcon){
+            getSupportFragmentManager()
+                    .beginTransaction()
+                    .replace(R.id.flFragment, shoppingListFragment)
+                    .commit();
+            return true;
+
         } else {
             return false;
         }
