@@ -27,7 +27,8 @@ public class LoginActivity extends AppCompatActivity{
                 // in the future, place a toast message here to tell them to enter credentials correctly
             } else {
                 // go to firebase: attempt to log in user
-
+                Intent intent = new Intent(LoginActivity.this, WelcomeActivity.class);
+                startActivity(intent);
             }
         });
         Button createAnAccount = findViewById(R.id.accountCreation);
