@@ -1,10 +1,13 @@
 package com.example.recipeapp.views;
 
+import static android.content.ContentValues.TAG;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -22,7 +25,7 @@ public class SignUpActivity extends AppCompatActivity {
     private FirebaseAuth auth;
     private EditText signupEmail, signupPassword;
     private Button signupButton;
-    private TextView loginRedirectText;
+//    private TextView loginRedirectText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,6 +36,7 @@ public class SignUpActivity extends AppCompatActivity {
         signupEmail = findViewById(R.id.enterUsername);
         signupPassword = findViewById(R.id.enterPassword);
         signupButton = findViewById(R.id.createAccount);
+//        loginRedirectText = findViewById(R.id.)
 
         signupButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -49,6 +53,7 @@ public class SignUpActivity extends AppCompatActivity {
                     auth.createUserWithEmailAndPassword(user, pass).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                         @Override
                         public void onComplete(@NonNull Task<AuthResult> task) {
+                            Log.d(TAG, "debug");
                             if (task.isSuccessful()) {
                                 Toast.makeText(SignUpActivity.this, "Sign Up Successful", Toast.LENGTH_SHORT).show();
                                 startActivity(new Intent(SignUpActivity.this, LoginActivity.class));
@@ -58,12 +63,9 @@ public class SignUpActivity extends AppCompatActivity {
                         }
                     });
 
-                    loginRedirectText.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-                            startActivity(new Intent(SignUpActivity.this, LoginActivity.class));
-                        }
-                    });
+//                    loginRedirectText.setOnClickListener(view -> {
+//                        startActivity(new Intent(SignUpActivity.this, LoginActivity.class));
+//                    });
                 }
             }
         });
