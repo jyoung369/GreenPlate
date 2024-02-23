@@ -1,5 +1,6 @@
 plugins {
     id("com.android.application")
+    id("com.google.gms.google-services")
 }
 
 android {
@@ -35,7 +36,8 @@ dependencies {
     implementation("androidx.constraintlayout:constraintlayout:2.1.4")
     implementation("com.google.firebase:firebase-database:20.3.0")
 
-    implementation("com.google.android.gms:play-services-auth:21.0.0") // added this dependency for
+    implementation("com.google.android.gms:play-services-auth:21.0.0")
+    implementation("com.google.firebase:firebase-auth:22.3.1") // added this dependency for
     // one tap sign in
 
     testImplementation("junit:junit:4.13.2")
