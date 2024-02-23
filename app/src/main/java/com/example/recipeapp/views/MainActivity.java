@@ -31,7 +31,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
 
         BottomNavigationView navbar = findViewById(R.id.bottomNavigationView);
         navbar.setOnNavigationItemSelectedListener(this);
-        navbar.setSelectedItemId(R.id.home);
+        navbar.setSelectedItemId(R.id.homeNavbarIcon);
 
     }
 
@@ -40,14 +40,14 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
     onNavigationItemSelected(MenuItem item)
     {
         int viewId = item.getItemId();
-        if (viewId == R.id.home){
+        if (viewId == R.id.homeNavbarIcon){
             getSupportFragmentManager()
                     .beginTransaction()
                     .replace(R.id.flFragment, homeFragment)
                     .commit();
             return true;
 
-        } else if (viewId == R.id.shopping_list){
+        } else if (viewId == R.id.shopping_listNavbarIcon){
             getSupportFragmentManager()
                     .beginTransaction()
                     .replace(R.id.flFragment, shoppingListFragment)

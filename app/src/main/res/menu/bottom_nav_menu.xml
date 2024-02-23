@@ -4,10 +4,10 @@
     <item
         android:icon="@drawable/home_foreground"
         android:title="Home"
-        android:id="@+id/home"/>
+        android:id="@+id/homeNavbarIcon"/>
 
     <item
         android:icon="@drawable/home_foreground"
         android:title="Shopping List"
-        android:id="@+id/shopping_list"/>
+        android:id="@+id/shopping_listNavbarIcon"/>
 </menu>
