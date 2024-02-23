@@ -43,6 +43,7 @@ public class LoginActivity extends AppCompatActivity{
             if (username.getText().toString().isEmpty() || password.getText().toString().isEmpty() || username == null || password == null) {
                 // don't do anything
                 Log.d(TAG, "enter your credentials");
+                loginPassword.setError("Enter your credentials");
             } else {
                 // go to firebase: attempt to log in user
                 auth.signInWithEmailAndPassword(email,pass).addOnSuccessListener(new OnSuccessListener<AuthResult>() {
@@ -65,7 +66,7 @@ public class LoginActivity extends AppCompatActivity{
         Button createAnAccount = findViewById(R.id.accountCreation);
         createAnAccount.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
+            public void onClick(View view) {
                 startActivity(new Intent(LoginActivity.this, SignUpActivity.class));
             }
         });
