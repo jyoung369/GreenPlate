@@ -22,6 +22,11 @@ android {
             proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
         }
     }
+
+    buildFeatures{
+        dataBinding = true
+        viewBinding = true
+    }
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
@@ -39,8 +44,7 @@ dependencies {
     implementation("com.google.android.gms:play-services-auth:21.0.0") // added for one tap sign in
     // config
 
-    
-
+    implementation("com.google.android.material:material:1.2.0")
 
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
