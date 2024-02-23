@@ -7,7 +7,7 @@
         android:id="@+id/homeNavbarIcon"/>
 
     <item
-        android:icon="@drawable/home_foreground"
+        android:icon="@drawable/shopping_list_foreground"
         android:title="Shopping List"
         android:id="@+id/shopping_listNavbarIcon"/>
 </menu>
