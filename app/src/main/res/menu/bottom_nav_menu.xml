@@ -14,6 +14,10 @@
         android:title="Recipe"
         android:id="@+id/recipeNavbarIcon" />
     <item
+        android:icon="@drawable/ingredient_foreground"
+        android:title="Ingredient"
+        android:id="@+id/ingredientNavbarIcon" />
+    <item
         android:icon="@drawable/shopping_list_foreground"
         android:title="Shopping List"
         android:id="@+id/shopping_listNavbarIcon"/>

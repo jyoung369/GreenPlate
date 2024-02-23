@@ -8,6 +8,7 @@ import android.view.MenuItem;
 import android.widget.Button;
 
 import com.example.recipeapp.HomeFragment;
+import com.example.recipeapp.IngredientFragment;
 import com.example.recipeapp.InputMealFragment;
 import com.example.recipeapp.R;
 import com.example.recipeapp.RecipeFragment;
@@ -19,8 +20,9 @@ public class WelcomeActivity extends AppCompatActivity implements BottomNavigati
 
     HomeFragment homeFragment = new HomeFragment();
     InputMealFragment inputMealFragment = new InputMealFragment();
-    ShoppingListFragment shoppingListFragment = new ShoppingListFragment();
     RecipeFragment recipeFragment = new RecipeFragment();
+    IngredientFragment ingredientFragment = new IngredientFragment();
+    ShoppingListFragment shoppingListFragment = new ShoppingListFragment();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,6 +64,12 @@ public class WelcomeActivity extends AppCompatActivity implements BottomNavigati
             getSupportFragmentManager()
                     .beginTransaction()
                     .replace(R.id.flFragment, recipeFragment)
+                    .commit();
+            return true;
+        } else if (viewId == R.id.ingredientNavbarIcon){
+            getSupportFragmentManager()
+                    .beginTransaction()
+                    .replace(R.id.flFragment, ingredientFragment)
                     .commit();
             return true;
         } else {
