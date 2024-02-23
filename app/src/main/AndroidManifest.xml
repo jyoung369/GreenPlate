@@ -25,7 +25,7 @@
             android:exported="true" />
         <activity
             android:name=".views.WelcomeActivity"
-            android:exported="false">
+            android:exported="true">
 
         </activity>
         <activity

@@ -21,7 +21,7 @@ public class WelcomeActivity extends AppCompatActivity implements BottomNavigati
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_welcome);
 
         BottomNavigationView navbar = findViewById(R.id.bottomNavigationView);
         navbar.setOnNavigationItemSelectedListener(this);
