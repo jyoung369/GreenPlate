@@ -38,6 +38,7 @@ public class LoginActivity extends AppCompatActivity{
 
         Button signinButton = findViewById(R.id.signinButton);
         signinButton.setOnClickListener(view -> {
+
             String email = username.getText().toString();
             String pass = password.getText().toString();
             if (username.getText().toString().isEmpty() || password.getText().toString().isEmpty() || username == null || password == null) {
@@ -64,11 +65,12 @@ public class LoginActivity extends AppCompatActivity{
 
         });
         Button createAnAccount = findViewById(R.id.accountCreation);
-        createAnAccount.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(LoginActivity.this, SignUpActivity.class));
-            }
+
+
+        createAnAccount.setOnClickListener(view -> {
+            Intent intent = new Intent(LoginActivity.this, SignUpActivity.class);
+            startActivity(intent);
+
         });
 
         Button exitButton = findViewById(R.id.exitApp);
