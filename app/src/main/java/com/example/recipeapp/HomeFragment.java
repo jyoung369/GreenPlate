@@ -13,7 +13,7 @@ public class HomeFragment extends Fragment {
     }
 
     /**
-     * Goes and creates a view for the Home part of the nav bar(fragment)
+     * Goes and creates a view for the Home part of the nav bar(fragment).
      * @param inflater The LayoutInflater object that can be used to inflate
      * any views in the fragment,
      * @param container If non-null, this is the parent view that the fragment's
