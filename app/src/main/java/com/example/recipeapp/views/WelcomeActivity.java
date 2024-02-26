@@ -2,10 +2,8 @@ package com.example.recipeapp.views;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
-import android.widget.Button;
 
 import com.example.recipeapp.HomeFragment;
 import com.example.recipeapp.IngredientFragment;
@@ -16,13 +14,13 @@ import com.example.recipeapp.ShoppingListFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class WelcomeActivity extends AppCompatActivity implements BottomNavigationView
-        .OnNavigationItemSelectedListener{
+        .OnNavigationItemSelectedListener {
 
-    HomeFragment homeFragment = new HomeFragment();
-    InputMealFragment inputMealFragment = new InputMealFragment();
-    RecipeFragment recipeFragment = new RecipeFragment();
-    IngredientFragment ingredientFragment = new IngredientFragment();
-    ShoppingListFragment shoppingListFragment = new ShoppingListFragment();
+    private HomeFragment homeFragment = new HomeFragment();
+    private InputMealFragment inputMealFragment = new InputMealFragment();
+    private RecipeFragment recipeFragment = new RecipeFragment();
+    private IngredientFragment ingredientFragment = new IngredientFragment();
+    private ShoppingListFragment shoppingListFragment = new ShoppingListFragment();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,35 +35,34 @@ public class WelcomeActivity extends AppCompatActivity implements BottomNavigati
 
     @Override
     public boolean
-    onNavigationItemSelected(MenuItem item)
-    {
+        onNavigationItemSelected(MenuItem item) {
         int viewId = item.getItemId();
-        if (viewId == R.id.homeNavbarIcon){
+        if (viewId == R.id.homeNavbarIcon) {
             getSupportFragmentManager()
                     .beginTransaction()
                     .replace(R.id.flFragment, homeFragment)
                     .commit();
             return true;
 
-        } else if (viewId == R.id.inputMealNavbarIcon){
+        } else if (viewId == R.id.inputMealNavbarIcon) {
             getSupportFragmentManager()
                     .beginTransaction()
                     .replace(R.id.flFragment, inputMealFragment)
                     .commit();
             return true;
-        } else if (viewId == R.id.recipeNavbarIcon){
+        } else if (viewId == R.id.recipeNavbarIcon) {
             getSupportFragmentManager()
                     .beginTransaction()
                     .replace(R.id.flFragment, recipeFragment)
                     .commit();
             return true;
-        } else if (viewId == R.id.ingredientNavbarIcon){
+        } else if (viewId == R.id.ingredientNavbarIcon) {
             getSupportFragmentManager()
                     .beginTransaction()
                     .replace(R.id.flFragment, ingredientFragment)
                     .commit();
             return true;
-        } else if (viewId == R.id.shopping_listNavbarIcon){
+        } else if (viewId == R.id.shopping_listNavbarIcon) {
             getSupportFragmentManager()
                     .beginTransaction()
                     .replace(R.id.flFragment, shoppingListFragment)
