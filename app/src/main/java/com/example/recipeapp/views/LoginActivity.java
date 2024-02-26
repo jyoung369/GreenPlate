@@ -8,7 +8,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -20,10 +19,11 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 
-public class LoginActivity extends AppCompatActivity{
+public class LoginActivity extends AppCompatActivity {
 
     private FirebaseAuth auth;
-    private EditText loginEmail, loginPassword;
+    private EditText loginEmail;
+    private EditText loginPassword;
     private TextView signupRedirectText;
     private Button loginButton;
 
@@ -41,25 +41,29 @@ public class LoginActivity extends AppCompatActivity{
 
             String email = username.getText().toString();
             String pass = password.getText().toString();
-            if (username.getText().toString().isEmpty() || password.getText().toString().isEmpty() || username == null || password == null) {
+            if (username.getText().toString().isEmpty()
+                    || password.getText().toString().isEmpty()
+                    || username == null || password == null) {
                 // don't do anything
                 Log.d(TAG, "enter your credentials");
                 loginPassword.setError("Enter your credentials");
             } else {
-                // go to firebase: attempt to log in user
-                auth.signInWithEmailAndPassword(email,pass).addOnSuccessListener(new OnSuccessListener<AuthResult>() {
-                    @Override
-                    public void onSuccess(AuthResult authResult) {
-                        Toast.makeText(LoginActivity.this, "Login Successful", Toast.LENGTH_SHORT).show();
-                        startActivity(new Intent(LoginActivity.this, WelcomeActivity.class));
-                        finish();
-                    }
-                }).addOnFailureListener(new OnFailureListener() {
+                OnSuccessListener<AuthResult> successListener = authResult -> {
+                    Toast.makeText(LoginActivity.this,
+                            "Login Successful", Toast.LENGTH_SHORT).show();
+                    startActivity(new Intent(LoginActivity.this, WelcomeActivity.class));
+                    finish();
+                };
+                OnFailureListener failureListener = new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
-                        Toast.makeText(LoginActivity.this, "Login Failed", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(LoginActivity.this,
+                                "Login Failed", Toast.LENGTH_SHORT).show();
                     }
-                });
+                };
+                auth.signInWithEmailAndPassword(email, pass)
+                        .addOnSuccessListener(successListener)
+                        .addOnFailureListener(failureListener);
                 Log.d(TAG, "Try to log in user");
             }
 
