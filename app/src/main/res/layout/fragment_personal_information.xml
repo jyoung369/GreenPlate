@@ -6,12 +6,18 @@
     android:layout_height="match_parent"
     tools:context=".PersonalInformationFragment">
 
-
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:text="Edit your information"
+        android:textSize="30dp"
+        android:layout_marginStart="16dp"
+        />
     <TextView
         android:id="@+id/textViewHeight"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="50dp"
         android:layout_marginStart="16dp"
         android:text="Height (in cm):"
         android:textSize="18sp" />
