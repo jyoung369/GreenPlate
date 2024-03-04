@@ -49,6 +49,10 @@
             android:name=".views.InputMealActivity"
             android:exported="true" />
 
+        <activity
+            android:name=".views.PersonalInformationActivity"
+            android:exported="true" />
+
         <meta-data
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />

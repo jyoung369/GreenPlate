@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.widget.Button;
 
 import com.example.recipeapp.HomeFragment;
 import com.example.recipeapp.IngredientFragment;
@@ -30,7 +31,6 @@ public class WelcomeActivity extends AppCompatActivity implements BottomNavigati
         BottomNavigationView navbar = findViewById(R.id.bottomNavigationView);
         navbar.setOnNavigationItemSelectedListener(this);
         navbar.setSelectedItemId(R.id.homeNavbarIcon);
-
     }
 
     @Override
