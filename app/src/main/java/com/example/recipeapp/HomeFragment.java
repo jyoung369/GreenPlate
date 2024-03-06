@@ -34,7 +34,7 @@ public class HomeFragment extends Fragment {
         Button setPersonalInfoButton = view.findViewById(R.id.personalInfoButton);
 
         // Set onClickListener for the button
-        setPersonalInfoButton.setOnClickListener(anotherView ->{
+        setPersonalInfoButton.setOnClickListener(anotherView -> {
             Intent intent = new Intent(requireContext(), PersonalInformationActivity.class);
             startActivity(intent);
         });
