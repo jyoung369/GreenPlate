@@ -16,6 +16,12 @@ import com.example.recipeapp.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class SignUpActivity extends AppCompatActivity {
 
@@ -51,46 +57,30 @@ public class SignUpActivity extends AppCompatActivity {
                     OnCompleteListener<AuthResult> completeListener = task -> {
                         Log.d(TAG, "debug");
                         if (task.isSuccessful()) {
+                            FirebaseUser loggedInUser = FirebaseAuth.getInstance().getCurrentUser();
                             Toast.makeText(SignUpActivity.this,
                                     "Sign Up Successful", Toast.LENGTH_SHORT).show();
+                            Map<String, Object> userData = new HashMap<>();
+                            userData.put("email", user);
+                            userData.put("height", "");
+                            userData.put("weight", "");
+                            userData.put("gender", "");
+                            FirebaseDatabase database = FirebaseDatabase.getInstance("https://recipeapp-1fba1-default-rtdb.firebaseio.com/");
+                            DatabaseReference db = database.getReference();
+                            assert loggedInUser != null;
+                            db.child("users").child(loggedInUser.getUid())
+                                    .setValue(userData);
                             startActivity(new Intent(SignUpActivity.this, LoginActivity.class));
                         } else {
                             Toast.makeText(SignUpActivity.this,
                                     "Sign Up Failed"
                                             + task.getException().getMessage(),
-                                            Toast.LENGTH_SHORT).show();
+                                    Toast.LENGTH_SHORT).show();
                         }
                     };
 
                     auth.createUserWithEmailAndPassword(user, pass)
                             .addOnCompleteListener(completeListener);
-
-                    //                    auth.createUserWithEmailAndPassword(user, pass)
-                    //                    .addOnCompleteListener
-                    //                    (new OnCompleteListener<AuthResult>() {
-                    //                        @Override
-                    //                        public void onComplete
-                    //                        (@NonNull Task<AuthResult> task) {
-                    //                            Log.d(TAG, "debug");
-                    //                            if (task.isSuccessful()) {
-                    //                                Toast.makeText(SignUpActivity.this,
-                    //                                "Sign Up Successful",
-                    //                                Toast.LENGTH_SHORT).show();
-                    //                                startActivity(new Intent(SignUpActivity.this,
-                    //                                LoginActivity.class));
-                    //                            } else {
-                    //                                Toast.makeText(SignUpActivity.this,
-                    //                                "Sign Up Failed"
-                    //                                + task.getException().getMessage(),
-                    //                                Toast.LENGTH_SHORT).show();
-                    //                            }
-                    //                        }
-                    //                    });
-
-                    //                    loginRedirectText.setOnClickListener(view -> {
-                    //                        startActivity(new Intent(SignUpActivity.this,
-                    //                        LoginActivity.class));
-                    //  });
                 }
             }
         });

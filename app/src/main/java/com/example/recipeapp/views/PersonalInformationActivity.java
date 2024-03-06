@@ -17,6 +17,7 @@ import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 public class PersonalInformationActivity extends AppCompatActivity {
     private EditText editTextHeight;
@@ -56,14 +57,15 @@ public class PersonalInformationActivity extends AppCompatActivity {
             return;
         }
         Map<String, Object> userData = new HashMap<>();
+        userData.put("email", user.getEmail());
         userData.put("height", height);
         userData.put("weight", weight);
         userData.put("gender", gender);
-        String uid = user.getUid();
 
         FirebaseDatabase database = FirebaseDatabase.getInstance("https://recipeapp-1fba1-default-rtdb.firebaseio.com/");
         DatabaseReference db = database.getReference();
-        db.child("users").child(uid).setValue(userData)
+        db.child("users").child(user.getUid())
+                .setValue(userData)
                 .addOnSuccessListener(aVoid -> {
                     Toast.makeText(PersonalInformationActivity.this,
                             "Information saved", Toast.LENGTH_SHORT).show();
