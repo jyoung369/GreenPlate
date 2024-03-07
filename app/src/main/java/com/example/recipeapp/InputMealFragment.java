@@ -21,4 +21,5 @@ public class InputMealFragment extends Fragment {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_input_meal, container, false);
     }
+    //added a button
 }
