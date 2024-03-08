@@ -39,17 +39,19 @@
                 android:id="@+id/mealName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:ems="10"
+                android:ems="20"
                 android:hint="name of meal"
-                android:inputType="text" />
+                android:inputType="text"
+                android:minHeight="48dp" />
 
             <EditText
                 android:id="@+id/calorieCount"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:ems="10"
+                android:ems="20"
                 android:hint="calorie count"
-                android:inputType="number" />
+                android:inputType="number"
+                android:minHeight="48dp" />
 
             <Button
                 android:id="@+id/inputButton"
