@@ -4,27 +4,14 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-//imports necessary to use AnyChart
-import com.anychart.AnyChart;
-import com.anychart.AnyChartView;
-import com.anychart.chart.common.dataentry.DataEntry;
-import com.anychart.chart.common.dataentry.ValueDataEntry;
-import com.anychart.charts.Cartesian;
-import com.anychart.charts.Pie;
-import com.anychart.core.cartesian.series.Column;
-
-import java.util.ArrayList;
-import java.util.List;
-
 public class InputMealFragment extends Fragment {
 
-//    public InputMealFragment() {
+    //   public InputMealFragment() {
 //        // Required empty public constructor
 //    }
 //
@@ -56,8 +43,8 @@ public class InputMealFragment extends Fragment {
 //            }
 //        });
 //
-//        return view;
-//    }
+//      return view;
+//  }
     public InputMealFragment newInstance() {
         return new InputMealFragment();
     }
