@@ -10,6 +10,7 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.example.recipeapp.R;
+import com.example.recipeapp.viewmodels.PersonalInformationViewModel;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
@@ -17,7 +18,6 @@ import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 
 public class PersonalInformationActivity extends AppCompatActivity {
     private EditText editTextHeight;
@@ -46,13 +46,14 @@ public class PersonalInformationActivity extends AppCompatActivity {
         String height = editTextHeight.getText().toString().trim();
         String weight = editTextWeight.getText().toString().trim();
         String gender = spinnerGender.getSelectedItem().toString();
-        if (height.isEmpty()) {
+        PersonalInformationViewModel p = new PersonalInformationViewModel();
+        if (!p.validateHeight((height))) {
             editTextHeight.setError("Please enter your height");
             editTextHeight.requestFocus();
             return;
         }
-        if (weight.isEmpty()) {
-            editTextWeight.setError("Please enter your weight");
+        if (!p.validateWeight((weight))) {
+            editTextWeight.setError("Please enter your height");
             editTextWeight.requestFocus();
             return;
         }
@@ -65,14 +66,14 @@ public class PersonalInformationActivity extends AppCompatActivity {
         FirebaseDatabase database = FirebaseDatabase.getInstance("https://recipeapp-1fba1-default-rtdb.firebaseio.com/");
         DatabaseReference db = database.getReference();
         db.child("users").child(user.getUid())
-                .setValue(userData)
-                .addOnSuccessListener(aVoid -> {
-                    Toast.makeText(PersonalInformationActivity.this,
-                            "Information saved", Toast.LENGTH_SHORT).show();
-                })
-                .addOnFailureListener(e -> {
-                    Toast.makeText(PersonalInformationActivity.this,
-                            "Failed to save information", Toast.LENGTH_SHORT).show();
-                });
+                    .setValue(userData)
+                    .addOnSuccessListener(aVoid -> {
+                        Toast.makeText(PersonalInformationActivity.this,
+                                "Information saved", Toast.LENGTH_SHORT).show();
+                    })
+                    .addOnFailureListener(e -> {
+                        Toast.makeText(PersonalInformationActivity.this,
+                                "Failed to save information", Toast.LENGTH_SHORT).show();
+                    });
     }
 }
