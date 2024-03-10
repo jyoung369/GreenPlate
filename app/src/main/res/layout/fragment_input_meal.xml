@@ -101,6 +101,15 @@
                 android:inputType="number"
                 android:minHeight="48dp" />
 
+            <EditText
+                android:id="@+id/mealDate"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="20"
+                android:hint="meal date"
+                android:inputType="none"
+                android:minHeight="48dp" />
+
             <Button
                 android:id="@+id/inputButton"
                 android:layout_width="match_parent"
