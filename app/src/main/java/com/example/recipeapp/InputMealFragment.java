@@ -10,6 +10,18 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+//imports necessary to use AnyChart
+import com.anychart.AnyChart;
+import com.anychart.AnyChartView;
+import com.anychart.chart.common.dataentry.DataEntry;
+import com.anychart.chart.common.dataentry.ValueDataEntry;
+import com.anychart.charts.Cartesian;
+import com.anychart.charts.Pie;
+import com.anychart.core.cartesian.series.Column;
+
+import java.util.ArrayList;
+import java.util.List;
+
 public class InputMealFragment extends Fragment {
 
 //    public InputMealFragment() {
@@ -53,6 +65,30 @@ public class InputMealFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_input_meal, container, false);
+        View view = inflater.inflate(R.layout.fragment_input_meal, container, false);
+
+        /**
+        AnyChartView dataVisual1 = view.findViewById(R.id.any_chart_view);
+
+        dataVisual1.setProgressBar(view.findViewById(R.id.progress_bar));
+
+        Cartesian cartesian = AnyChart.column();
+
+        List<DataEntry> data = new ArrayList<>();
+        //example of column chart (avg caloric intake per month)
+        data.add(new ValueDataEntry("Rouge", 80540));
+        data.add(new ValueDataEntry("Foundation", 94190));
+        data.add(new ValueDataEntry("Mascara", 102610));
+        data.add(new ValueDataEntry("Lip gloss", 110430));
+        data.add(new ValueDataEntry("Lipstick", 128000));
+        data.add(new ValueDataEntry("Nail polish", 143760));
+        data.add(new ValueDataEntry("Eyebrow pencil", 170670));
+        data.add(new ValueDataEntry("Eyeliner", 213210));
+        data.add(new ValueDataEntry("Eyeshadows", 249980));
+
+        Column column = cartesian.column(data);
+        */
+        return view;
+
     }
 }
