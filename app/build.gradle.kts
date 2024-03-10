@@ -59,6 +59,9 @@ dependencies {
     implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.6.1")
     implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.6.1")
 
+    //adding dependency for AnyChart
+    implementation("com.github.AnyChart:AnyChart-Android:1.1.5")
+
 
 
 
