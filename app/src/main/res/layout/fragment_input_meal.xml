@@ -67,32 +67,11 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-
-        android:layout_gravity="center_horizontal"
-        android:orientation="horizontal"
-        android:padding="24dp">
-
-        <!-- Data Visual 1 Button -->
-        <Button
-            android:id="@+id/button1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Button 1"
-            app:layout_constraintTop_toBottomOf="@+id/inputMealLabel"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintVertical_bias="0.1"
-            android:layout_marginTop="16dp" />
-
-        <!-- Data Visual 2 Button -->
-        <Button
-            android:id="@+id/button2"
-            android:layout_width="wrap_content"
-
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:orientation="vertical"
             android:padding="24dp">
+
 
             <TextView
                 android:id="@+id/mealText"
@@ -144,7 +123,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <!-- Button 1 -->
+    <!-- Data Visual 1 Button -->
     <Button
         android:id="@+id/button1"
         android:layout_width="wrap_content"
@@ -156,7 +135,7 @@
         app:layout_constraintVertical_bias="0.1"
         android:layout_marginTop="16dp" />
 
-    <!-- Button 2 -->
+    <!-- Data Visual 2 Button -->
     <Button
         android:id="@+id/button2"
         android:layout_width="wrap_content"
