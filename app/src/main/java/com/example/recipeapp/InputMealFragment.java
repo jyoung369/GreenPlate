@@ -10,74 +10,58 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
-import android.widget.DatePicker;
-
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-import com.example.recipeapp.views.InputMealActivity;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 
-//imports necessary to use AnyChart
-import com.anychart.AnyChart;
-import com.anychart.AnyChartView;
-import com.anychart.chart.common.dataentry.DataEntry;
-import com.anychart.chart.common.dataentry.ValueDataEntry;
-import com.anychart.charts.Cartesian;
-import com.anychart.charts.Pie;
-import com.anychart.core.cartesian.series.Column;
-
 import java.text.SimpleDateFormat;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.List;
 import java.util.Locale;
 
 
 public class InputMealFragment extends Fragment {
 
     //   public InputMealFragment() {
-//        // Required empty public constructor
-//    }
-//
-//    @Override
-//    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-//                             Bundle savedInstanceState) {
-//        // Inflate the layout for this fragment
-//        View view = inflater.inflate(R.layout.fragment_input_meal, container, false);
-//
-//        // Find references to the buttons in the inflated layout
-//        Button button1 = view.findViewById(R.id.button1);
-//        Button button2 = view.findViewById(R.id.button2);
-//
-//        // Set click listener for Button 1
-//        button1.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                // Handle button1 click
-//                // Perform an action, e.g., start another activity or execute some logic
-//            }
-//        });
-//
-//        // Set click listener for Button 2
-//        button2.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                // Handle button2 click
-//                // Perform an action, e.g., start another activity or execute some logic
-//            }
-//        });
-//
-//      return view;
-//  }
+    //        // Required empty public constructor
+    //    }
+    //
+    //    @Override
+    //    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    //                             Bundle savedInstanceState) {
+    //        // Inflate the layout for this fragment
+    //        View view = inflater.inflate(R.layout.fragment_input_meal, container, false);
+    //
+    //        // Find references to the buttons in the inflated layout
+    //        Button button1 = view.findViewById(R.id.button1);
+    //        Button button2 = view.findViewById(R.id.button2);
+    //
+    //        // Set click listener for Button 1
+    //        button1.setOnClickListener(new View.OnClickListener() {
+    //            @Override
+    //            public void onClick(View v) {
+    //                // Handle button1 click
+    //                // Perform an action, e.g., start another activity or execute some logic
+    //            }
+    //        });
+    //
+    //        // Set click listener for Button 2
+    //        button2.setOnClickListener(new View.OnClickListener() {
+    //            @Override
+    //            public void onClick(View v) {
+    //                // Handle button2 click
+    //                // Perform an action, e.g., start another activity or execute some logic
+    //            }
+    //        });
+    //
+    //      return view;
+    //  }
     public InputMealFragment newInstance() {
         return new InputMealFragment();
     }
@@ -146,7 +130,8 @@ public class InputMealFragment extends Fragment {
                 requireContext(),
                 (view, year1, monthOfYear, day1) -> {
                     calendar.set(year1, monthOfYear, day1);
-                    SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault());
+                    SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy",
+                            Locale.getDefault());
                     String formattedDate = dateFormat.format(calendar.getTime());
                     mealDate.setText(formattedDate);
                 },
@@ -165,7 +150,7 @@ public class InputMealFragment extends Fragment {
 
         private String date;
 
-        public Meal (String name, String calories, String date) {
+        public Meal(String name, String calories, String date) {
             this.name = name;
             this.calories = calories;
             this.date = date;
@@ -192,15 +177,13 @@ public class InputMealFragment extends Fragment {
             calories.setError("Please enter the amount of calories in your meal!");
         } else if (date.isEmpty()) {
             mealDate.setError("Please enter when you had your meal!");
-        }
-        else {
+        } else {
             Meal myMeal = new Meal(nameOfMeal, cals, date);
             FirebaseDatabase database = FirebaseDatabase
                         .getInstance("https://recipeapp-1fba1-default-rtdb.firebaseio.com/");
-                DatabaseReference mealsref = database.getReference().child("meals/"
+            DatabaseReference mealsref = database.getReference().child("meals/"
                         + user.getUid());
-
-                mealsref.push().setValue(myMeal)
+            mealsref.push().setValue(myMeal)
                         .addOnSuccessListener(success -> {
                             Toast.makeText(requireContext(),
                                     "Meal inputted successfully!", Toast.LENGTH_SHORT).show();
@@ -211,5 +194,4 @@ public class InputMealFragment extends Fragment {
                         });
         }
     }
-
 }

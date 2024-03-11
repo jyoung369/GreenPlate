@@ -1,85 +1,60 @@
 package com.example.recipeapp.views;
 
-import static android.content.ContentValues.TAG;
-
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
+import com.example.recipeapp.viewmodels.LoginViewModel;
 
 import com.example.recipeapp.R;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.firebase.auth.AuthResult;
-import com.google.firebase.auth.FirebaseAuth;
 
 public class LoginActivity extends AppCompatActivity {
-
-    private FirebaseAuth auth;
     private EditText loginEmail;
     private EditText loginPassword;
-    private TextView signupRedirectText;
-    private Button loginButton;
+    private final LoginViewModel loginViewModel = new LoginViewModel();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        auth = FirebaseAuth.getInstance();
-        EditText username = findViewById(R.id.emailUsername);
-        EditText password = findViewById(R.id.editTextTextPassword);
+        loginEmail = findViewById(R.id.emailUsername);
+        loginPassword = findViewById(R.id.editTextTextPassword);
+        Button loginButton = findViewById(R.id.signinButton);
+        Button createAccountButton = findViewById(R.id.accountCreation);
+        Button exitButton = findViewById(R.id.exitApp);
 
-        Button signinButton = findViewById(R.id.signinButton);
-        signinButton.setOnClickListener(view -> {
+        observe();
 
-            String email = username.getText().toString();
-            String pass = password.getText().toString();
-            if (username.getText().toString().isEmpty()
-                    || password.getText().toString().isEmpty()
-                    || username == null || password == null) {
-                // don't do anything
-                Log.d(TAG, "enter your credentials");
-                loginPassword.setError("Enter your credentials");
-            } else {
-                OnSuccessListener<AuthResult> successListener = authResult -> {
-                    Toast.makeText(LoginActivity.this,
-                            "Login Successful", Toast.LENGTH_SHORT).show();
-                    startActivity(new Intent(LoginActivity.this, WelcomeActivity.class));
-                    finish();
-                };
-                OnFailureListener failureListener = new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        Toast.makeText(LoginActivity.this,
-                                "Login Failed", Toast.LENGTH_SHORT).show();
-                    }
-                };
-                auth.signInWithEmailAndPassword(email, pass)
-                        .addOnSuccessListener(successListener)
-                        .addOnFailureListener(failureListener);
-                Log.d(TAG, "Try to log in user");
-            }
-
+        loginButton.setOnClickListener(view -> {
+            String email = loginEmail.getText().toString().trim();
+            String password = loginPassword.getText().toString().trim();
+            loginViewModel.login(email, password);
         });
-        Button createAnAccount = findViewById(R.id.accountCreation);
 
-
-        createAnAccount.setOnClickListener(view -> {
+        createAccountButton.setOnClickListener(view -> {
             Intent intent = new Intent(LoginActivity.this, SignUpActivity.class);
             startActivity(intent);
-
         });
 
-        Button exitButton = findViewById(R.id.exitApp);
-        exitButton.setOnClickListener(view -> {
-            finishAffinity();
+        exitButton.setOnClickListener(view -> finishAffinity());
+    }
+    private void observe() {
+        loginViewModel.getLoginSuccess().observe(this, isSuccess -> {
+            if (isSuccess) {
+                Toast.makeText(LoginActivity.this, "Login Successful", Toast.LENGTH_SHORT).show();
+                startActivity(new Intent(LoginActivity.this, WelcomeActivity.class));
+                finish();
+            }
+        });
+
+        loginViewModel.getLoginError().observe(this, error -> {
+            if (error != null && !error.isEmpty()) {
+                Toast.makeText(LoginActivity.this, error, Toast.LENGTH_SHORT).show();
+            }
         });
     }
 }
