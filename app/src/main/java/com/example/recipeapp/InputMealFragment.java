@@ -17,6 +17,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import com.example.recipeapp.model.Meal;
+import com.example.recipeapp.viewmodels.MealViewModel;
 import com.example.recipeapp.views.InputMealActivity;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -90,7 +92,6 @@ public class InputMealFragment extends Fragment {
     private EditText mealName;
     private Calendar calendar;
 
-    private final FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
@@ -127,13 +128,14 @@ public class InputMealFragment extends Fragment {
         calories = view.findViewById(R.id.calorieCount);
         mealDate = view.findViewById(R.id.mealDate);
         calendar = Calendar.getInstance();
+        MealViewModel vm = new MealViewModel();
 
         mealDate.setOnClickListener(v -> showDatePickerDialog());
 
         super.onViewCreated(view, savedInstanceState);
         super.onCreate(savedInstanceState);
         Button input = view.findViewById(R.id.inputButton);
-        input.setOnClickListener(v -> inputMeal(mealName, calories, mealDate));
+        input.setOnClickListener(v -> vm.inputMeal(requireContext(), mealName, calories, mealDate));
     }
 
     //opens up a calendar and allows user to select which date to input meal for
@@ -156,60 +158,6 @@ public class InputMealFragment extends Fragment {
         );
 
         datePickerDialog.show();
-    }
-
-    class Meal {
-
-        private String name;
-        private String calories;
-
-        private String date;
-
-        public Meal (String name, String calories, String date) {
-            this.name = name;
-            this.calories = calories;
-            this.date = date;
-        }
-        public String getMealName() {
-            return name;
-        }
-        public String getCalories() {
-            return calories;
-        }
-
-        public String getDate() {
-            return date;
-        }
-    }
-    private void inputMeal(EditText mealName, EditText calories, EditText mealDate) {
-        String nameOfMeal = mealName.getText().toString();
-        String cals = calories.getText().toString();
-        String date = mealDate.getText().toString();
-
-        if (nameOfMeal.isEmpty()) {
-            mealName.setError("Please enter the name of your meal!");
-        } else if (cals.isEmpty()) {
-            calories.setError("Please enter the amount of calories in your meal!");
-        } else if (date.isEmpty()) {
-            mealDate.setError("Please enter when you had your meal!");
-        }
-        else {
-            Meal myMeal = new Meal(nameOfMeal, cals, date);
-            FirebaseDatabase database = FirebaseDatabase
-                        .getInstance("https://recipeapp-1fba1-default-rtdb.firebaseio.com/");
-                DatabaseReference mealsref = database.getReference().child("meals/"
-                        + user.getUid());
-
-                mealsref.push().setValue(myMeal)
-                        .addOnSuccessListener(success -> {
-                            Toast.makeText(requireContext(),
-                                    "Meal inputted successfully!", Toast.LENGTH_SHORT).show();
-                        })
-                        .addOnFailureListener(failure -> {
-                            Toast.makeText(requireContext(),
-                                    "Could not input meal", Toast.LENGTH_SHORT).show();
-                        });
-        }
     }
 
 }
