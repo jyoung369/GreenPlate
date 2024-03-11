@@ -13,16 +13,13 @@ import com.example.recipeapp.R;
 import com.example.recipeapp.viewmodels.PersonalInformationViewModel;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-
-import java.util.HashMap;
-import java.util.Map;
+import androidx.lifecycle.ViewModelProvider;
 
 public class PersonalInformationActivity extends AppCompatActivity {
     private EditText editTextHeight;
     private EditText editTextWeight;
     private Spinner spinnerGender;
+    private PersonalInformationViewModel viewModel;
     private final FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
     @Override
@@ -34,6 +31,7 @@ public class PersonalInformationActivity extends AppCompatActivity {
         editTextWeight = findViewById(R.id.editTextWeight);
         spinnerGender = findViewById(R.id.spinnerGender);
         Button buttonSave = findViewById(R.id.buttonSave);
+        viewModel = new ViewModelProvider(this).get(PersonalInformationViewModel.class);
 
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
                 R.array.gender_options, android.R.layout.simple_spinner_item);
@@ -57,23 +55,16 @@ public class PersonalInformationActivity extends AppCompatActivity {
             editTextWeight.requestFocus();
             return;
         }
-        Map<String, Object> userData = new HashMap<>();
-        userData.put("email", user.getEmail());
-        userData.put("height", height);
-        userData.put("weight", weight);
-        userData.put("gender", gender);
-
-        FirebaseDatabase database = FirebaseDatabase.getInstance("https://recipeapp-1fba1-default-rtdb.firebaseio.com/");
-        DatabaseReference db = database.getReference();
-        db.child("users").child(user.getUid())
-                    .setValue(userData)
-                    .addOnSuccessListener(aVoid -> {
-                        Toast.makeText(PersonalInformationActivity.this,
-                                "Information saved", Toast.LENGTH_SHORT).show();
-                    })
-                    .addOnFailureListener(e -> {
-                        Toast.makeText(PersonalInformationActivity.this,
-                                "Failed to save information", Toast.LENGTH_SHORT).show();
-                    });
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        if (user != null) {
+            viewModel.savePersonalInformation(user.getEmail(), height, weight, gender);
+        }
+        viewModel.getIsSaveSuccessful().observe(this, isSuccessful -> {
+            if (isSuccessful) {
+                Toast.makeText(this, "Information saved successfully", Toast.LENGTH_SHORT).show();
+            } else {
+                Toast.makeText(this, "Failed to save information", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 }
