@@ -1,4 +1,4 @@
-package com.example.recipeapp.views;
+package com.example.recipeapp;
 
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -35,68 +35,73 @@ import java.util.List;
 import java.util.Map;
 
 public class InputMealActivity extends AppCompatActivity {
-
-
-    private final FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-    private EditText mealName = findViewById(R.id.mealName);
-    private EditText calories = findViewById(R.id.calorieCount);
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         System.out.println("CREATINGGGGGGGGG");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_input_meal);
-//        Calendar calendar = Calendar.getInstance();
-//        AnyChartView dataVisual1 = (AnyChartView) findViewById(R.id.data_visual_1);
-//        MealViewModel vm1 = new MealViewModel();
-//
-//        Cartesian cartesian = AnyChart.column();
-//        Column column = cartesian.column(new ArrayList<>());
-//
-//        column.tooltip()
-//                .titleFormat("{%X}")
-//                .position(Position.CENTER_BOTTOM)
-//                .anchor(Anchor.CENTER_BOTTOM)
-//                .offsetX(0d)
-//                .offsetY(5d)
-//                .format("${%Value}{groupsSeparator: }");
-//
-//        cartesian.animation(true);
-//
-//        //make current month into string
-//        int currentMonth = calendar.get(Calendar.MONTH) + 1;
-//        String currMonthName = new DateFormatSymbols().getMonths()[currentMonth - 1];
-//        cartesian.title("Daily Caloric Intake for " + currMonthName);
-//
-//        cartesian.yScale().minimum(0d);
-//
-//        cartesian.yAxis(0).labels().format("${%Value}{groupsSeparator: }");
-//
-//        cartesian.tooltip().positionMode(TooltipPositionMode.POINT);
-//        cartesian.interactivity().hoverMode(HoverMode.BY_X);
-//
-//        cartesian.xAxis(0).title("Days");
-//        cartesian.yAxis(0).title("Calories per day");
-//
-//        vm1.getData().observe(this, info -> {
-//            System.out.println("bye");
-//            List<DataEntry> dataList = new ArrayList<>();
-//
-//            for (HashMap.Entry<String, Integer> element : info.entrySet()) {
-//                dataList.add(new ValueDataEntry(element.getKey(), element.getValue()));
-//            }
-//            column.data(dataList);
-//            System.out.println("chart set?");
-//            System.out.println(dataVisual1 == null); //not null tested
-//
-//            dataVisual1.setVisibility(View.VISIBLE);
-//            dataVisual1.setChart(cartesian);
-//            cartesian.draw(true);
-//            System.out.println("AnyChartView visibility: " + dataVisual1.getVisibility());
-//            System.out.println("yo");
-//        });
-//
-//        HashMap<String, Integer> data = new HashMap<>();
-//        vm1.readMeals(data);
+        Calendar calendar = Calendar.getInstance();
+        AnyChartView dataVisual1 = (AnyChartView) findViewById(R.id.data_visual_1);
+        dataVisual1.setProgressBar(findViewById(R.id.progress_bar));
+
+        MealViewModel vm1 = new MealViewModel();
+
+        Cartesian cartesian = AnyChart.column();
+        Column column = cartesian.column(new ArrayList<>());
+
+        column.tooltip()
+                .titleFormat("{%X}")
+                .position(Position.CENTER_BOTTOM)
+                .anchor(Anchor.CENTER_BOTTOM)
+                .offsetX(0d)
+                .offsetY(5d)
+                .format("${%Value}{groupsSeparator: }");
+
+        cartesian.animation(true);
+
+        //make current month into string
+        int currentMonth = calendar.get(Calendar.MONTH) + 1;
+        String currMonthName = new DateFormatSymbols().getMonths()[currentMonth - 1];
+        cartesian.title("Daily Caloric Intake for " + currMonthName);
+
+        cartesian.yScale().minimum(0d);
+
+        cartesian.yAxis(0).labels().format("${%Value}{groupsSeparator: }");
+
+        cartesian.tooltip().positionMode(TooltipPositionMode.POINT);
+        cartesian.interactivity().hoverMode(HoverMode.BY_X);
+
+        cartesian.xAxis(0).title("Days");
+        cartesian.yAxis(0).title("Calories per day");
+
+        vm1.getData().observe(this, info -> {
+            System.out.println("bye");
+            List<DataEntry> dataList = new ArrayList<>();
+
+            for (HashMap.Entry<String, Integer> element : info.entrySet()) {
+                dataList.add(new ValueDataEntry(element.getKey(), element.getValue()));
+            }
+
+            for (DataEntry de : dataList) {
+                for (String key : de.keySet()) {
+                    System.out.println(key);
+                    System.out.println(de.getValue(key));
+                }
+            }
+
+            column.data(dataList);
+            System.out.println("chart set?");
+            System.out.println(dataVisual1 == null); //not null tested
+
+            dataVisual1.setVisibility(View.VISIBLE);
+            dataVisual1.setChart(cartesian);
+            cartesian.draw(true);
+            System.out.println("AnyChartView visibility: " + dataVisual1.getVisibility());
+            System.out.println("yo");
+        });
+
+        HashMap<String, Integer> data = new HashMap<>();
+        vm1.readMeals(data);
     }
 //    private void inputMeal() {
 //        String nameOfMeal = mealName.getText().toString();

@@ -11,45 +11,21 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
-import android.widget.DatePicker;
 
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-import com.anychart.enums.Anchor;
-import com.anychart.enums.HoverMode;
-import com.anychart.enums.Position;
-import com.anychart.enums.TooltipPositionMode;
-import com.example.recipeapp.model.Meal;
 import com.example.recipeapp.viewmodels.MealViewModel;
 import com.example.recipeapp.viewmodels.PersonalInformationViewModel;
-import com.example.recipeapp.views.InputMealActivity;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 
 
 //imports necessary to use AnyChart
-import com.anychart.AnyChart;
 import com.anychart.AnyChartView;
-import com.anychart.chart.common.dataentry.DataEntry;
-import com.anychart.chart.common.dataentry.ValueDataEntry;
-import com.anychart.charts.Cartesian;
-import com.anychart.charts.Pie;
-import com.anychart.core.cartesian.series.Column;
 
-import java.text.DateFormatSymbols;
 import java.text.SimpleDateFormat;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.HashMap;
-import java.util.List;
 import java.util.Locale;
 
 
@@ -147,7 +123,7 @@ public class InputMealFragment extends Fragment {
 
 //        Cartesian cartesian = AnyChart.column();
 //        Column column = cartesian.column(new ArrayList<>());
-//
+
 //        column.tooltip()
 //                .titleFormat("{%X}")
 //                .position(Position.CENTER_BOTTOM)
@@ -198,7 +174,7 @@ public class InputMealFragment extends Fragment {
             System.out.println("Button clicked");
             System.out.println(getContext());
             try {
-                Intent intent = new Intent(requireContext(), com.example.recipeapp.views.InputMealActivity.class);
+                Intent intent = new Intent(getActivity(), InputMealActivity.class);
                 startActivity(intent);
             }
             catch (Exception e) {
