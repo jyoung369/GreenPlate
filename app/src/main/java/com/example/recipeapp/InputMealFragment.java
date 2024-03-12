@@ -17,6 +17,10 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import com.anychart.enums.Anchor;
+import com.anychart.enums.HoverMode;
+import com.anychart.enums.Position;
+import com.anychart.enums.TooltipPositionMode;
 import com.example.recipeapp.model.Meal;
 import com.example.recipeapp.viewmodels.MealViewModel;
 import com.example.recipeapp.views.InputMealActivity;
@@ -35,51 +39,18 @@ import com.anychart.charts.Cartesian;
 import com.anychart.charts.Pie;
 import com.anychart.core.cartesian.series.Column;
 
+import java.text.DateFormatSymbols;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 
 
 public class InputMealFragment extends Fragment {
-
-    //   public InputMealFragment() {
-//        // Required empty public constructor
-//    }
-//
-//    @Override
-//    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-//                             Bundle savedInstanceState) {
-//        // Inflate the layout for this fragment
-//        View view = inflater.inflate(R.layout.fragment_input_meal, container, false);
-//
-//        // Find references to the buttons in the inflated layout
-//        Button button1 = view.findViewById(R.id.button1);
-//        Button button2 = view.findViewById(R.id.button2);
-//
-//        // Set click listener for Button 1
-//        button1.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                // Handle button1 click
-//                // Perform an action, e.g., start another activity or execute some logic
-//            }
-//        });
-//
-//        // Set click listener for Button 2
-//        button2.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                // Handle button2 click
-//                // Perform an action, e.g., start another activity or execute some logic
-//            }
-//        });
-//
-//      return view;
-//  }
     public InputMealFragment newInstance() {
         return new InputMealFragment();
     }
@@ -90,6 +61,7 @@ public class InputMealFragment extends Fragment {
     private EditText mealDate;
     private EditText calories;
     private EditText mealName;
+    private AnyChartView dataVisual1;
     private Calendar calendar;
 
 
@@ -98,27 +70,6 @@ public class InputMealFragment extends Fragment {
                              @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_input_meal, container, false);
 
-        /**
-        AnyChartView dataVisual1 = view.findViewById(R.id.any_chart_view);
-
-        dataVisual1.setProgressBar(view.findViewById(R.id.progress_bar));
-
-        Cartesian cartesian = AnyChart.column();
-
-        List<DataEntry> data = new ArrayList<>();
-        //example of column chart (avg caloric intake per month)
-        data.add(new ValueDataEntry("Rouge", 80540));
-        data.add(new ValueDataEntry("Foundation", 94190));
-        data.add(new ValueDataEntry("Mascara", 102610));
-        data.add(new ValueDataEntry("Lip gloss", 110430));
-        data.add(new ValueDataEntry("Lipstick", 128000));
-        data.add(new ValueDataEntry("Nail polish", 143760));
-        data.add(new ValueDataEntry("Eyebrow pencil", 170670));
-        data.add(new ValueDataEntry("Eyeliner", 213210));
-        data.add(new ValueDataEntry("Eyeshadows", 249980));
-
-        Column column = cartesian.column(data);
-        */
         return view;
 
     }
@@ -127,6 +78,8 @@ public class InputMealFragment extends Fragment {
         mealName = view.findViewById(R.id.mealName);
         calories = view.findViewById(R.id.calorieCount);
         mealDate = view.findViewById(R.id.mealDate);
+        //dataVisual1 (displaying user's avg daily calorie intake for current month)
+        dataVisual1 = (AnyChartView) view.findViewById(R.id.data_visual_1);
         calendar = Calendar.getInstance();
         MealViewModel vm = new MealViewModel();
 
@@ -134,8 +87,65 @@ public class InputMealFragment extends Fragment {
 
         super.onViewCreated(view, savedInstanceState);
         super.onCreate(savedInstanceState);
+
         Button input = view.findViewById(R.id.inputButton);
         input.setOnClickListener(v -> vm.inputMeal(requireContext(), mealName, calories, mealDate));
+
+        //Find references to the buttons in the inflated layout
+        Button button1 = view.findViewById(R.id.button1);
+        Button button2 = view.findViewById(R.id.button2);
+
+        Cartesian cartesian = AnyChart.column();
+        Column column = cartesian.column(new ArrayList<>());
+
+        column.tooltip()
+                .titleFormat("{%X}")
+                .position(Position.CENTER_BOTTOM)
+                .anchor(Anchor.CENTER_BOTTOM)
+                .offsetX(0d)
+                .offsetY(5d)
+                .format("${%Value}{groupsSeparator: }");
+
+        cartesian.animation(true);
+
+        //make current month into string
+        int currentMonth = calendar.get(Calendar.MONTH) + 1;
+        String currMonthName = new DateFormatSymbols().getMonths()[currentMonth - 1];
+        cartesian.title("Daily Caloric Intake for " + currMonthName);
+
+        cartesian.yScale().minimum(0d);
+
+        cartesian.yAxis(0).labels().format("${%Value}{groupsSeparator: }");
+
+        cartesian.tooltip().positionMode(TooltipPositionMode.POINT);
+        cartesian.interactivity().hoverMode(HoverMode.BY_X);
+
+        cartesian.xAxis(0).title("Days");
+        cartesian.yAxis(0).title("Calories per day");
+
+        vm.getData().observe(getViewLifecycleOwner(), info -> {
+            System.out.println("bye");
+            List<DataEntry> dataList = new ArrayList<>();
+
+            for (HashMap.Entry<String, Integer> element : info.entrySet()) {
+                dataList.add(new ValueDataEntry(element.getKey(), element.getValue()));
+            }
+            column.data(dataList);
+            System.out.println("chart set?");
+            System.out.println(dataVisual1 == null); //not null tested
+
+            dataVisual1.setVisibility(View.VISIBLE);
+            dataVisual1.setChart(cartesian);
+            cartesian.draw(true);
+            System.out.println("AnyChartView visibility: " + dataVisual1.getVisibility());
+            System.out.println("yo");
+        });
+
+        // Set click listener for Button 1 for data visual 1
+        button1.setOnClickListener(v -> {
+            HashMap<String, Integer> data = new HashMap<>();
+            vm.readMeals(data);
+        });
     }
 
     //opens up a calendar and allows user to select which date to input meal for
@@ -159,5 +169,4 @@ public class InputMealFragment extends Fragment {
 
         datePickerDialog.show();
     }
-
 }

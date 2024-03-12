@@ -3,18 +3,44 @@ package com.example.recipeapp.viewmodels;
 import static androidx.core.content.ContentProviderCompat.requireContext;
 
 import android.content.Context;
+import android.util.Log;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.collection.CircularArray;
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MutableLiveData;
+
+import com.anychart.chart.common.dataentry.DataEntry;
 import com.example.recipeapp.model.Meal;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
+import java.text.DateFormatSymbols;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
 
 public class MealViewModel {
-
     private final FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+    private List<Integer> currentCals;
+    private List<DataEntry> plotData;
+    private String currMonthName;
+    private Calendar calendar;
+
+    private MutableLiveData<HashMap<String, Integer>> hm = new MutableLiveData<>(new HashMap<>());
+    public LiveData<HashMap<String, Integer>> getData() {
+        return hm;
+    }
 
     public void inputMeal(Context context, EditText mealName, EditText calories, EditText mealDate) {
         String nameOfMeal = mealName.getText().toString();
@@ -46,4 +72,74 @@ public class MealViewModel {
                     });
         }
     }
+    public void readMeals(HashMap<String, Integer> data) {
+        FirebaseDatabase database = FirebaseDatabase
+                .getInstance("https://recipeapp-1fba1-default-rtdb.firebaseio.com/");
+        DatabaseReference mealsref = database.getReference().child("meals/"
+                + user.getUid());
+
+        //get current month
+        calendar = Calendar.getInstance();
+        int currentMonth = calendar.get(Calendar.MONTH) + 1;
+
+        mealsref.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+                    //String mealId = dataSnapshot.getKey();
+                    String mealName = dataSnapshot.child("mealName").getValue(String.class);
+                    String calories = dataSnapshot.child("calories").getValue(String.class);
+                    String date = dataSnapshot.child("date").getValue(String.class);
+
+                    try {
+                        SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
+                        assert date != null;
+                        Date newDate = dateFormat.parse(date);
+
+                        // Extract month
+                        assert newDate != null;
+                        SimpleDateFormat monthFormat = new SimpleDateFormat("MM");
+                        String month = monthFormat.format(newDate);
+                        int intMonth = Integer.parseInt(month);
+
+                        // Extract day
+                        SimpleDateFormat dayFormat = new SimpleDateFormat("dd");
+                        String day = dayFormat.format(newDate);
+                        //int intDay = Integer.parseInt(day);
+
+                        //System.out.println(intDay);
+
+                        assert calories != null;
+                        int intCalories = Integer.parseInt(calories);
+
+                        if (intMonth == currentMonth) {
+                            if (data.containsKey(day)) {
+                                int newCal = data.get(day) + intCalories;
+                                data.put(day, newCal);
+                            } else {
+                                data.put(day, intCalories);
+                            }
+                            //currentCals.add(intCalories);
+                        }
+
+                    } catch (ParseException e) {
+                        throw new RuntimeException(e);
+                    }
+                    Log.d("FirebaseData", "Meal: " + mealName + ", Calories: " + calories + ", Date: " + date);
+                }
+                hm.setValue(data);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Log.e("FirebaseError", "Error reading data from Firebase: " + error.getMessage());
+            }
+        });
+    }
+
+    private void updateChart1() {
+
+
+    }
+
 }
