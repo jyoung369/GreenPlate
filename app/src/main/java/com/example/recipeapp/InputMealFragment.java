@@ -1,6 +1,7 @@
 package com.example.recipeapp;
 
 import android.app.DatePickerDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -110,7 +111,7 @@ public class InputMealFragment extends Fragment {
                 weightText.setVisibility(View.VISIBLE);
                 String weightMessage = "Weight: " + weight + " kg";
                 weightText.setText(weightMessage);
-                calorieCalc(heightText, weightText, genderText, gjoalText);
+                calorieCalc(heightText, weightText, genderText, goalText);
             }
         });
 
@@ -144,56 +145,65 @@ public class InputMealFragment extends Fragment {
         Button button1 = view.findViewById(R.id.button1);
         Button button2 = view.findViewById(R.id.button2);
 
-        Cartesian cartesian = AnyChart.column();
-        Column column = cartesian.column(new ArrayList<>());
-
-        column.tooltip()
-                .titleFormat("{%X}")
-                .position(Position.CENTER_BOTTOM)
-                .anchor(Anchor.CENTER_BOTTOM)
-                .offsetX(0d)
-                .offsetY(5d)
-                .format("${%Value}{groupsSeparator: }");
-
-        cartesian.animation(true);
-
-        //make current month into string
-        int currentMonth = calendar.get(Calendar.MONTH) + 1;
-        String currMonthName = new DateFormatSymbols().getMonths()[currentMonth - 1];
-        cartesian.title("Daily Caloric Intake for " + currMonthName);
-
-        cartesian.yScale().minimum(0d);
-
-        cartesian.yAxis(0).labels().format("${%Value}{groupsSeparator: }");
-
-        cartesian.tooltip().positionMode(TooltipPositionMode.POINT);
-        cartesian.interactivity().hoverMode(HoverMode.BY_X);
-
-        cartesian.xAxis(0).title("Days");
-        cartesian.yAxis(0).title("Calories per day");
-
-        vm.getData().observe(getViewLifecycleOwner(), info -> {
-            System.out.println("bye");
-            List<DataEntry> dataList = new ArrayList<>();
-
-            for (HashMap.Entry<String, Integer> element : info.entrySet()) {
-                dataList.add(new ValueDataEntry(element.getKey(), element.getValue()));
-            }
-            column.data(dataList);
-            System.out.println("chart set?");
-            System.out.println(dataVisual1 == null); //not null tested
-
-            dataVisual1.setVisibility(View.VISIBLE);
-            dataVisual1.setChart(cartesian);
-            cartesian.draw(true);
-            System.out.println("AnyChartView visibility: " + dataVisual1.getVisibility());
-            System.out.println("yo");
-        });
+//        Cartesian cartesian = AnyChart.column();
+//        Column column = cartesian.column(new ArrayList<>());
+//
+//        column.tooltip()
+//                .titleFormat("{%X}")
+//                .position(Position.CENTER_BOTTOM)
+//                .anchor(Anchor.CENTER_BOTTOM)
+//                .offsetX(0d)
+//                .offsetY(5d)
+//                .format("${%Value}{groupsSeparator: }");
+//
+//        cartesian.animation(true);
+//
+//        //make current month into string
+//        int currentMonth = calendar.get(Calendar.MONTH) + 1;
+//        String currMonthName = new DateFormatSymbols().getMonths()[currentMonth - 1];
+//        cartesian.title("Daily Caloric Intake for " + currMonthName);
+//
+//        cartesian.yScale().minimum(0d);
+//
+//        cartesian.yAxis(0).labels().format("${%Value}{groupsSeparator: }");
+//
+//        cartesian.tooltip().positionMode(TooltipPositionMode.POINT);
+//        cartesian.interactivity().hoverMode(HoverMode.BY_X);
+//
+//        cartesian.xAxis(0).title("Days");
+//        cartesian.yAxis(0).title("Calories per day");
+//
+//        vm.getData().observe(getViewLifecycleOwner(), info -> {
+//            System.out.println("bye");
+//            List<DataEntry> dataList = new ArrayList<>();
+//
+//            for (HashMap.Entry<String, Integer> element : info.entrySet()) {
+//                dataList.add(new ValueDataEntry(element.getKey(), element.getValue()));
+//            }
+//            column.data(dataList);
+//            System.out.println("chart set?");
+//            System.out.println(dataVisual1 == null); //not null tested
+//
+//            dataVisual1.setVisibility(View.VISIBLE);
+//            dataVisual1.setChart(cartesian);
+//            cartesian.draw(true);
+//            System.out.println("AnyChartView visibility: " + dataVisual1.getVisibility());
+//            System.out.println("yo");
+//        });
 
         // Set click listener for Button 1 for data visual 1
         button1.setOnClickListener(v -> {
-            HashMap<String, Integer> data = new HashMap<>();
-            vm.readMeals(data);
+//            HashMap<String, Integer> data = new HashMap<>();
+//            vm.readMeals(data);
+            System.out.println("Button clicked");
+            System.out.println(getContext());
+            try {
+                Intent intent = new Intent(requireContext(), com.example.recipeapp.views.InputMealActivity.class);
+                startActivity(intent);
+            }
+            catch (Exception e) {
+                e.printStackTrace();
+            }
         });
     }
 
@@ -218,7 +228,6 @@ public class InputMealFragment extends Fragment {
 
         datePickerDialog.show();
     }
-}
     private void calorieCalc(TextView heightText, TextView weightText, TextView genderText, TextView goalText) {
         //The equation that we will be using to calculate calorie goal is the Mifflin-St Jeor
         //formula: https://www.calculator.net/calorie-calculator.html
