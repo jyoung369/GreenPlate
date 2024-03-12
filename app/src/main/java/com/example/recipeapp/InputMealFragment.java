@@ -157,7 +157,7 @@ public class InputMealFragment extends Fragment {
                 weightText.setVisibility(View.VISIBLE);
                 String weightMessage = "Weight: " + weight + " kg";
                 weightText.setText(weightMessage);
-                calorieCalc(heightText, weightText, genderText, goalText);
+                calorieCalc(heightText, weightText, genderText, gjoalText);
             }
         });
 
