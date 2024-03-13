@@ -204,6 +204,7 @@ public class InputMealFragment extends Fragment {
 
         datePickerDialog.show();
     }
+
     private void calorieCalc(TextView heightText, TextView weightText, TextView genderText, TextView goalText) {
         //The equation that we will be using to calculate calorie goal is the Mifflin-St Jeor
         //formula: https://www.calculator.net/calorie-calculator.html

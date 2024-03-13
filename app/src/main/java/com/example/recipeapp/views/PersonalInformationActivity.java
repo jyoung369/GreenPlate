@@ -1,7 +1,10 @@
 package com.example.recipeapp.views;
 
+import static androidx.core.content.ContentProviderCompat.requireContext;
+
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -9,6 +12,7 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.example.recipeapp.HomeFragment;
 import com.example.recipeapp.R;
 import com.example.recipeapp.viewmodels.PersonalInformationViewModel;
 import com.google.firebase.auth.FirebaseAuth;
@@ -31,6 +35,7 @@ public class PersonalInformationActivity extends AppCompatActivity {
         editTextWeight = findViewById(R.id.editTextWeight);
         spinnerGender = findViewById(R.id.spinnerGender);
         Button buttonSave = findViewById(R.id.buttonSave);
+        Button buttonBack = findViewById(R.id.buttonBackToHome);
         viewModel = new ViewModelProvider(this).get(PersonalInformationViewModel.class);
 
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
@@ -39,6 +44,11 @@ public class PersonalInformationActivity extends AppCompatActivity {
         spinnerGender.setAdapter(adapter);
 
         buttonSave.setOnClickListener(v -> savePersonalInformation());
+
+        buttonBack.setOnClickListener(v->{
+            Intent intent = new Intent(PersonalInformationActivity.this, WelcomeActivity.class);
+            startActivity(intent);
+        });
     }
     private void savePersonalInformation() {
         String height = editTextHeight.getText().toString().trim();
