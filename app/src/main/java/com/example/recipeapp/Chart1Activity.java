@@ -52,7 +52,7 @@ public class Chart1Activity extends AppCompatActivity {
                 .anchor(Anchor.CENTER_BOTTOM)
                 .offsetX(0d)
                 .offsetY(5d)
-                .format("${%Value}{groupsSeparator: }");
+                .format("{%Value}{groupsSeparator: }");
 
         cartesian.animation(true);
         cartesian.title("Daily Caloric Intake");
