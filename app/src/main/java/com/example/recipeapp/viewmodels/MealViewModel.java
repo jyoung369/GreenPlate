@@ -1,17 +1,12 @@
 package com.example.recipeapp.viewmodels;
-
 import android.content.Context;
 import android.util.Log;
 import android.widget.EditText;
 import android.widget.Toast;
-
 import androidx.annotation.NonNull;
-
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
-
 import com.anychart.chart.common.dataentry.DataEntry;
-
 import com.example.recipeapp.model.Meal;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -20,11 +15,10 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Locale;
-
 import java.text.ParseException;
 import java.util.Date;
 import java.util.HashMap;
@@ -73,8 +67,8 @@ public class MealViewModel {
                     });
         }
     }
-  
-    public void readMeals(HashMap<String, Integer> data) {
+
+    public void readMeals(HashMap<String, Integer> data, ArrayList<Integer> calorieList) {
         FirebaseDatabase database = FirebaseDatabase
                 .getInstance("https://recipeapp-1fba1-default-rtdb.firebaseio.com/");
         DatabaseReference mealsref = database.getReference().child("meals/"
@@ -84,11 +78,14 @@ public class MealViewModel {
         calendar = Calendar.getInstance();
         int currentMonth = calendar.get(Calendar.MONTH) + 1;
 
+        //get current day
+        int currentDay = calendar.get(Calendar.DATE);
+        System.out.println(currentDay);
+
         mealsref.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
-                    //String mealId = dataSnapshot.getKey();
                     String mealName = dataSnapshot.child("mealName").getValue(String.class);
                     String calories = dataSnapshot.child("calories").getValue(String.class);
                     String date = dataSnapshot.child("date").getValue(String.class);
@@ -107,9 +104,7 @@ public class MealViewModel {
                         // Extract day
                         SimpleDateFormat dayFormat = new SimpleDateFormat("dd");
                         String day = dayFormat.format(newDate);
-                        //int intDay = Integer.parseInt(day);
-
-                        //System.out.println(intDay);
+                        int intDay = Integer.parseInt(day);
 
                         assert calories != null;
                         int intCalories = Integer.parseInt(calories);
@@ -121,7 +116,10 @@ public class MealViewModel {
                             } else {
                                 data.put(day, intCalories);
                             }
-                            //currentCals.add(intCalories);
+                        }
+
+                        if (intDay == currentDay) {
+                            calorieList.add(intCalories);
                         }
 
                     } catch (ParseException e) {
@@ -162,7 +160,6 @@ public class MealViewModel {
                     }
                 }
                 dailyCount.setValue(calorieCount);
-
             }
 
             @Override
@@ -170,10 +167,5 @@ public class MealViewModel {
                 Log.e("FirebaseError", "Error reading data from Firebase: " + error.getMessage());
             }
         });
-    }
-
-    private void updateChart1() {
-
-
     }
 }

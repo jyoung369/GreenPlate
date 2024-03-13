@@ -1,8 +1,5 @@
 package com.example.recipeapp;
-
-
 import androidx.appcompat.app.AppCompatActivity;
-
 import com.anychart.AnyChart;
 import com.anychart.AnyChartView;
 import com.anychart.chart.common.dataentry.DataEntry;
@@ -13,31 +10,23 @@ import com.anychart.enums.Anchor;
 import com.anychart.enums.HoverMode;
 import com.anychart.enums.Position;
 import com.anychart.enums.TooltipPositionMode;
-
-import com.example.recipeapp.viewmodels.MealViewModel;
 import com.example.recipeapp.views.WelcomeActivity;
-import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
-
 import java.text.DateFormatSymbols;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
-public class InputMealActivity extends AppCompatActivity {
+public class Chart1Activity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_input_meal);
-
+        setContentView(R.layout.chart1);
         Button backButton = findViewById(R.id.backButton);
         backButton.setOnClickListener(back -> {
-            Intent intent = new Intent(InputMealActivity.this, WelcomeActivity.class);
+            Intent intent = new Intent(Chart1Activity.this, WelcomeActivity.class);
             startActivity(intent);
         });
 
@@ -74,7 +63,6 @@ public class InputMealActivity extends AppCompatActivity {
         cartesian.title("Daily Caloric Intake for " + currMonthName);
 
         cartesian.yScale().minimum(0d);
-
         cartesian.yAxis(0).labels().format("${%Value}{groupsSeparator: }");
 
         cartesian.tooltip().positionMode(TooltipPositionMode.POINT);
@@ -85,31 +73,4 @@ public class InputMealActivity extends AppCompatActivity {
 
         dataVisual1.setChart(cartesian);
     }
-    //    private void inputMeal() {
-    //        String nameOfMeal = mealName.getText().toString();
-    //        String cals = calories.getText().toString();
-    //        if (nameOfMeal.isEmpty()) {
-    //            mealName.setError("Please enter the name of your meal!");
-    //        } else if (cals.isEmpty()) {
-    //            calories.setError("Please enter the amount of calories in your meal!");
-    //        } else {
-    //            Map<String, Object> mealData = new HashMap<>();
-    //            mealData.put("name", nameOfMeal);
-    //            mealData.put("calorie count", cals);
-    //            mealData.put("userid", user.getUid());
-    //
-    //            FirebaseDatabase database = FirebaseDatabase.getInstance("https://recipeapp-1fba1-default-rtdb.firebaseio.com/");
-    //            DatabaseReference mealsref = database.getReference().child("meals");
-    //
-    //            mealsref.child(user.getUid())
-    //                    .setValue(mealData)
-    //                    .addOnSuccessListener(success -> {
-    //                        Toast.makeText(InputMealActivity.this,
-    //                                "Meal inputted successfully!", Toast.LENGTH_SHORT).show();
-    //                    })
-    //                    .addOnFailureListener(failure -> {
-    //                        Toast.makeText(InputMealActivity.this,
-    //                                "Could not input meal", Toast.LENGTH_SHORT).show();
-    //                    });
-    //          }
 }
