@@ -1,8 +1,5 @@
 package com.example.recipeapp.model;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class User {
     private static User instance; // Singleton instance
     private String uid;
@@ -19,7 +16,8 @@ public class User {
         this.gender = gender;
     }
 
-    public static User getInstance(String uid, String email, double height, double weight, String gender) {
+    public static User getInstance(String uid, String email,
+                                   double height, double weight, String gender) {
         if (instance == null) {
             instance = new User(uid, email, height, weight, gender);
         }

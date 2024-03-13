@@ -1,7 +1,5 @@
 package com.example.recipeapp.views;
 
-import static androidx.core.content.ContentProviderCompat.requireContext;
-
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -12,7 +10,6 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
-import com.example.recipeapp.HomeFragment;
 import com.example.recipeapp.R;
 import com.example.recipeapp.viewmodels.PersonalInformationViewModel;
 import com.google.firebase.auth.FirebaseAuth;
@@ -45,7 +42,7 @@ public class PersonalInformationActivity extends AppCompatActivity {
 
         buttonSave.setOnClickListener(v -> savePersonalInformation());
 
-        buttonBack.setOnClickListener(v->{
+        buttonBack.setOnClickListener(v -> {
             Intent intent = new Intent(PersonalInformationActivity.this, WelcomeActivity.class);
             startActivity(intent);
         });

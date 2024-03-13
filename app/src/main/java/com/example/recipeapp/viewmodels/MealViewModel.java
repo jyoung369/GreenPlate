@@ -1,7 +1,5 @@
 package com.example.recipeapp.viewmodels;
 
-import static androidx.core.content.ContentProviderCompat.requireContext;
-
 import android.content.Context;
 import android.util.Log;
 import android.widget.EditText;
@@ -9,14 +7,10 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
-import androidx.collection.CircularArray;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
 import com.anychart.chart.common.dataentry.DataEntry;
-
-import androidx.lifecycle.LiveData;
-import androidx.lifecycle.MutableLiveData;
 
 import com.example.recipeapp.model.Meal;
 import com.google.firebase.auth.FirebaseAuth;
@@ -31,10 +25,7 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Locale;
 
-import java.text.DateFormatSymbols;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -52,7 +43,8 @@ public class MealViewModel {
     }
     private MutableLiveData<Integer> dailyCount = new MutableLiveData<>();
 
-    public void inputMeal(Context context, EditText mealName, EditText calories, EditText mealDate) {
+    public void inputMeal(Context context, EditText mealName,
+                          EditText calories, EditText mealDate) {
         String nameOfMeal = mealName.getText().toString();
         String cals = calories.getText().toString();
         String date = mealDate.getText().toString();
@@ -63,8 +55,7 @@ public class MealViewModel {
             calories.setError("Please enter the amount of calories in your meal!");
         } else if (date.isEmpty()) {
             mealDate.setError("Please enter when you had your meal!");
-        }
-        else {
+        } else {
             Meal myMeal = new Meal(nameOfMeal, cals, date);
             FirebaseDatabase database = FirebaseDatabase
                     .getInstance("https://recipeapp-1fba1-default-rtdb.firebaseio.com/");
@@ -136,7 +127,8 @@ public class MealViewModel {
                     } catch (ParseException e) {
                         throw new RuntimeException(e);
                     }
-                    Log.d("FirebaseData", "Meal: " + mealName + ", Calories: " + calories + ", Date: " + date);
+                    Log.d("FirebaseData",
+                            "Meal: " + mealName + ", Calories: " + calories + ", Date: " + date);
                 }
                 hm.setValue(data);
             }
@@ -159,7 +151,8 @@ public class MealViewModel {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 int calorieCount = 0;
-                SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault());
+                SimpleDateFormat dateFormat = new SimpleDateFormat(
+                        "dd-MM-yyyy", Locale.getDefault());
                 Calendar calendar = Calendar.getInstance();
                 String today = dateFormat.format(calendar.getTime());
                 for (DataSnapshot meal: snapshot.getChildren()) {

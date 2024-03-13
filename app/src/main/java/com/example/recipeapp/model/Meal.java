@@ -7,7 +7,7 @@ public class Meal {
 
     private String date;
 
-    public Meal (String name, String calories, String date) {
+    public Meal(String name, String calories, String date) {
         this.name = name;
         this.calories = calories;
         this.date = date;
