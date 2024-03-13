@@ -57,4 +57,33 @@ public class RecipeUnitTests {
         Util activity = new Util();
         assertTrue(activity.validateHeight("124"));
     }
+
+    //Simona Ivanov
+    @Test
+    public void inputMealWithEmptyNameReturnsFalse() {
+        Util vm = new Util();
+        assertFalse(vm.validName(""));
+    }
+    //Simona Ivanov
+    @Test
+    public void inputMealWithEmptyCalCountReturnsFalse() {
+        Util vm = new Util();
+        assertFalse(vm.validCalCount(null));
+    }
+
+    //Amritha Pramod
+    @Test
+    public void inputMealWithValidNameReturnsTrue() {
+        Util vm = new Util();
+        assertTrue(vm.validName("Banana"));
+    }
+
+    //Amritha Pramod
+    @Test
+    public void inputMealWithValidCals() {
+        Util vm = new Util();
+        assertTrue(vm.validCalCount(720));
+    }
 }
+
+
