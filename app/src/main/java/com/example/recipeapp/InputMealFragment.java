@@ -1,30 +1,22 @@
 package com.example.recipeapp;
-
 import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
-
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-
 import com.example.recipeapp.viewmodels.MealViewModel;
 import com.example.recipeapp.viewmodels.PersonalInformationViewModel;
 
-
 //imports necessary to use AnyChart
 import com.anychart.AnyChartView;
-
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -45,16 +37,13 @@ public class InputMealFragment extends Fragment {
     private AnyChartView dataVisual1;
     private Calendar calendar;
 
-
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_input_meal, container, false);
-
         return view;
-
     }
-  
+
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         mealName = view.findViewById(R.id.mealName);
         calories = view.findViewById(R.id.calorieCount);
@@ -132,15 +121,28 @@ public class InputMealFragment extends Fragment {
         });
 
         HashMap<String, Integer> data = new HashMap<>();
-        vm.readMeals(data);
+        ArrayList<Integer> calorieList = new ArrayList<>();
+        vm.readMeals(data, calorieList);
 
         // Set click listener for Button 1 for data visual 1
         button1.setOnClickListener(v -> {
             try {
-                Intent intent = new Intent(getActivity(), InputMealActivity.class);
-                intent.putStringArrayListExtra("dataKeys", dataKeys);
-                intent.putIntegerArrayListExtra("dataValues", dataValues);
-                startActivity(intent);
+                Intent intent1 = new Intent(getActivity(), Chart1Activity.class);
+                intent1.putStringArrayListExtra("dataKeys", dataKeys);
+                intent1.putIntegerArrayListExtra("dataValues", dataValues);
+                startActivity(intent1);
+            }
+            catch (Exception e) {
+                e.printStackTrace();
+            }
+        });
+
+        // Set click listener for Button 2 for data visual 2
+        button2.setOnClickListener(v -> {
+            try {
+                Intent intent2 = new Intent(getActivity(), Chart2Activity.class);
+                intent2.putIntegerArrayListExtra("calorieList", calorieList);
+                startActivity(intent2);
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -166,9 +168,9 @@ public class InputMealFragment extends Fragment {
                 month,
                 day
         );
-
         datePickerDialog.show();
     }
+
 
     private void calorieCalc(TextView heightText, TextView weightText,
                              TextView genderText, TextView goalText) {
@@ -218,5 +220,4 @@ public class InputMealFragment extends Fragment {
         int finalCalories = (int) Math.ceil(calories);
         return(finalCalories);
     }
-
 }
