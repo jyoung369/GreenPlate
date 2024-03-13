@@ -45,6 +45,13 @@ public class MealViewModel {
     }
     private MutableLiveData<Integer> dailyCount = new MutableLiveData<>();
 
+    public boolean validName(String mealName) {
+        return !mealName.isEmpty();
+    }
+    public boolean validCalCount(Integer calories) {
+        return calories != null;
+    }
+
     public void inputMeal(Context context, EditText mealName,
                           EditText calories, Button mealDate) {
         System.out.println(mealName);
@@ -63,7 +70,7 @@ public class MealViewModel {
             mealName.setError(null);
             calories.setError(null);
             mealDate.setError(null);
-            Meal myMeal = new Meal(nameOfMeal, cals, date);
+            Meal myMeal = new Meal(nameOfMeal, Integer.parseInt(cals), date);
             FirebaseDatabase database = FirebaseDatabase
                     .getInstance("https://recipeapp-1fba1-default-rtdb.firebaseio.com/");
             DatabaseReference mealsref = database.getReference().child("meals/"
