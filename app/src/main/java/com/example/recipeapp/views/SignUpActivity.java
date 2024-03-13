@@ -34,8 +34,6 @@ public class SignUpActivity extends AppCompatActivity {
             signUpViewModel.signUp(email, password);
         });
 
-        Button exitButton = findViewById(R.id.exitApp);
-        exitButton.setOnClickListener(view -> finishAffinity());
     }
     private void observe() {
         signUpViewModel.getSignUpSuccess().observe(this, isSuccess -> {
