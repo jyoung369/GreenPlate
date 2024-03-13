@@ -33,6 +33,9 @@ public class SignUpActivity extends AppCompatActivity {
             String password = signupPassword.getText().toString().trim();
             signUpViewModel.signUp(email, password);
         });
+
+        Button exitButton = findViewById(R.id.exitApp);
+        exitButton.setOnClickListener(view -> finishAffinity());
     }
     private void observe() {
         signUpViewModel.getSignUpSuccess().observe(this, isSuccess -> {
