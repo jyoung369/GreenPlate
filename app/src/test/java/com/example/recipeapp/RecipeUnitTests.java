@@ -82,7 +82,7 @@ public class RecipeUnitTests {
     @Test
     public void inputMealWithValidCals() {
         Util vm = new Util();
-        assertTrue(vm.validCalCount(720));
+        assertTrue(vm.validCalCount("720"));
     }
 }
 

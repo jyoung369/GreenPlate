@@ -11,7 +11,7 @@ public class Util {
     public boolean validName(String mealName) {
         return !mealName.isEmpty();
     }
-    public boolean validCalCount(Integer calories) {
+    public boolean validCalCount(String calories) {
         return calories != null;
     }
 }
