@@ -28,6 +28,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Locale;
 
@@ -83,7 +84,7 @@ public class MealViewModel {
         }
     }
   
-    public void readMeals(HashMap<String, Integer> data) {
+    public void readMeals(HashMap<String, Integer> data, ArrayList<Integer> calorieList) {
         FirebaseDatabase database = FirebaseDatabase
                 .getInstance("https://recipeapp-1fba1-default-rtdb.firebaseio.com/");
         DatabaseReference mealsref = database.getReference().child("meals/"
@@ -93,11 +94,14 @@ public class MealViewModel {
         calendar = Calendar.getInstance();
         int currentMonth = calendar.get(Calendar.MONTH) + 1;
 
+        //get current day
+        int currentDay = calendar.get(Calendar.DATE);
+        System.out.println(currentDay);
+
         mealsref.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
-                    //String mealId = dataSnapshot.getKey();
                     String mealName = dataSnapshot.child("mealName").getValue(String.class);
                     String calories = dataSnapshot.child("calories").getValue(String.class);
                     String date = dataSnapshot.child("date").getValue(String.class);
@@ -116,9 +120,7 @@ public class MealViewModel {
                         // Extract day
                         SimpleDateFormat dayFormat = new SimpleDateFormat("dd");
                         String day = dayFormat.format(newDate);
-                        //int intDay = Integer.parseInt(day);
-
-                        //System.out.println(intDay);
+                        int intDay = Integer.parseInt(day);
 
                         assert calories != null;
                         int intCalories = Integer.parseInt(calories);
@@ -131,6 +133,10 @@ public class MealViewModel {
                                 data.put(day, intCalories);
                             }
                             //currentCals.add(intCalories);
+                        }
+
+                        if (intDay == currentDay) {
+                            calorieList.add(intCalories);
                         }
 
                     } catch (ParseException e) {
