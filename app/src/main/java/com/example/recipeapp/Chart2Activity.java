@@ -10,13 +10,7 @@ import com.anychart.charts.Pie;
 import com.anychart.enums.Align;
 import com.anychart.enums.LegendLayout;
 
-import com.anychart.enums.Position;
-import com.anychart.enums.TooltipPositionMode;
-import com.example.recipeapp.viewmodels.MealViewModel;
 import com.example.recipeapp.views.WelcomeActivity;
-import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 
 import android.content.Intent;
 import android.os.Bundle;
