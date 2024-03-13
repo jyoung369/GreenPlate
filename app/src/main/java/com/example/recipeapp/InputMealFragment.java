@@ -202,16 +202,21 @@ public class InputMealFragment extends Fragment {
             System.out.println(weight);
             System.out.println(height);
             System.out.println(gender);
-            double calories = (10 * weight) + (6.25 * height) - (5 * 38.9);
-            if (gender.equals("Male")) {
-                calories = calories + 5;
-            } else if (gender.equals("Female")) {
-                calories = calories - 161;
-            }
-            int finalCalories = (int) Math.ceil(calories);
+            int finalCalories = calorieEquation(height, weight, gender);
             goalText.setVisibility(View.VISIBLE);
             goalText.setText("Min Daily Calorie Goal: " + finalCalories);
         }
+    }
+
+    public int calorieEquation(double height, double weight, String gender) {
+        double calories = (10 * weight) + (6.25 * height) - (5 * 38.9);
+        if (gender.equals("Male")) {
+            calories = calories + 5;
+        } else if (gender.equals("Female")) {
+            calories = calories - 161;
+        }
+        int finalCalories = (int) Math.ceil(calories);
+        return(finalCalories);
     }
 
 }
