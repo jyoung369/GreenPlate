@@ -49,7 +49,11 @@
             android:exported="false" />
 
         <activity
-            android:name=".InputMealActivity"
+            android:name=".Chart1Activity"
+            android:exported="true" />
+
+        <activity
+            android:name=".Chart2Activity"
             android:exported="true" />
 
         <activity

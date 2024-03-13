@@ -128,51 +128,6 @@ public class InputMealFragment extends Fragment {
         Button button1 = view.findViewById(R.id.button1);
         Button button2 = view.findViewById(R.id.button2);
 
-//        Cartesian cartesian = AnyChart.column();
-//        Column column = cartesian.column(new ArrayList<>());
-
-//        column.tooltip()
-//                .titleFormat("{%X}")
-//                .position(Position.CENTER_BOTTOM)
-//                .anchor(Anchor.CENTER_BOTTOM)
-//                .offsetX(0d)
-//                .offsetY(5d)
-//                .format("${%Value}{groupsSeparator: }");
-//
-//        cartesian.animation(true);
-//
-//        //make current month into string
-//        int currentMonth = calendar.get(Calendar.MONTH) + 1;
-//        String currMonthName = new DateFormatSymbols().getMonths()[currentMonth - 1];
-//        cartesian.title("Daily Caloric Intake for " + currMonthName);
-//
-//        cartesian.yScale().minimum(0d);
-//
-//        cartesian.yAxis(0).labels().format("${%Value}{groupsSeparator: }");
-//
-//        cartesian.tooltip().positionMode(TooltipPositionMode.POINT);
-//        cartesian.interactivity().hoverMode(HoverMode.BY_X);
-//
-//        cartesian.xAxis(0).title("Days");
-//        cartesian.yAxis(0).title("Calories per day");
-//
-//        vm.getData().observe(getViewLifecycleOwner(), info -> {
-//            System.out.println("bye");
-//            List<DataEntry> dataList = new ArrayList<>();
-//
-//            for (HashMap.Entry<String, Integer> element : info.entrySet()) {
-//                dataList.add(new ValueDataEntry(element.getKey(), element.getValue()));
-//            }
-//            column.data(dataList);
-//            System.out.println("chart set?");
-//            System.out.println(dataVisual1 == null); //not null tested
-//
-//            dataVisual1.setVisibility(View.VISIBLE);
-//            dataVisual1.setChart(cartesian);
-//            cartesian.draw(true);
-//            System.out.println("AnyChartView visibility: " + dataVisual1.getVisibility());
-//            System.out.println("yo");
-//        });
         ArrayList<String> dataKeys = new ArrayList<>();
         ArrayList<Integer> dataValues = new ArrayList<>();
         vm.getData().observe(getViewLifecycleOwner(), info -> {
@@ -183,15 +138,28 @@ public class InputMealFragment extends Fragment {
         });
 
         HashMap<String, Integer> data = new HashMap<>();
-        vm.readMeals(data);
+        ArrayList<Integer> calorieList = new ArrayList<>();
+        vm.readMeals(data, calorieList);
 
         // Set click listener for Button 1 for data visual 1
         button1.setOnClickListener(v -> {
             try {
-                Intent intent = new Intent(getActivity(), InputMealActivity.class);
-                intent.putStringArrayListExtra("dataKeys", dataKeys);
-                intent.putIntegerArrayListExtra("dataValues", dataValues);
-                startActivity(intent);
+                Intent intent1 = new Intent(getActivity(), Chart1Activity.class);
+                intent1.putStringArrayListExtra("dataKeys", dataKeys);
+                intent1.putIntegerArrayListExtra("dataValues", dataValues);
+                startActivity(intent1);
+            }
+            catch (Exception e) {
+                e.printStackTrace();
+            }
+        });
+
+        // Set click listener for Button 2 for data visual 2
+        button2.setOnClickListener(v -> {
+            try {
+                Intent intent2 = new Intent(getActivity(), Chart2Activity.class);
+                intent2.putIntegerArrayListExtra("calorieList", calorieList);
+                startActivity(intent2);
             }
             catch (Exception e) {
                 e.printStackTrace();
