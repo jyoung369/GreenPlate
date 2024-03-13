@@ -9,6 +9,16 @@ import com.anychart.chart.common.listener.ListenersInterface;
 import com.anychart.charts.Pie;
 import com.anychart.enums.Align;
 import com.anychart.enums.LegendLayout;
+
+import com.anychart.enums.Position;
+import com.anychart.enums.TooltipPositionMode;
+import com.example.recipeapp.viewmodels.MealViewModel;
+import com.example.recipeapp.views.WelcomeActivity;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
+import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Toast;
 import java.util.ArrayList;
@@ -21,6 +31,12 @@ public class Chart2Activity extends AppCompatActivity {
 
         AnyChartView dataVisual2 = (AnyChartView) findViewById(R.id.data_visual_2);
         dataVisual2.setProgressBar(findViewById(R.id.progress_bar2));
+
+        Button backButton = findViewById(R.id.backButton);
+        backButton.setOnClickListener(back -> {
+            Intent intent = new Intent(Chart2Activity.this, WelcomeActivity.class);
+            startActivity(intent);
+        });
 
         ArrayList<Integer> dataValues = getIntent().getIntegerArrayListExtra("calorieList");
 
