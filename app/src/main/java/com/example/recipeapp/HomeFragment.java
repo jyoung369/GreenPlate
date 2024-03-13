@@ -1,11 +1,15 @@
 package com.example.recipeapp;
 
+import android.app.Person;
 import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -35,8 +39,17 @@ public class HomeFragment extends Fragment {
 
         // Set onClickListener for the button
         setPersonalInfoButton.setOnClickListener(anotherView -> {
-            Intent intent = new Intent(requireContext(), PersonalInformationActivity.class);
-            startActivity(intent);
+            FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
+            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+            Fragment PersonalInformationFragment = new PersonalInformationFragment();
+            // Replace the current fragment with the new fragment
+            fragmentTransaction.replace(R.id.flFragment, PersonalInformationFragment);
+
+            // Optional: Add the transaction to the back stack
+            fragmentTransaction.addToBackStack(null);
+
+            // Commit the transaction
+            fragmentTransaction.commit();
         });
     }
 }
