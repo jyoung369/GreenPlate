@@ -48,8 +48,8 @@ public class MealViewModel {
     public boolean validName(String mealName) {
         return !mealName.isEmpty();
     }
-    public boolean validCalCount(Integer calories) {
-        return calories != null;
+    public boolean validCalCount(String calories) {
+        return !calories.isEmpty();
     }
 
     public void inputMeal(Context context, EditText mealName,
@@ -70,7 +70,7 @@ public class MealViewModel {
             mealName.setError(null);
             calories.setError(null);
             mealDate.setError(null);
-            Meal myMeal = new Meal(nameOfMeal, Integer.parseInt(cals), date);
+            Meal myMeal = new Meal(nameOfMeal, cals, date);
             FirebaseDatabase database = FirebaseDatabase
                     .getInstance("https://recipeapp-1fba1-default-rtdb.firebaseio.com/");
             DatabaseReference mealsref = database.getReference().child("meals/"
