@@ -30,11 +30,11 @@ public class LoginViewModel extends ViewModel {
                 .addOnFailureListener(e -> loginError.postValue(e.getMessage()));
     }
 
-    public boolean notEmptyEmail (String email) {
+    public boolean notEmptyEmail(String email) {
         return !email.isEmpty();
     }
 
-    public boolean notEmptyPassword (String pass) {
+    public boolean notEmptyPassword(String pass) {
         return !pass.isEmpty();
     }
 
