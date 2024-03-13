@@ -3,7 +3,7 @@ package com.example.recipeapp;
 import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Parcelable;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,8 +18,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-import com.anychart.chart.common.dataentry.DataEntry;
-import com.anychart.chart.common.dataentry.ValueDataEntry;
 import com.example.recipeapp.viewmodels.MealViewModel;
 import com.example.recipeapp.viewmodels.PersonalInformationViewModel;
 
@@ -27,14 +25,11 @@ import com.example.recipeapp.viewmodels.PersonalInformationViewModel;
 //imports necessary to use AnyChart
 import com.anychart.AnyChartView;
 
-import java.lang.reflect.Array;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Locale;
-
 
 public class InputMealFragment extends Fragment {
     public InputMealFragment newInstance() {
@@ -124,55 +119,9 @@ public class InputMealFragment extends Fragment {
         Button input = view.findViewById(R.id.inputButton);
         input.setOnClickListener(v -> vm.inputMeal(requireContext(), mealName, calories, mealDate));
 
-        //Find references to the buttons in the inflated layout
         Button button1 = view.findViewById(R.id.button1);
         Button button2 = view.findViewById(R.id.button2);
 
-//        Cartesian cartesian = AnyChart.column();
-//        Column column = cartesian.column(new ArrayList<>());
-
-//        column.tooltip()
-//                .titleFormat("{%X}")
-//                .position(Position.CENTER_BOTTOM)
-//                .anchor(Anchor.CENTER_BOTTOM)
-//                .offsetX(0d)
-//                .offsetY(5d)
-//                .format("${%Value}{groupsSeparator: }");
-//
-//        cartesian.animation(true);
-//
-//        //make current month into string
-//        int currentMonth = calendar.get(Calendar.MONTH) + 1;
-//        String currMonthName = new DateFormatSymbols().getMonths()[currentMonth - 1];
-//        cartesian.title("Daily Caloric Intake for " + currMonthName);
-//
-//        cartesian.yScale().minimum(0d);
-//
-//        cartesian.yAxis(0).labels().format("${%Value}{groupsSeparator: }");
-//
-//        cartesian.tooltip().positionMode(TooltipPositionMode.POINT);
-//        cartesian.interactivity().hoverMode(HoverMode.BY_X);
-//
-//        cartesian.xAxis(0).title("Days");
-//        cartesian.yAxis(0).title("Calories per day");
-//
-//        vm.getData().observe(getViewLifecycleOwner(), info -> {
-//            System.out.println("bye");
-//            List<DataEntry> dataList = new ArrayList<>();
-//
-//            for (HashMap.Entry<String, Integer> element : info.entrySet()) {
-//                dataList.add(new ValueDataEntry(element.getKey(), element.getValue()));
-//            }
-//            column.data(dataList);
-//            System.out.println("chart set?");
-//            System.out.println(dataVisual1 == null); //not null tested
-//
-//            dataVisual1.setVisibility(View.VISIBLE);
-//            dataVisual1.setChart(cartesian);
-//            cartesian.draw(true);
-//            System.out.println("AnyChartView visibility: " + dataVisual1.getVisibility());
-//            System.out.println("yo");
-//        });
         ArrayList<String> dataKeys = new ArrayList<>();
         ArrayList<Integer> dataValues = new ArrayList<>();
         vm.getData().observe(getViewLifecycleOwner(), info -> {
@@ -192,8 +141,7 @@ public class InputMealFragment extends Fragment {
                 intent.putStringArrayListExtra("dataKeys", dataKeys);
                 intent.putIntegerArrayListExtra("dataValues", dataValues);
                 startActivity(intent);
-            }
-            catch (Exception e) {
+            } catch (Exception e) {
                 e.printStackTrace();
             }
         });
@@ -209,7 +157,8 @@ public class InputMealFragment extends Fragment {
                 requireContext(),
                 (view, year1, monthOfYear, day1) -> {
                     calendar.set(year1, monthOfYear, day1);
-                    SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault());
+                    SimpleDateFormat dateFormat = new SimpleDateFormat(
+                            "dd-MM-yyyy", Locale.getDefault());
                     String formattedDate = dateFormat.format(calendar.getTime());
                     mealDate.setText(formattedDate);
                 },
@@ -221,21 +170,26 @@ public class InputMealFragment extends Fragment {
         datePickerDialog.show();
     }
 
-    private void calorieCalc(TextView heightText, TextView weightText, TextView genderText, TextView goalText) {
+    private void calorieCalc(TextView heightText, TextView weightText,
+                             TextView genderText, TextView goalText) {
         //The equation that we will be using to calculate calorie goal is the Mifflin-St Jeor
         //formula: https://www.calculator.net/calorie-calculator.html
-        //The equation for men is BMR = 10W + 6.25H - 5A + 5 and BMR = 10W + 6.25H - 5A - 161 for women
-        // where W represents weight, H represents height,and A represents age. Since we are not storing age,
+        //The equation for men is BMR = 10W + 6.25H - 5A + 5 and
+        // BMR = 10W + 6.25H - 5A - 161 for women
+        // where W represents weight, H represents height,and A represents age.
+        // Since we are not storing age,
         // we will use the average age in the
         // US in 2022 of 38.9 years. This statistic was reported by the U.S. Census Bureau:
         // https://www.census.gov/newsroom/press-releases/2023/population-estimates-characteristics.html
-        // The number of calories will be for a person at rest to maintain their current weight. Note: Most people will not be at rest the entire day.
+        // The number of calories will be for a person at rest to
+        // maintain their current weight. Note: Most people will not be at rest the entire day.
         // The calculator states than the result is multiplied by a value between 1.2 and 1.95
         // to represent a person's activity level. For this calculation, we will just multiply
         // by 1.5 which falls in the range.
         // Since we are storing calories as ints, we will be rounded the final calculation up to
         // the nearest int.
-        if (heightText.getVisibility() == View.VISIBLE && weightText.getVisibility() == View.VISIBLE && genderText.getVisibility() == View.VISIBLE) {
+        if (heightText.getVisibility() == View.VISIBLE && weightText.getVisibility() == View.VISIBLE
+                && genderText.getVisibility() == View.VISIBLE) {
             String heightTotal = (String) heightText.getText();
             String[] parsedHeight = heightTotal.split(" ");
             double height = Double.parseDouble(parsedHeight[1]);
