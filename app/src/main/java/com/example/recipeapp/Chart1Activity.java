@@ -55,7 +55,7 @@ public class Chart1Activity extends AppCompatActivity {
                 .format("${%Value}{groupsSeparator: }");
 
         cartesian.animation(true);
-        cartesian.title("Top 10 cosmetic products");
+        cartesian.title("Daily Caloric Intake");
 
         //make current month into string
         int currentMonth = calendar.get(Calendar.MONTH) + 1;
@@ -63,7 +63,7 @@ public class Chart1Activity extends AppCompatActivity {
         cartesian.title("Daily Caloric Intake for " + currMonthName);
 
         cartesian.yScale().minimum(0d);
-        cartesian.yAxis(0).labels().format("${%Value}{groupsSeparator: }");
+        cartesian.yAxis(0).labels().format("{%Value}{groupsSeparator: }");
 
         cartesian.tooltip().positionMode(TooltipPositionMode.POINT);
         cartesian.interactivity().hoverMode(HoverMode.BY_X);
