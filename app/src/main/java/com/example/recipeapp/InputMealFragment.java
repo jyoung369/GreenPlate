@@ -126,6 +126,7 @@ public class InputMealFragment extends Fragment {
 
         // Set click listener for Button 1 for data visual 1
         button1.setOnClickListener(v -> {
+            System.out.println("HERE");
             try {
                 Intent intent1 = new Intent(getActivity(), Chart1Activity.class);
                 intent1.putStringArrayListExtra("dataKeys", dataKeys);
