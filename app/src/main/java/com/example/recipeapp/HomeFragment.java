@@ -1,7 +1,5 @@
 package com.example.recipeapp;
 
-import android.app.Person;
-import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -14,8 +12,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-
-import com.example.recipeapp.views.PersonalInformationActivity;
 
 public class HomeFragment extends Fragment {
 
@@ -41,9 +37,9 @@ public class HomeFragment extends Fragment {
         setPersonalInfoButton.setOnClickListener(anotherView -> {
             FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
             FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-            Fragment PersonalInformationFragment = new PersonalInformationFragment();
+            Fragment personalInformationFragment = new PersonalInformationFragment();
             // Replace the current fragment with the new fragment
-            fragmentTransaction.replace(R.id.flFragment, PersonalInformationFragment);
+            fragmentTransaction.replace(R.id.flFragment, personalInformationFragment);
 
             // Optional: Add the transaction to the back stack
             fragmentTransaction.addToBackStack(null);

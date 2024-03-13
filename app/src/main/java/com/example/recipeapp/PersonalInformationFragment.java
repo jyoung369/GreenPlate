@@ -19,7 +19,6 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.example.recipeapp.viewmodels.PersonalInformationViewModel;
-import com.example.recipeapp.views.PersonalInformationActivity;
 import com.example.recipeapp.views.WelcomeActivity;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -37,7 +36,7 @@ public class PersonalInformationFragment extends Fragment {
         return new PersonalInformationFragment();
     }
 
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState){
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         editTextHeight = view.findViewById(R.id.editTextHeight);
         editTextWeight = view.findViewById(R.id.editTextWeight);
@@ -53,7 +52,7 @@ public class PersonalInformationFragment extends Fragment {
 
         buttonSave.setOnClickListener(v -> savePersonalInformation());
 
-        buttonBack.setOnClickListener(v-> {
+        buttonBack.setOnClickListener(v -> {
             Intent intent = new Intent(getContext(), WelcomeActivity.class);
             startActivity(intent);
         });
@@ -92,9 +91,13 @@ public class PersonalInformationFragment extends Fragment {
         }
         viewModel.getIsSaveSuccessful().observe(getViewLifecycleOwner(), isSuccessful -> {
             if (isSuccessful) {
-                Toast.makeText(getContext(), "Information saved successfully", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(),
+                        "Information saved successfully", Toast.LENGTH_SHORT)
+                        .show();
             } else {
-                Toast.makeText(getContext(), "Failed to save information", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(),
+                        "Failed to save information", Toast.LENGTH_SHORT)
+                        .show();
             }
         });
     }

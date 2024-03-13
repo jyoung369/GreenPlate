@@ -131,8 +131,7 @@ public class InputMealFragment extends Fragment {
                 intent1.putStringArrayListExtra("dataKeys", dataKeys);
                 intent1.putIntegerArrayListExtra("dataValues", dataValues);
                 startActivity(intent1);
-            }
-            catch (Exception e) {
+            } catch (Exception e) {
                 e.printStackTrace();
             }
         });
@@ -218,6 +217,6 @@ public class InputMealFragment extends Fragment {
             calories = calories - 161;
         }
         int finalCalories = (int) Math.ceil(calories);
-        return(finalCalories);
+        return (finalCalories);
     }
 }
