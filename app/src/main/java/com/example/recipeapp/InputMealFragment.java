@@ -39,7 +39,7 @@ public class InputMealFragment extends Fragment {
     private EditText editTextHeight;
     private EditText editTextWeight;
     private Spinner spinnerGender;
-    private EditText mealDate;
+    private Button mealDate;
     private EditText calories;
     private EditText mealName;
     private AnyChartView dataVisual1;

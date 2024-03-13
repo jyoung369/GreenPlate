@@ -27,8 +27,6 @@ public class InputMealActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_input_meal);
 
-        System.out.println("running");
-
         Calendar calendar = Calendar.getInstance();
         AnyChartView dataVisual1 = (AnyChartView) findViewById(R.id.data_visual_1);
         dataVisual1.setProgressBar(findViewById(R.id.progress_bar));
@@ -73,31 +71,4 @@ public class InputMealActivity extends AppCompatActivity {
 
         dataVisual1.setChart(cartesian);
     }
-    //    private void inputMeal() {
-    //        String nameOfMeal = mealName.getText().toString();
-    //        String cals = calories.getText().toString();
-    //        if (nameOfMeal.isEmpty()) {
-    //            mealName.setError("Please enter the name of your meal!");
-    //        } else if (cals.isEmpty()) {
-    //            calories.setError("Please enter the amount of calories in your meal!");
-    //        } else {
-    //            Map<String, Object> mealData = new HashMap<>();
-    //            mealData.put("name", nameOfMeal);
-    //            mealData.put("calorie count", cals);
-    //            mealData.put("userid", user.getUid());
-    //
-    //            FirebaseDatabase database = FirebaseDatabase.getInstance("https://recipeapp-1fba1-default-rtdb.firebaseio.com/");
-    //            DatabaseReference mealsref = database.getReference().child("meals");
-    //
-    //            mealsref.child(user.getUid())
-    //                    .setValue(mealData)
-    //                    .addOnSuccessListener(success -> {
-    //                        Toast.makeText(InputMealActivity.this,
-    //                                "Meal inputted successfully!", Toast.LENGTH_SHORT).show();
-    //                    })
-    //                    .addOnFailureListener(failure -> {
-    //                        Toast.makeText(InputMealActivity.this,
-    //                                "Could not input meal", Toast.LENGTH_SHORT).show();
-    //                    });
-    //          }
 }

@@ -2,6 +2,7 @@ package com.example.recipeapp.viewmodels;
 
 import android.content.Context;
 import android.util.Log;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -44,11 +45,15 @@ public class MealViewModel {
     private MutableLiveData<Integer> dailyCount = new MutableLiveData<>();
 
     public void inputMeal(Context context, EditText mealName,
-                          EditText calories, EditText mealDate) {
+                          EditText calories, Button mealDate) {
+        System.out.println("yo");
+        System.out.println(mealName);
+        System.out.println(calories);
+        System.out.println(mealDate);
         String nameOfMeal = mealName.getText().toString();
         String cals = calories.getText().toString();
         String date = mealDate.getText().toString();
-
+        System.out.println(date);
         if (nameOfMeal.isEmpty()) {
             mealName.setError("Please enter the name of your meal!");
         } else if (cals.isEmpty()) {
@@ -56,6 +61,9 @@ public class MealViewModel {
         } else if (date.isEmpty()) {
             mealDate.setError("Please enter when you had your meal!");
         } else {
+            mealName.setError(null);
+            calories.setError(null);
+            mealDate.setError(null);
             Meal myMeal = new Meal(nameOfMeal, cals, date);
             FirebaseDatabase database = FirebaseDatabase
                     .getInstance("https://recipeapp-1fba1-default-rtdb.firebaseio.com/");
