@@ -3,6 +3,7 @@ package com.example.recipeapp;
 import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,6 +18,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import com.anychart.chart.common.dataentry.DataEntry;
+import com.anychart.chart.common.dataentry.ValueDataEntry;
 import com.example.recipeapp.viewmodels.MealViewModel;
 import com.example.recipeapp.viewmodels.PersonalInformationViewModel;
 
@@ -24,8 +27,12 @@ import com.example.recipeapp.viewmodels.PersonalInformationViewModel;
 //imports necessary to use AnyChart
 import com.anychart.AnyChartView;
 
+import java.lang.reflect.Array;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Locale;
 
 
@@ -166,15 +173,24 @@ public class InputMealFragment extends Fragment {
 //            System.out.println("AnyChartView visibility: " + dataVisual1.getVisibility());
 //            System.out.println("yo");
 //        });
+        ArrayList<String> dataKeys = new ArrayList<>();
+        ArrayList<Integer> dataValues = new ArrayList<>();
+        vm.getData().observe(getViewLifecycleOwner(), info -> {
+            for (HashMap.Entry<String, Integer> element : info.entrySet()) {
+                dataKeys.add(element.getKey());
+                dataValues.add(element.getValue());
+            }
+        });
+
+        HashMap<String, Integer> data = new HashMap<>();
+        vm.readMeals(data);
 
         // Set click listener for Button 1 for data visual 1
         button1.setOnClickListener(v -> {
-//            HashMap<String, Integer> data = new HashMap<>();
-//            vm.readMeals(data);
-            System.out.println("Button clicked");
-            System.out.println(getContext());
             try {
                 Intent intent = new Intent(getActivity(), InputMealActivity.class);
+                intent.putStringArrayListExtra("dataKeys", dataKeys);
+                intent.putIntegerArrayListExtra("dataValues", dataValues);
                 startActivity(intent);
             }
             catch (Exception e) {

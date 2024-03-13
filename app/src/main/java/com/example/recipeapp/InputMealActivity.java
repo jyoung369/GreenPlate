@@ -37,17 +37,26 @@ import java.util.Map;
 public class InputMealActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        System.out.println("CREATINGGGGGGGGG");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_input_meal);
+
+        System.out.println("running");
+
         Calendar calendar = Calendar.getInstance();
         AnyChartView dataVisual1 = (AnyChartView) findViewById(R.id.data_visual_1);
         dataVisual1.setProgressBar(findViewById(R.id.progress_bar));
 
-        MealViewModel vm1 = new MealViewModel();
+        ArrayList<String> dataKeys = getIntent().getStringArrayListExtra("dataKeys");
+        ArrayList<Integer> dataValues = getIntent().getIntegerArrayListExtra("dataValues");
+
+        List<DataEntry> dataList = new ArrayList<>();
+
+        for (int i = 0; i < dataKeys.size(); i++) {
+            dataList.add(new ValueDataEntry(dataKeys.get(i), dataValues.get(i)));
+        }
 
         Cartesian cartesian = AnyChart.column();
-        Column column = cartesian.column(new ArrayList<>());
+        Column column = cartesian.column(dataList);
 
         column.tooltip()
                 .titleFormat("{%X}")
@@ -58,6 +67,7 @@ public class InputMealActivity extends AppCompatActivity {
                 .format("${%Value}{groupsSeparator: }");
 
         cartesian.animation(true);
+        cartesian.title("Top 10 cosmetic products");
 
         //make current month into string
         int currentMonth = calendar.get(Calendar.MONTH) + 1;
@@ -74,34 +84,7 @@ public class InputMealActivity extends AppCompatActivity {
         cartesian.xAxis(0).title("Days");
         cartesian.yAxis(0).title("Calories per day");
 
-        vm1.getData().observe(this, info -> {
-            System.out.println("bye");
-            List<DataEntry> dataList = new ArrayList<>();
-
-            for (HashMap.Entry<String, Integer> element : info.entrySet()) {
-                dataList.add(new ValueDataEntry(element.getKey(), element.getValue()));
-            }
-
-            for (DataEntry de : dataList) {
-                for (String key : de.keySet()) {
-                    System.out.println(key);
-                    System.out.println(de.getValue(key));
-                }
-            }
-
-            column.data(dataList);
-            System.out.println("chart set?");
-            System.out.println(dataVisual1 == null); //not null tested
-
-            dataVisual1.setVisibility(View.VISIBLE);
-            dataVisual1.setChart(cartesian);
-            cartesian.draw(true);
-            System.out.println("AnyChartView visibility: " + dataVisual1.getVisibility());
-            System.out.println("yo");
-        });
-
-        HashMap<String, Integer> data = new HashMap<>();
-        vm1.readMeals(data);
+        dataVisual1.setChart(cartesian);
     }
 //    private void inputMeal() {
 //        String nameOfMeal = mealName.getText().toString();
