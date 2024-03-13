@@ -6,33 +6,13 @@ import com.anychart.chart.common.dataentry.DataEntry;
 import com.anychart.chart.common.dataentry.ValueDataEntry;
 import com.anychart.chart.common.listener.Event;
 import com.anychart.chart.common.listener.ListenersInterface;
-import com.anychart.charts.Cartesian;
 import com.anychart.charts.Pie;
-import com.anychart.core.cartesian.series.Column;
 import com.anychart.enums.Align;
-import com.anychart.enums.Anchor;
-import com.anychart.enums.HoverMode;
 import com.anychart.enums.LegendLayout;
-import com.anychart.enums.Position;
-import com.anychart.enums.TooltipPositionMode;
-import com.example.recipeapp.viewmodels.MealViewModel;
-import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 import android.os.Bundle;
-import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
 import android.widget.Toast;
-import com.example.recipeapp.R;
-import com.google.firebase.auth.FirebaseAuth;
-import java.text.DateFormatSymbols;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-
 public class Chart2Activity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,7 +28,9 @@ public class Chart2Activity extends AppCompatActivity {
         pie.setOnClickListener(new ListenersInterface.OnClickListener(new String[]{"x", "value"}) {
             @Override
             public void onClick(Event event) {
-                Toast.makeText(Chart2Activity.this, event.getData().get("x") + ":" + event.getData().get("value"), Toast.LENGTH_SHORT).show();
+                Toast.makeText(Chart2Activity.this,
+                        event.getData().get("x") + ":"
+                                + event.getData().get("value"), Toast.LENGTH_SHORT).show();
             }
         });
 
