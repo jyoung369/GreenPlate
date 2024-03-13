@@ -60,8 +60,6 @@ public class InputMealFragment extends Fragment {
         TextView goalText = view.findViewById(R.id.calorieGoalText);
         TextView dailyCalorieText = view.findViewById(R.id.dailyCalorieText);
 
-        Button exitButton = view.findViewById(R.id.exitApp);
-        exitButton.setOnClickListener(view -> finishAffinity());
 
         //Height Observer
         userVM.getHeight().observe(getViewLifecycleOwner(), height -> {
