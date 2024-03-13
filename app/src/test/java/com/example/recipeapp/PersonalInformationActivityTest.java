@@ -9,13 +9,13 @@ public class PersonalInformationActivityTest {
 
     @Test
     public void validateInputs_withEmptyHeight_returnsFalse() {
-        PersonalInformationViewModel activity = new PersonalInformationViewModel();
+        Util activity = new Util();
         assertFalse(activity.validateHeight(""));
     }
 
     @Test
     public void validateInputs_valid() {
-        PersonalInformationViewModel activity = new PersonalInformationViewModel();
+        Util activity = new Util();
         assertTrue(activity.validateWeight("124"));
     }
 }
