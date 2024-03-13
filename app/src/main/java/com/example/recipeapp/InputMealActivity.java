@@ -14,6 +14,13 @@ import com.anychart.enums.HoverMode;
 import com.anychart.enums.Position;
 import com.anychart.enums.TooltipPositionMode;
 
+import com.example.recipeapp.viewmodels.MealViewModel;
+import com.example.recipeapp.views.WelcomeActivity;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
+import android.content.Intent;
 import android.os.Bundle;
 
 import java.text.DateFormatSymbols;
@@ -27,7 +34,11 @@ public class InputMealActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_input_meal);
 
-        System.out.println("running");
+        Button backButton = findViewById(R.id.backButton);
+        backButton.setOnClickListener(back -> {
+            Intent intent = new Intent(InputMealActivity.this, WelcomeActivity.class);
+            startActivity(intent);
+        });
 
         Calendar calendar = Calendar.getInstance();
         AnyChartView dataVisual1 = (AnyChartView) findViewById(R.id.data_visual_1);
