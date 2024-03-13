@@ -93,6 +93,10 @@ public class MealViewModel {
         calendar = Calendar.getInstance();
         int currentMonth = calendar.get(Calendar.MONTH) + 1;
 
+        //get current day
+        int currentDay = calendar.get(Calendar.DATE);
+        System.out.println(currentDay);
+
         mealsref.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -116,9 +120,7 @@ public class MealViewModel {
                         // Extract day
                         SimpleDateFormat dayFormat = new SimpleDateFormat("dd");
                         String day = dayFormat.format(newDate);
-                        //int intDay = Integer.parseInt(day);
-
-                        //System.out.println(intDay);
+                        int intDay = Integer.parseInt(day);
 
                         assert calories != null;
                         int intCalories = Integer.parseInt(calories);
@@ -130,9 +132,11 @@ public class MealViewModel {
                             } else {
                                 data.put(day, intCalories);
                             }
-                            //currentCals.add(intCalories);
                         }
 
+                        if (intDay == currentDay) {
+                            calorieList.add(intCalories);
+                        }
                     } catch (ParseException e) {
                         throw new RuntimeException(e);
                     }
@@ -171,7 +175,6 @@ public class MealViewModel {
                     }
                 }
                 dailyCount.setValue(calorieCount);
-
             }
 
             @Override
