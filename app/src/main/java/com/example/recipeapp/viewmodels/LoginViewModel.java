@@ -29,4 +29,16 @@ public class LoginViewModel extends ViewModel {
                 .addOnSuccessListener(authResult -> loginSuccess.postValue(true))
                 .addOnFailureListener(e -> loginError.postValue(e.getMessage()));
     }
+
+    public boolean notEmptyEmail (String email) {
+        return !email.isEmpty();
+    }
+
+    public boolean notEmptyPassword (String pass) {
+        return !pass.isEmpty();
+    }
+
+    public boolean validPassLength(String pass) {
+        return !(pass.length() < 6);
+    }
 }
