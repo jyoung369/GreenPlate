@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".RecipeInputFragment">
+
+    <FrameLayout
+        android:id="@+id/container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+
+    <TextView
+        android:id="@+id/tvRecipeNameLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Recipe Name"
+        android:layout_marginTop="16dp"
+        android:layout_marginStart="16dp"/>
+
+    <EditText
+        android:id="@+id/etRecipeName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tvRecipeNameLabel"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp" />
+
+    <TextView
+        android:id="@+id/tvRecipeInstructionsLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Recipe Instructions"
+        android:layout_below="@id/etRecipeName"
+        android:layout_marginTop="16dp"
+        android:layout_marginStart="16dp"/>
+
+    <EditText
+        android:id="@+id/etRecipeInstructions"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:layout_below="@id/tvRecipeInstructionsLabel"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:inputType="textMultiLine"
+        android:gravity="top"/>
+
+    <TextView
+        android:id="@+id/tvCalorieCountLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Calorie Count"
+        android:layout_below="@id/etRecipeInstructions"
+        android:layout_marginTop="16dp"
+        android:layout_marginStart="16dp"/>
+
+    <EditText
+        android:id="@+id/etCalorieCount"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tvCalorieCountLabel"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:inputType="number"/>
+
+    <LinearLayout
+        android:id="@+id/llIngredientsList"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/etCalorieCount"
+        android:layout_marginTop="16dp"
+        android:orientation="vertical">
+
+    </LinearLayout>
+    <Button
+        android:id="@+id/buttonAddIngredient"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Add Ingredient"
+        android:layout_marginTop="16dp"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/etCalorieCount"/>
+
+    <Button
+        android:id="@+id/buttonSave"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/buttonAddIngredient"
+        android:layout_marginTop="16dp"
+        android:layout_centerHorizontal="true"
+        android:text="Save" />
+
+    <Button
+        android:id="@+id/buttonToRecipe"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/buttonSave"
+        android:layout_marginTop="16dp"
+        android:layout_centerHorizontal="true"
+        android:text="Back To Home" />
+</RelativeLayout>
