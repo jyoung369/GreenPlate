@@ -3,22 +3,38 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:backgroundTintMode="screen"
+    android:foregroundTintMode="add"
+    tools:context=".MainActivity">
 
-    <TextView
-        android:id="@+id/RecipeLabel"
-        android:layout_width="294dp"
+    <Button
+        android:id="@+id/AddRecipeButton"
+        android:layout_width="0dp"
         android:layout_height="54dp"
-        android:fontFamily="casual"
-        android:text="Recipe Screen"
+        android:backgroundTint="#8BC34A"
+        android:text="Add Recipe"
         android:textAlignment="center"
-        android:textSize="34sp"
-        android:textStyle="bold"
-        android:typeface="sans"
-        android:visibility="visible"
+        android:textColor="@color/white"
+        android:textSize="30sp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/FilterSpinner"
+        app:layout_constraintHorizontal_chainStyle="packed"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.045" />
+        app:layout_constraintVertical_bias="0.0" />
+
+    <Spinner
+        android:id="@+id/FilterSpinner"
+        android:layout_width="0dp"
+        android:layout_height="45dp"
+        android:background="#CDDC39"
+        android:backgroundTint="#4CAF50"
+        android:foregroundTint="#FFFFFF"
+        android:textAlignment="center"
+        app:layout_constraintBottom_toBottomOf="@+id/AddRecipeButton"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/AddRecipeButton"
+        app:layout_constraintTop_toTopOf="@+id/AddRecipeButton" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
