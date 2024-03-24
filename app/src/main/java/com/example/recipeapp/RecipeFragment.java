@@ -14,6 +14,8 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
 
+import com.example.recipeapp.viewmodels.RecipeViewModel;
+
 public class RecipeFragment extends Fragment {
 
     public RecipeFragment() {
@@ -42,5 +44,9 @@ public class RecipeFragment extends Fragment {
                 e.printStackTrace();
             }
         });
+
+        RecipeViewModel recipeViewModel = new RecipeViewModel();
+        recipeViewModel.readRecipes();
+        System.out.println(recipeViewModel.getRecipeList());
     }
 }
