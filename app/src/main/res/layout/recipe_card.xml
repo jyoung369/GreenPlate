@@ -30,7 +30,8 @@
             android:id="@+id/recipe_ingredients_textview"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Ingredients:" />
+            android:text="Ingredients:"
+            android:textStyle="bold"/>
 
 
         <LinearLayout
@@ -43,10 +44,16 @@
         </LinearLayout>
 
         <TextView
-            android:id="@+id/recipe_instructions_textview"
+            android:id="@+id/recipe_instructions_label"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Instructions" />
+            android:text="Instructions:"
+            android:textStyle="bold"/>
+
+        <TextView
+            android:id="@+id/recipe_instructions_textview"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
 
     </LinearLayout>
 </androidx.cardview.widget.CardView>

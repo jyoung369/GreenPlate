@@ -14,7 +14,7 @@
         android:layout_height="54dp"
         android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
         <Button
@@ -40,14 +40,20 @@
 
     </LinearLayout>
 
-    <LinearLayout
-        android:id="@+id/RecipeListLayout"
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:orientation="vertical"
+        app:layout_constraintTop_toBottomOf="@id/addRecipeLayout"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/addRecipeLayout"/>
+        android:scrollbarSize="20dp">
+
+        <LinearLayout
+            android:id="@+id/RecipeListLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            />
+
+    </ScrollView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

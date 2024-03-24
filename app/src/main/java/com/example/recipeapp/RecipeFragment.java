@@ -1,6 +1,7 @@
 package com.example.recipeapp;
 
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -9,6 +10,9 @@ import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 
 import android.text.Layout;
+import android.text.Spannable;
+import android.text.SpannableString;
+import android.text.style.StyleSpan;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -65,9 +69,13 @@ public class RecipeFragment extends Fragment {
             for (Recipe r : recipeViewModel.getRecipeLiveData().getValue()){
                 View cardView = inflater.inflate(R.layout.recipe_card, null);
                 TextView name = cardView.findViewById(R.id.recipe_name_textview);
-                name.setText("Recipe Name: "+ r.name);
+                SpannableString recipeName = new SpannableString("Recipe Name: " + r.name);
+                recipeName.setSpan(new StyleSpan(Typeface.BOLD), 0, 11, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+                name.setText(recipeName);
                 TextView calories = cardView.findViewById(R.id.recipe_calories_textview);
-                calories.setText("Calories: " + r.calories);
+                SpannableString caloriesLabel = new SpannableString("Calories: " + r.calories);
+                caloriesLabel.setSpan(new StyleSpan(Typeface.BOLD), 0, 9, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+                calories.setText(caloriesLabel);
                 TextView instructions = cardView.findViewById(R.id.recipe_instructions_textview);
                 instructions.setText(r.instructions);
                 LinearLayout ingredientsListLayout = cardView.findViewById(R.id.recipe_ingredients_layout);
