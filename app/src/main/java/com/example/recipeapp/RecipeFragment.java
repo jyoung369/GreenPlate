@@ -77,6 +77,8 @@ public class RecipeFragment extends Fragment {
                     ingredientsListLayout.addView(ingredient);
                 }
                 recipeListLayout.addView(cardView);
+                TextView spacer = new TextView(requireContext());
+                recipeListLayout.addView(spacer);
             }
         });
     }

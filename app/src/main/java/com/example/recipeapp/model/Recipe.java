@@ -7,9 +7,9 @@ public class Recipe {
     public int calories;
     public String instructions;
     public List<String> ingredients;
-    public List<Integer> quantities;
+    public List<Double> quantities;
 
-    public Recipe(String name, int calories, String instructions, List<String> ingredients, List<Integer> quantities){
+    public Recipe(String name, int calories, String instructions, List<String> ingredients, List<Double> quantities){
         this.name = name;
         this.calories = calories;
         this.instructions = instructions;

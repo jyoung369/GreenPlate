@@ -42,12 +42,12 @@ public class RecipeViewModel {
                     //Log.d("FirebaseData","Recipe: " + name + ", Calories: " + calories + ", Instructions: " + instructions);
 
                     List<String> ingredients = new ArrayList<>();
-                    List<Integer> ingredientQuantities = new ArrayList<>();
+                    List<Double> ingredientQuantities = new ArrayList<>();
                     DataSnapshot ingredientsSnapshot = recipeSnapshot.child("ingredients");
 
                     for (DataSnapshot ingredientSnapshot: ingredientsSnapshot.getChildren()){
                         String ingredientName = ingredientSnapshot.child("name").getValue(String.class);
-                        Integer ingredientQuantity = ingredientSnapshot.child("quantity").getValue(Integer.class);
+                        Double ingredientQuantity = ingredientSnapshot.child("quantity").getValue(Double.class);
                         ingredients.add(ingredientName);
                         ingredientQuantities.add(ingredientQuantity);
                     }
