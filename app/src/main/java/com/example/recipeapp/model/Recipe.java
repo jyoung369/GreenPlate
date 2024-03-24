@@ -6,8 +6,8 @@ public class Recipe {
     public String name;
     public int calories;
     public String instructions;
-    List<String> ingredients;
-    List<Integer> quantities;
+    public List<String> ingredients;
+    public List<Integer> quantities;
 
     public Recipe(String name, int calories, String instructions, List<String> ingredients, List<Integer> quantities){
         this.name = name;
@@ -15,6 +15,14 @@ public class Recipe {
         this.instructions = instructions;
         this.ingredients = ingredients;
         this.quantities = quantities;
+    }
+
+    /**
+     * Overridden to provide sanity check
+     * @return debug output
+     */
+    public String toString(){
+        return "Recipe: "+ this.name + " Calories: "+ this.calories + " Instructions: "+ instructions;
     }
 
 }

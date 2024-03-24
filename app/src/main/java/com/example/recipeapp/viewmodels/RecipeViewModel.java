@@ -4,6 +4,7 @@ import android.provider.ContactsContract;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
+import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
 import com.example.recipeapp.model.Recipe;
@@ -29,10 +30,11 @@ public class RecipeViewModel {
         FirebaseDatabase database = FirebaseDatabase
                 .getInstance("https://recipeapp-1fba1-default-rtdb.firebaseio.com/");
         DatabaseReference recipesRef = database.getReference().child("recipes");
+
+        List<Recipe> allRecipes = new ArrayList<>();
         recipesRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                List<Recipe> recipes = new ArrayList<>();
                 for (DataSnapshot recipeSnapshot: snapshot.getChildren()){
                     String name = recipeSnapshot.child("name").getValue(String.class);
                     int calories = recipeSnapshot.child("calories").getValue(Integer.class);
@@ -50,9 +52,9 @@ public class RecipeViewModel {
                         ingredientQuantities.add(ingredientQuantity);
                     }
                     Recipe recipe = new Recipe(name, calories, instructions, ingredients, ingredientQuantities);
-                    recipes.add(recipe);
+                    allRecipes.add(recipe);
                 }
-                recipeList.setValue(recipes);
+                recipeList.setValue(allRecipes);
             }
 
             @Override
@@ -62,8 +64,8 @@ public class RecipeViewModel {
         });
     }
 
-    public List<Recipe> getRecipeList(){
-        return recipeList.getValue();
+    public LiveData<List<Recipe>> getRecipeLiveData(){
+        return recipeList;
     }
 
 }

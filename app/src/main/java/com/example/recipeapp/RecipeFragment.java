@@ -18,8 +18,12 @@ import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import com.anychart.scales.Linear;
 import com.example.recipeapp.model.Recipe;
 import com.example.recipeapp.viewmodels.RecipeViewModel;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class RecipeFragment extends Fragment {
 
@@ -52,13 +56,28 @@ public class RecipeFragment extends Fragment {
 
         RecipeViewModel recipeViewModel = new RecipeViewModel();
         recipeViewModel.readRecipes();
-        System.out.println(recipeViewModel.getRecipeList());
 
-        LinearLayout ingredientsListLayout = view.findViewById(R.id.RecipeListLayout);
+
+        LinearLayout recipeListLayout = view.findViewById(R.id.RecipeListLayout);
         LayoutInflater inflater = LayoutInflater.from(getContext());
-        View cardView = inflater.inflate(R.layout.recipe_card, null);
-        TextView name = cardView.findViewById(R.id.recipe_name_textview);
-        name.setText("recipe.name");
-        ingredientsListLayout.addView(cardView);
+
+        recipeViewModel.getRecipeLiveData().observe(getViewLifecycleOwner(), recipes->{
+            for (Recipe r : recipeViewModel.getRecipeLiveData().getValue()){
+                View cardView = inflater.inflate(R.layout.recipe_card, null);
+                TextView name = cardView.findViewById(R.id.recipe_name_textview);
+                name.setText("Recipe Name: "+ r.name);
+                TextView calories = cardView.findViewById(R.id.recipe_calories_textview);
+                calories.setText("Calories: " + r.calories);
+                TextView instructions = cardView.findViewById(R.id.recipe_instructions_textview);
+                instructions.setText(r.instructions);
+                LinearLayout ingredientsListLayout = cardView.findViewById(R.id.recipe_ingredients_layout);
+                for (int i=0;i<r.ingredients.size();i++){
+                    TextView ingredient = new TextView(requireContext());
+                    ingredient.setText(r.ingredients.get(i) + ": " + r.quantities.get(i));
+                    ingredientsListLayout.addView(ingredient);
+                }
+                recipeListLayout.addView(cardView);
+            }
+        });
     }
 }
