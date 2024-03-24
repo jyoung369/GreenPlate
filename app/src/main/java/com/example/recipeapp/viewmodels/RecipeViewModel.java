@@ -62,8 +62,8 @@ public class RecipeViewModel {
         });
     }
 
-    public MutableLiveData<List<Recipe>> getRecipeList(){
-        return recipeList;
+    public List<Recipe> getRecipeList(){
+        return recipeList.getValue();
     }
 
 }

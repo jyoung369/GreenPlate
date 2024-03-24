@@ -5,15 +5,20 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 
+import android.text.Layout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.Spinner;
+import android.widget.TextView;
 
+import com.example.recipeapp.model.Recipe;
 import com.example.recipeapp.viewmodels.RecipeViewModel;
 
 public class RecipeFragment extends Fragment {
@@ -48,5 +53,12 @@ public class RecipeFragment extends Fragment {
         RecipeViewModel recipeViewModel = new RecipeViewModel();
         recipeViewModel.readRecipes();
         System.out.println(recipeViewModel.getRecipeList());
+
+        LinearLayout ingredientsListLayout = view.findViewById(R.id.RecipeListLayout);
+        LayoutInflater inflater = LayoutInflater.from(getContext());
+        View cardView = inflater.inflate(R.layout.recipe_card, null);
+        TextView name = cardView.findViewById(R.id.recipe_name_textview);
+        name.setText("recipe.name");
+        ingredientsListLayout.addView(cardView);
     }
 }
