@@ -11,6 +11,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
@@ -30,14 +31,15 @@ public class RecipeInputViewModal extends ViewModel {
     public boolean validateCalories(String calories) {
         return !calories.isEmpty();
     }
-    public void saveRecipe(String name, String instr, String calories, Ingredient[] ingredients) {
+    public void saveRecipe(String name, String instr,
+                           String calories, List<Ingredient> ingredients) {
         Map<String, Object> recipeData = new HashMap<>();
         Integer cal = Integer.parseInt(calories);
         recipeData.put("user", user.getUid());
         recipeData.put("name", name);
         recipeData.put("instructions", instr);
         recipeData.put("calories", cal);
-
+        recipeData.put("ingredients", ingredients);
         DatabaseReference db = FirebaseDatabase.getInstance("https://recipeapp-1fba1-default-rtdb.firebaseio.com/")
                 .getReference();
         db.child("recipes")
