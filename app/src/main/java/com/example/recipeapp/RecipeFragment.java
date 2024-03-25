@@ -26,6 +26,8 @@ import com.anychart.scales.Linear;
 import com.example.recipeapp.model.Recipe;
 import com.example.recipeapp.viewmodels.RecipeViewModel;
 
+import org.w3c.dom.Text;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -78,6 +80,7 @@ public class RecipeFragment extends Fragment {
                 calories.setText(caloriesLabel);
                 TextView instructions = cardView.findViewById(R.id.recipe_instructions_textview);
                 instructions.setText(r.instructions);
+                TextView available = cardView.findViewById(R.id.recipe_ingredients_available_textview);
                 LinearLayout ingredientsListLayout = cardView.findViewById(R.id.recipe_ingredients_layout);
                 for (int i=0;i<r.ingredients.size();i++){
                     TextView ingredient = new TextView(requireContext());

@@ -27,12 +27,19 @@
             android:text="Calories" />
 
         <TextView
+            android:id="@+id/recipe_ingredients_available_textview"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Hello"
+            android:textStyle="bold"
+            android:textColor=""/>
+
+        <TextView
             android:id="@+id/recipe_ingredients_textview"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Ingredients:"
             android:textStyle="bold"/>
-
 
         <LinearLayout
             android:id="@+id/recipe_ingredients_layout"
