@@ -30,4 +30,10 @@ public class Recipe {
                 + this.calories + " Instructions: " + instructions;
     }
 
+    public int getCalories() {
+        return this.calories;
+    }
+    public int getIngredientCount() {
+        return this.ingredients.size();
+    }
 }

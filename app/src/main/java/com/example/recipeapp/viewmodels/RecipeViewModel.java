@@ -16,6 +16,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 public class RecipeViewModel {
     private final FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
@@ -53,9 +54,15 @@ public class RecipeViewModel {
                             ingredients, ingredientQuantities);
                     allRecipes.add(recipe);
                 }
+                sortRecipesByCalories(allRecipes);
                 recipeList.setValue(allRecipes);
             }
-
+            private void sortRecipesByCalories(List<Recipe> recipes) {
+                recipes.sort(Comparator.comparingInt(Recipe::getCalories));
+            }
+            private void sortRecipesByIngredients(List<Recipe> recipes) {
+                recipes.sort(Comparator.comparingInt(Recipe::getIngredientCount));
+            }
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
                 Log.e("FirebaseError", "Error reading data from Firebase: " + error.getMessage());
