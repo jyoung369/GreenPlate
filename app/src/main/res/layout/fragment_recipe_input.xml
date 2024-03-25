@@ -11,7 +11,7 @@
         android:layout_height="match_parent"/>
 
     <TextView
-        android:id="@+id/tvRecipeNameLabel"
+        android:id="@+id/recipeNameLabel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Recipe Name"
@@ -22,12 +22,12 @@
         android:id="@+id/etRecipeName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/tvRecipeNameLabel"
+        android:layout_below="@id/recipeNameLabel"
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp" />
 
     <TextView
-        android:id="@+id/tvRecipeInstructionsLabel"
+        android:id="@+id/recipeInstructionsLabel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Recipe Instructions"
@@ -39,7 +39,7 @@
         android:id="@+id/etRecipeInstructions"
         android:layout_width="match_parent"
         android:layout_height="100dp"
-        android:layout_below="@id/tvRecipeInstructionsLabel"
+        android:layout_below="@id/recipeInstructionsLabel"
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
         android:inputType="textMultiLine"

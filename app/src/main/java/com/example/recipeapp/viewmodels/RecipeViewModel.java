@@ -1,6 +1,5 @@
 package com.example.recipeapp.viewmodels;
 
-import android.provider.ContactsContract;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
@@ -17,16 +16,13 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-
 public class RecipeViewModel {
     private final FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
     private MutableLiveData<List<Recipe>> recipeList = new MutableLiveData<>(new ArrayList<>());
 
-    public void readRecipes(){
+    public void readRecipes() {
         FirebaseDatabase database = FirebaseDatabase
                 .getInstance("https://recipeapp-1fba1-default-rtdb.firebaseio.com/");
         DatabaseReference recipesRef = database.getReference().child("recipes");
@@ -35,23 +31,26 @@ public class RecipeViewModel {
         recipesRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                for (DataSnapshot recipeSnapshot: snapshot.getChildren()){
+                for (DataSnapshot recipeSnapshot: snapshot.getChildren()) {
                     String name = recipeSnapshot.child("name").getValue(String.class);
-                    int calories = recipeSnapshot.child("calories").getValue(Integer.class);
-                    String instructions = recipeSnapshot.child("instructions").getValue(String.class);
-                    //Log.d("FirebaseData","Recipe: " + name + ", Calories: " + calories + ", Instructions: " + instructions);
-
+                    int calories = recipeSnapshot.child("calories")
+                            .getValue(Integer.class);
+                    String instructions = recipeSnapshot.child("instructions")
+                            .getValue(String.class);
                     List<String> ingredients = new ArrayList<>();
                     List<Double> ingredientQuantities = new ArrayList<>();
                     DataSnapshot ingredientsSnapshot = recipeSnapshot.child("ingredients");
 
-                    for (DataSnapshot ingredientSnapshot: ingredientsSnapshot.getChildren()){
-                        String ingredientName = ingredientSnapshot.child("name").getValue(String.class);
-                        Double ingredientQuantity = ingredientSnapshot.child("quantity").getValue(Double.class);
+                    for (DataSnapshot ingredientSnapshot: ingredientsSnapshot.getChildren()) {
+                        String ingredientName = ingredientSnapshot.child("name")
+                                .getValue(String.class);
+                        Double ingredientQuantity = ingredientSnapshot.child("quantity")
+                                .getValue(Double.class);
                         ingredients.add(ingredientName);
                         ingredientQuantities.add(ingredientQuantity);
                     }
-                    Recipe recipe = new Recipe(name, calories, instructions, ingredients, ingredientQuantities);
+                    Recipe recipe = new Recipe(name, calories, instructions,
+                            ingredients, ingredientQuantities);
                     allRecipes.add(recipe);
                 }
                 recipeList.setValue(allRecipes);
@@ -64,7 +63,7 @@ public class RecipeViewModel {
         });
     }
 
-    public LiveData<List<Recipe>> getRecipeLiveData(){
+    public LiveData<List<Recipe>> getRecipeLiveData() {
         return recipeList;
     }
 
