@@ -82,10 +82,18 @@ public class RecipeFragment extends Fragment {
                 instructions.setText(r.instructions);
                 TextView available = cardView.findViewById(R.id.recipe_ingredients_available_textview);
                 LinearLayout ingredientsListLayout = cardView.findViewById(R.id.recipe_ingredients_layout);
+                boolean isAvailable = false;
                 for (int i=0;i<r.ingredients.size();i++){
                     TextView ingredient = new TextView(requireContext());
                     ingredient.setText(r.ingredients.get(i) + ": " + r.quantities.get(i));
                     ingredientsListLayout.addView(ingredient);
+                }
+                if (isAvailable) {
+                    available.setText("Sufficient Ingredients");
+                    available.setTextColor(Integer.parseInt("#00FF00"));
+                } else {
+                    available.setText("Insufficient Ingredients");
+                    available.setTextColor(Integer.parseInt("#FF0000"));
                 }
                 recipeListLayout.addView(cardView);
                 TextView spacer = new TextView(requireContext());
