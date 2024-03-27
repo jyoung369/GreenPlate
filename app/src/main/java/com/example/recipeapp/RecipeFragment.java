@@ -24,7 +24,6 @@ import android.widget.TextView;
 import com.example.recipeapp.model.Recipe;
 import com.example.recipeapp.viewmodels.RecipeViewModel;
 
-
 public class RecipeFragment extends Fragment {
 
     public RecipeFragment() {
@@ -97,13 +96,23 @@ public class RecipeFragment extends Fragment {
                 calories.setText(caloriesLabel);
                 TextView instructions = cardView.findViewById(R.id.recipe_instructions_textview);
                 instructions.setText(r.getInstructions());
+                TextView available = cardView.findViewById(
+                        R.id.recipe_ingredients_available_textview);
                 LinearLayout ingredientsListLayout = cardView.findViewById(
                         R.id.recipe_ingredients_layout);
+                boolean isAvailable = false;
                 for (int i = 0; i < r.getIngredients().size(); i++) {
                     TextView ingredient = new TextView(requireContext());
                     ingredient.setText(r.getIngredients().get(i) + ": "
-                            + r.getQuantities().get(i) + "g");
+                            + r.getQuantities().get(i));
                     ingredientsListLayout.addView(ingredient);
+                }
+                if (isAvailable) {
+                    available.setText("Sufficient Ingredients");
+                    available.setTextColor(Integer.parseInt("#00FF00"));
+                } else {
+                    available.setText("Insufficient Ingredients");
+                    available.setTextColor(Integer.parseInt("#FF0000"));
                 }
                 recipeListLayout.addView(cardView);
                 TextView spacer = new TextView(requireContext());
