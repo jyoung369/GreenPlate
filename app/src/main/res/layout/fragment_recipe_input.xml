@@ -11,7 +11,7 @@
         android:layout_height="match_parent"/>
 
     <TextView
-        android:id="@+id/tvRecipeNameLabel"
+        android:id="@+id/recipeNameLabel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Recipe Name"
@@ -22,12 +22,12 @@
         android:id="@+id/etRecipeName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/tvRecipeNameLabel"
+        android:layout_below="@id/recipeNameLabel"
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp" />
 
     <TextView
-        android:id="@+id/tvRecipeInstructionsLabel"
+        android:id="@+id/recipeInstructionsLabel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Recipe Instructions"
@@ -39,7 +39,7 @@
         android:id="@+id/etRecipeInstructions"
         android:layout_width="match_parent"
         android:layout_height="100dp"
-        android:layout_below="@id/tvRecipeInstructionsLabel"
+        android:layout_below="@id/recipeInstructionsLabel"
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
         android:inputType="textMultiLine"
@@ -62,24 +62,44 @@
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
         android:inputType="number"/>
-
     <LinearLayout
-        android:id="@+id/llIngredientsList"
+        android:id="@+id/ingredientInputContainer"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/etCalorieCount"
         android:layout_marginTop="16dp"
-        android:orientation="vertical">
+        android:orientation="horizontal">
+
+        <EditText
+            android:id="@+id/etIngredientName"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:hint="Ingredient Name"
+            android:layout_margin="10dp"/>
+
+        <EditText
+            android:id="@+id/etIngredientAmount"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_margin="10dp"
+            android:hint="Amount (grams)"
+            android:inputType="number"/>
 
     </LinearLayout>
+
     <Button
         android:id="@+id/buttonAddIngredient"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Add Ingredient"
-        android:layout_marginTop="16dp"
+        android:layout_below="@id/ingredientInputContainer"
         android:layout_centerHorizontal="true"
-        android:layout_below="@id/etCalorieCount"/>
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="16dp"
+        android:text="Add Ingredient (0 added)" />
 
     <Button
         android:id="@+id/buttonSave"
