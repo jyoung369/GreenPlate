@@ -33,6 +33,13 @@
             android:text="Ingredients:"
             android:textStyle="bold"/>
 
+        <TextView
+            android:id="@+id/recipe_ingredients_available_textview"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Insufficient Ingredients"
+            android:textStyle="bold"
+            android:textColor="#FF0000"/>
 
         <LinearLayout
             android:id="@+id/recipe_ingredients_layout"

@@ -26,6 +26,8 @@ import com.anychart.scales.Linear;
 import com.example.recipeapp.model.Recipe;
 import com.example.recipeapp.viewmodels.RecipeViewModel;
 
+import org.w3c.dom.Text;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -78,11 +80,20 @@ public class RecipeFragment extends Fragment {
                 calories.setText(caloriesLabel);
                 TextView instructions = cardView.findViewById(R.id.recipe_instructions_textview);
                 instructions.setText(r.instructions);
+                TextView available = cardView.findViewById(R.id.recipe_ingredients_available_textview);
                 LinearLayout ingredientsListLayout = cardView.findViewById(R.id.recipe_ingredients_layout);
+                boolean isAvailable = false;
                 for (int i=0;i<r.ingredients.size();i++){
                     TextView ingredient = new TextView(requireContext());
                     ingredient.setText(r.ingredients.get(i) + ": " + r.quantities.get(i));
                     ingredientsListLayout.addView(ingredient);
+                }
+                if (isAvailable) {
+                    available.setText("Sufficient Ingredients");
+                    available.setTextColor(Integer.parseInt("#00FF00"));
+                } else {
+                    available.setText("Insufficient Ingredients");
+                    available.setTextColor(Integer.parseInt("#FF0000"));
                 }
                 recipeListLayout.addView(cardView);
                 TextView spacer = new TextView(requireContext());
