@@ -6,6 +6,7 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
+import com.example.recipeapp.FilterContext;
 import com.example.recipeapp.model.Recipe;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -16,19 +17,16 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.List;
 public class RecipeViewModel {
     private final FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-
     private MutableLiveData<List<Recipe>> recipeList = new MutableLiveData<>(new ArrayList<>());
+    private List<Recipe> allRecipes = new ArrayList<>();
 
-    public void readRecipes() {
+    public void readRecipes(FilterContext filterContext) {
         FirebaseDatabase database = FirebaseDatabase
                 .getInstance("https://recipeapp-1fba1-default-rtdb.firebaseio.com/");
         DatabaseReference recipesRef = database.getReference().child("recipes");
-
-        List<Recipe> allRecipes = new ArrayList<>();
         recipesRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -41,7 +39,6 @@ public class RecipeViewModel {
                     List<String> ingredients = new ArrayList<>();
                     List<Double> ingredientQuantities = new ArrayList<>();
                     DataSnapshot ingredientsSnapshot = recipeSnapshot.child("ingredients");
-
                     for (DataSnapshot ingredientSnapshot: ingredientsSnapshot.getChildren()) {
                         String ingredientName = ingredientSnapshot.child("name")
                                 .getValue(String.class);
@@ -54,14 +51,8 @@ public class RecipeViewModel {
                             ingredients, ingredientQuantities);
                     allRecipes.add(recipe);
                 }
-                sortRecipesByCalories(allRecipes);
+                filterContext.filterRecipes(allRecipes);
                 recipeList.setValue(allRecipes);
-            }
-            private void sortRecipesByCalories(List<Recipe> recipes) {
-                recipes.sort(Comparator.comparingInt(Recipe::getCalories));
-            }
-            private void sortRecipesByIngredients(List<Recipe> recipes) {
-                recipes.sort(Comparator.comparingInt(Recipe::getIngredientCount));
             }
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
@@ -73,5 +64,10 @@ public class RecipeViewModel {
     public LiveData<List<Recipe>> getRecipeLiveData() {
         return recipeList;
     }
-
+    public void filterAndUpdateRecipes(FilterContext filterContext) {
+        if (filterContext != null && allRecipes.size() != 0) {
+            List<Recipe> filteredRecipes = filterContext.filterRecipes(new ArrayList<>(allRecipes));
+            recipeList.setValue(filteredRecipes);
+        }
+    }
 }

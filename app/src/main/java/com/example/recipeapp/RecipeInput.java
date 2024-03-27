@@ -8,7 +8,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.example.recipeapp.model.Ingredient;
@@ -26,7 +25,7 @@ public class RecipeInput extends AppCompatActivity {
     private EditText ingredientInput;
     private EditText ingredientQuantityInput;
     private Button addIngredientButton;
-    List<Ingredient> l = new ArrayList<>();
+    private List<Ingredient> l = new ArrayList<>();
 
     private RecipeInputViewModal viewModel;
     @Override
@@ -55,7 +54,8 @@ public class RecipeInput extends AppCompatActivity {
             if (Boolean.TRUE.equals(isSuccess)) {
                 Toast.makeText(this, "Recipe saved successfully.", Toast.LENGTH_SHORT).show();
             } else if (Boolean.FALSE.equals(isSuccess)) {
-                Toast.makeText(this, "Failed to save recipe. Please try again.", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "Failed to save recipe. Please try again.",
+                        Toast.LENGTH_SHORT).show();
             }
         });
         addIngredientButton = findViewById(R.id.buttonAddIngredient);
@@ -66,7 +66,7 @@ public class RecipeInput extends AppCompatActivity {
     private void addIngredientEditText() {
         String ingredientName = ingredientInput.getText().toString().trim();
         String ingredientQuantity = ingredientQuantityInput.getText().toString().trim();
-        if(ingredientName.isEmpty() || ingredientQuantity.isEmpty()) {
+        if (ingredientName.isEmpty() || ingredientQuantity.isEmpty()) {
             if (ingredientName.isEmpty()) {
                 ingredientInput.setError("Please enter an ingredient for this recipe");
                 ingredientInput.requestFocus();

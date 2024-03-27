@@ -13,7 +13,6 @@ import com.google.firebase.database.FirebaseDatabase;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 
 public class RecipeInputViewModal extends ViewModel {
     private final FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
