@@ -2,18 +2,35 @@ package com.example.recipeapp.model;
 
 public class Ingredient {
     private String name;
-    private Double quantity;
-    public Ingredient(String name, Double quantity) {
+    private Integer quantity;
+    private int caloriesPerServing;
+
+    private String expirationDate;
+
+    public Ingredient(String name, Integer quantity, int caloriesPerServing, String expirationDate) {
         this.name = name;
         this.quantity = quantity;
+        this.caloriesPerServing = caloriesPerServing;
+        if (expirationDate != null) {
+            this.expirationDate = expirationDate;
+        } else {
+            this.expirationDate = "N/A";
+        }
     }
+
     public String getName() {
         return name;
     }
-    public Double getQuantity() {
+
+    public Integer getQuantity() {
         return quantity;
     }
-    public void setQuantity(Double quantity) {
-        this.quantity = quantity;
+
+    public int getCaloriesPerServing() {
+        return caloriesPerServing;
+    }
+
+    public String getExpirationDate() {
+        return expirationDate;
     }
 }

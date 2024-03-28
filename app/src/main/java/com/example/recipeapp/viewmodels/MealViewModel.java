@@ -54,9 +54,9 @@ public class MealViewModel {
 
     public void inputMeal(Context context, EditText mealName,
                           EditText calories, Button mealDate) {
-        System.out.println(mealName);
-        System.out.println(calories);
-        System.out.println(mealDate);
+        //System.out.println(mealName);
+        //System.out.println(calories);
+        //System.out.println(mealDate);
         String nameOfMeal = mealName.getText().toString();
         String cals = calories.getText().toString();
         String date = mealDate.getText().toString();
@@ -106,7 +106,6 @@ public class MealViewModel {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
-                    //String mealId = dataSnapshot.getKey();
                     String mealName = dataSnapshot.child("mealName").getValue(String.class);
                     String calories = dataSnapshot.child("calories").getValue(String.class);
                     String date = dataSnapshot.child("date").getValue(String.class);
