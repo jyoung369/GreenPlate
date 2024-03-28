@@ -34,5 +34,4 @@ public class RecipeInputFragment extends Fragment {
                              @Nullable Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_recipe_input, container, false);
     }
-
 }
