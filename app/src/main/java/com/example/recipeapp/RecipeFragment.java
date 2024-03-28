@@ -101,7 +101,7 @@ public class RecipeFragment extends Fragment {
                 for (int i = 0; i < r.getIngredients().size(); i++) {
                     TextView ingredient = new TextView(requireContext());
                     ingredient.setText(r.getIngredients().get(i) + ": "
-                            + r.getQuantities().get(i));
+                            + r.getQuantities().get(i) + "g");
                     ingredientsListLayout.addView(ingredient);
                 }
                 recipeListLayout.addView(cardView);

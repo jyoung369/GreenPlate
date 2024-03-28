@@ -9,10 +9,10 @@ public class Recipe {
     private int calories;
     private String instructions;
     private List<String> ingredients;
-    private List<Double> quantities;
+    private List<Integer> quantities;
 
     public Recipe(String name, int calories, String instructions,
-                  List<String> ingredients, List<Double> quantities) {
+                  List<String> ingredients, List<Integer> quantities) {
         this.name = name;
         this.calories = calories;
         this.instructions = instructions;
@@ -40,7 +40,7 @@ public class Recipe {
     public List<String> getIngredients() {
         return ingredients;
     }
-    public List<Double> getQuantities() {
+    public List<Integer> getQuantities() {
         return quantities;
     }
 }

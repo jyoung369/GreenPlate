@@ -76,7 +76,7 @@ public class RecipeInput extends AppCompatActivity {
                 ingredientQuantityInput.requestFocus();
             }
         } else {
-            Double quantity = Double.parseDouble(ingredientQuantity);
+            Integer quantity = Integer.parseInt(ingredientQuantity);
             Ingredient ing = new Ingredient(ingredientName, quantity);
             l.add(ing);
             addIngredientButton.setText("Add Ingredient (" + l.size() + " added)");
