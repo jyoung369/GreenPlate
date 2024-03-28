@@ -19,6 +19,7 @@ public class IngredientFragment extends Fragment {
     private EditText ingredientName;
     private EditText ingredientQuantity;
     private EditText caloriesPerServing;
+    private Button expirationDate;
 
     public IngredientFragment() {
         // Required empty public constructor
@@ -39,11 +40,14 @@ public class IngredientFragment extends Fragment {
         ingredientName = view.findViewById(R.id.ingredientName);
         ingredientQuantity = view.findViewById(R.id.ingredientQuantity);
         caloriesPerServing = view.findViewById(R.id.caloriesPerServing);
+        expirationDate = view.findViewById(R.id.expirationDate);
 
         PantryViewModel vm = new PantryViewModel();
 
+        expirationDate.setOnClickListener(v -> vm.showDatePickerDialog(requireContext(), expirationDate));
+
         Button ingInput = view.findViewById(R.id.inputIngButton);
-        ingInput.setOnClickListener(v -> vm.inputIngredient(requireContext(), ingredientName, ingredientQuantity, caloriesPerServing));
+        ingInput.setOnClickListener(v -> vm.inputIngredient(requireContext(), ingredientName, ingredientQuantity, caloriesPerServing, expirationDate));
 
         super.onViewCreated(view, savedInstanceState);
         super.onCreate(savedInstanceState);

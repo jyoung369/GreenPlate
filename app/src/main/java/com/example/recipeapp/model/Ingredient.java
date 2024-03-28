@@ -5,10 +5,17 @@ public class Ingredient {
     private int quantity;
     private int caloriesPerServing;
 
-    public Ingredient(String name, int quantity, int caloriesPerServing) {
+    private String expirationDate;
+
+    public Ingredient(String name, int quantity, int caloriesPerServing, String expirationDate) {
         this.name = name;
         this.quantity = quantity;
         this.caloriesPerServing = caloriesPerServing;
+        if (expirationDate != null) {
+            this.expirationDate = expirationDate;
+        } else {
+            this.expirationDate = "N/A";
+        }
     }
 
     public String getName() {
@@ -21,5 +28,9 @@ public class Ingredient {
 
     public int getCaloriesPerServing() {
         return caloriesPerServing;
+    }
+
+    public String getExpirationDate() {
+        return expirationDate;
     }
 }

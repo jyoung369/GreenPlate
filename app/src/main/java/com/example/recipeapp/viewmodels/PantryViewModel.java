@@ -1,5 +1,8 @@
 package com.example.recipeapp.viewmodels;
 
+import static androidx.core.content.ContentProviderCompat.requireContext;
+
+import android.app.DatePickerDialog;
 import android.content.Context;
 import android.widget.Button;
 import android.widget.EditText;
@@ -15,30 +18,37 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
+import java.util.Locale;
 
 public class PantryViewModel {
     private final FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-
+    private Calendar calendar;
     public void inputIngredient(Context context, EditText ingredientName,
-                          EditText quantity, EditText caloriesPerServing) {
+                          EditText quantity, EditText caloriesPerServing, Button expirationDate) {
         String ingredient_name = ingredientName.getText().toString();
         String strIngredient_quantity = quantity.getText().toString();
         String strIngredient_calories = caloriesPerServing.getText().toString();
+        String expDate = expirationDate.getText().toString();
         int ingredient_quantity = Integer.parseInt(quantity.getText().toString());
         int ingredient_calories = Integer.parseInt(caloriesPerServing.getText().toString());
         if (ingredient_name.isEmpty()) {
             ingredientName.setError("Please enter the name of your ingredient!");
         } else if (strIngredient_quantity.isEmpty()) {
             quantity.setError("Please enter the quantity of your ingredient!");
+        } else if (ingredient_quantity <= 0) {
+            quantity.setError("Please enter a valid quantity!");
         } else if (strIngredient_calories.isEmpty()) {
             caloriesPerServing.setError("Please enter the calories per serving for this ingredient!");
         } else {
             ingredientName.setError(null);
             quantity.setError(null);
             caloriesPerServing.setError(null);
-            Ingredient newIngredient = new Ingredient(ingredient_name, ingredient_quantity, ingredient_calories);
+            expirationDate.setError(null);
+            Ingredient newIngredient = new Ingredient(ingredient_name, ingredient_quantity, ingredient_calories, expDate);
             FirebaseDatabase database = FirebaseDatabase
                     .getInstance("https://recipeapp-1fba1-default-rtdb.firebaseio.com/");
             DatabaseReference pantryDB = database.getReference().child("pantry/"
@@ -54,6 +64,29 @@ public class PantryViewModel {
                                 "Could not input ingredient", Toast.LENGTH_SHORT).show();
                     });
         }
+    }
+
+    public void showDatePickerDialog(Context context, Button expDate) {
+        calendar = Calendar.getInstance();
+        int year = calendar.get(Calendar.YEAR);
+        int month = calendar.get(Calendar.MONTH);
+        int day = calendar.get(Calendar.DAY_OF_MONTH);
+        System.out.println("mello");
+        DatePickerDialog datePickerDialog = new DatePickerDialog(
+                context,
+                (view, year1, monthOfYear, day1) -> {
+                    calendar.set(year1, monthOfYear, day1);
+                    SimpleDateFormat dateFormat = new SimpleDateFormat(
+                            "dd-MM-yyyy", Locale.getDefault());
+                    String formattedDate = dateFormat.format(calendar.getTime());
+                    expDate.setText(formattedDate);
+                },
+                year,
+                month,
+                day
+        );
+        System.out.println("hello");
+        datePickerDialog.show();
     }
 
 }

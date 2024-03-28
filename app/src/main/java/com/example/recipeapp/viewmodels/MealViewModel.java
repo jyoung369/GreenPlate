@@ -106,7 +106,6 @@ public class MealViewModel {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
-                    //String mealId = dataSnapshot.getKey();
                     String mealName = dataSnapshot.child("mealName").getValue(String.class);
                     String calories = dataSnapshot.child("calories").getValue(String.class);
                     String date = dataSnapshot.child("date").getValue(String.class);
