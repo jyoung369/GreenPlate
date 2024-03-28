@@ -54,9 +54,6 @@ public class MealViewModel {
 
     public void inputMeal(Context context, EditText mealName,
                           EditText calories, Button mealDate) {
-        //System.out.println(mealName);
-        //System.out.println(calories);
-        //System.out.println(mealDate);
         String nameOfMeal = mealName.getText().toString();
         String cals = calories.getText().toString();
         String date = mealDate.getText().toString();

@@ -1,21 +1,18 @@
 package com.example.recipeapp;
-
 import android.os.Bundle;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-
 import com.example.recipeapp.viewmodels.PantryViewModel;
+import java.util.ArrayList;
+import java.util.HashMap;
 
 public class IngredientFragment extends Fragment {
-
     private EditText ingredientName;
     private EditText ingredientQuantity;
     private EditText caloriesPerServing;
@@ -24,10 +21,6 @@ public class IngredientFragment extends Fragment {
     public IngredientFragment() {
         // Required empty public constructor
     }
-
-/*    public IngredientFragment newInstance() {
-        return new IngredientFragment();
-    }*/
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -46,11 +39,31 @@ public class IngredientFragment extends Fragment {
 
         expirationDate.setOnClickListener(v -> vm.showDatePickerDialog(requireContext(), expirationDate));
 
+        ArrayList<String> ingData = new ArrayList<>();
+        vm.getData().observe(getViewLifecycleOwner(), info -> {
+            for (String name : info) {
+                ingData.add(name);
+            }
+        });
+
+        ArrayList<String> ingredientList = new ArrayList<>();
+        vm.readIngredients(ingredientList);
+
         Button ingInput = view.findViewById(R.id.inputIngButton);
-        ingInput.setOnClickListener(v -> vm.inputIngredient(requireContext(), ingredientName, ingredientQuantity, caloriesPerServing, expirationDate));
+        ingInput.setOnClickListener(v -> {
+            String ingredient_name = ingredientName.getText().toString();
+            int ingredient_quantity = Integer.parseInt(ingredientQuantity.getText().toString());
+            if (!ingData.contains(ingredient_name)) {
+                vm.inputIngredient(requireContext(), ingredientName, ingredientQuantity, caloriesPerServing, expirationDate);
+            } else if (ingredient_quantity <= 0) {
+                ingredientQuantity.setError("Please enter a valid quantity!");
+                ingredientName.setError("Cannot accept duplicate ingredients!");
+            } else {
+                ingredientName.setError("Cannot accept duplicate ingredients!");
+            }
+        });
 
         super.onViewCreated(view, savedInstanceState);
         super.onCreate(savedInstanceState);
     }
-
 }
