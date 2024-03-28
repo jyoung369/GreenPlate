@@ -1,34 +1,42 @@
 package com.example.recipeapp.viewmodels;
-
 import static androidx.core.content.ContentProviderCompat.requireContext;
-
 import android.app.DatePickerDialog;
 import android.content.Context;
+import android.util.Log;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
-
+import androidx.annotation.NonNull;
+import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
-
 import com.example.recipeapp.model.Ingredient;
 import com.example.recipeapp.model.Meal;
 import com.example.recipeapp.model.Recipe;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-
+import com.google.firebase.database.ValueEventListener;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 
 public class PantryViewModel {
     private final FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
     private Calendar calendar;
+    private MutableLiveData<ArrayList<String>> ingList = new MutableLiveData<>(new ArrayList<>());
+    public LiveData<ArrayList<String>> getData() {
+        return ingList;
+    }
     public void inputIngredient(Context context, EditText ingredientName,
-                          EditText quantity, EditText caloriesPerServing, Button expirationDate) {
+                                EditText quantity, EditText caloriesPerServing, Button expirationDate) {
         String ingredient_name = ingredientName.getText().toString();
         String strIngredient_quantity = quantity.getText().toString();
         String strIngredient_calories = caloriesPerServing.getText().toString();
@@ -66,6 +74,31 @@ public class PantryViewModel {
         }
     }
 
+    public void readIngredients(ArrayList<String> ingredientList) {
+        FirebaseDatabase ingDB = FirebaseDatabase
+                .getInstance("https://recipeapp-1fba1-default-rtdb.firebaseio.com/");
+        DatabaseReference pantryDB = ingDB.getReference().child("pantry/"
+                + user.getUid());
+        pantryDB.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+                    String ingredientName = dataSnapshot.child("name").getValue(String.class);
+                    Integer ingredientQuantity = dataSnapshot.child("quantity").getValue(Integer.class);
+                    if (ingredientQuantity > 0) {
+                        ingredientList.add(ingredientName);
+                    }
+                    Log.d("FirebaseData",
+                            "Ingredient Name: " + ingredientName + ", Quantity: " + ingredientQuantity);
+                }
+                ingList.setValue(ingredientList);
+            }
+            public void onCancelled(@NonNull DatabaseError error) {
+                Log.e("FirebaseError", "Error reading data from Firebase: " + error.getMessage());
+            }
+        });
+    }
+
     public void showDatePickerDialog(Context context, Button expDate) {
         calendar = Calendar.getInstance();
         int year = calendar.get(Calendar.YEAR);
@@ -88,5 +121,4 @@ public class PantryViewModel {
         System.out.println("hello");
         datePickerDialog.show();
     }
-
 }
