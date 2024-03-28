@@ -37,13 +37,13 @@ public class RecipeViewModel {
                     String instructions = recipeSnapshot.child("instructions")
                             .getValue(String.class);
                     List<String> ingredients = new ArrayList<>();
-                    List<Double> ingredientQuantities = new ArrayList<>();
+                    List<Integer> ingredientQuantities = new ArrayList<>();
                     DataSnapshot ingredientsSnapshot = recipeSnapshot.child("ingredients");
                     for (DataSnapshot ingredientSnapshot: ingredientsSnapshot.getChildren()) {
                         String ingredientName = ingredientSnapshot.child("name")
                                 .getValue(String.class);
-                        Double ingredientQuantity = ingredientSnapshot.child("quantity")
-                                .getValue(Double.class);
+                        Integer ingredientQuantity = ingredientSnapshot.child("quantity")
+                                .getValue(Integer.class);
                         ingredients.add(ingredientName);
                         ingredientQuantities.add(ingredientQuantity);
                     }
