@@ -47,7 +47,12 @@ public class RecipeFragment extends Fragment {
                 R.array.filter_options_array, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         filterSpinner.setAdapter(adapter);
+
+        //Recipe View Model
         RecipeViewModel recipeViewModel = new RecipeViewModel();
+
+        //Pantry View Model
+        PantryViewModel pantryViewModel = new PantryViewModel();
         FilterContext filterContext = new FilterContext(new NoFilter());
 
         filterSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -102,6 +107,32 @@ public class RecipeFragment extends Fragment {
                 calories.setText(caloriesLabel);
                 TextView instructions = cardView.findViewById(R.id.recipe_instructions_textview);
                 instructions.setText(r.getInstructions());
+
+                //Code to calculate and set whether sufficient ingredients
+                TextView available = cardView.findViewById(R.id.recipe_ingredients_available_textview);
+                HashMap<String, Integer> pantryItems = pantryViewModel.getIngQuantity().getValue();
+                Boolean sufficient = true;
+                for (int i = 0; i < r.getIngredients().size(); i++) {
+                    String ing = r.getIngredients().get(i);
+                    if (!(pantryItems.containsKey(ing))) {
+                        sufficient = false;
+                        break;
+                    } else {
+                        int qty = pantryItems.get(r.getIngredients().get(i));
+                        if (qty < r.getQuantities().get(i)) {
+                            sufficient = false;
+                            break;
+                        }
+                    }
+                }
+                if (sufficient == true) {
+                    available.setText("Sufficient Ingredients");
+                    available.setTextColor(Color.GREEN);
+                } else {
+                    available.setText("Insufficient Ingredients");
+                    available.setTextColor(Color.RED);
+                }
+
                 LinearLayout ingredientsListLayout = cardView.findViewById(
                         R.id.recipe_ingredients_layout);
 
@@ -118,8 +149,7 @@ public class RecipeFragment extends Fragment {
         });
 
         // Code to watch Pantry View Model and recalculate whether there are sufficient ingredients when a change is observed.
-        PantryViewModel pantry = new PantryViewModel();
-        pantry.getIngQuantity().observe(getViewLifecycleOwner(), pantryItems -> {
+        pantryViewModel.getIngQuantity().observe(getViewLifecycleOwner(), pantryItems -> {
             int index = 0;
             for (Recipe r: recipeViewModel.getRecipeLiveData().getValue()) {
                 View currView = recipeListLayout.getChildAt(index);
@@ -149,6 +179,6 @@ public class RecipeFragment extends Fragment {
             }
         });
 
-        pantry.readIngredientQuantities();
+        pantryViewModel.readIngredientQuantities();
     }
 }
