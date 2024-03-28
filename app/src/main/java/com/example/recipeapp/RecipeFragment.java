@@ -1,6 +1,7 @@
 package com.example.recipeapp;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
 
@@ -22,7 +23,11 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.example.recipeapp.model.Recipe;
+import com.example.recipeapp.viewmodels.PantryViewModel;
 import com.example.recipeapp.viewmodels.RecipeViewModel;
+
+import java.util.ArrayList;
+import java.util.HashMap;
 
 public class RecipeFragment extends Fragment {
 
@@ -44,6 +49,7 @@ public class RecipeFragment extends Fragment {
         filterSpinner.setAdapter(adapter);
         RecipeViewModel recipeViewModel = new RecipeViewModel();
         FilterContext filterContext = new FilterContext(new NoFilter());
+
         filterSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -98,6 +104,7 @@ public class RecipeFragment extends Fragment {
                 instructions.setText(r.getInstructions());
                 LinearLayout ingredientsListLayout = cardView.findViewById(
                         R.id.recipe_ingredients_layout);
+
                 for (int i = 0; i < r.getIngredients().size(); i++) {
                     TextView ingredient = new TextView(requireContext());
                     ingredient.setText(r.getIngredients().get(i) + ": "
@@ -109,5 +116,39 @@ public class RecipeFragment extends Fragment {
                 recipeListLayout.addView(spacer);
             }
         });
+
+        // Code to watch Pantry View Model and recalculate whether there are sufficient ingredients when a change is observed.
+        PantryViewModel pantry = new PantryViewModel();
+        pantry.getIngQuantity().observe(getViewLifecycleOwner(), pantryItems -> {
+            int index = 0;
+            for (Recipe r: recipeViewModel.getRecipeLiveData().getValue()) {
+                View currView = recipeListLayout.getChildAt(index);
+                TextView available = currView.findViewById(R.id.recipe_ingredients_available_textview);
+                Boolean sufficient = true;
+                for (int i = 0; i < r.getIngredients().size(); i++) {
+                    String ing = r.getIngredients().get(i);
+                    if (!(pantryItems.containsKey(ing))) {
+                        sufficient = false;
+                        break;
+                    } else {
+                        int qty = pantryItems.get(r.getIngredients().get(i));
+                        if (qty < r.getQuantities().get(i)) {
+                            sufficient = false;
+                            break;
+                        }
+                    }
+                }
+                if (sufficient == true) {
+                    available.setText("Sufficient Ingredients");
+                    available.setTextColor(Color.GREEN);
+                } else {
+                    available.setText("Insufficient Ingredients");
+                    available.setTextColor(Color.RED);
+                }
+                index+=2;
+            }
+        });
+
+        pantry.readIngredientQuantities();
     }
 }
