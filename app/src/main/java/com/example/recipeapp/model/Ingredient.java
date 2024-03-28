@@ -7,7 +7,8 @@ public class Ingredient {
 
     private String expirationDate;
 
-    public Ingredient(String name, Integer quantity, int caloriesPerServing, String expirationDate) {
+    public Ingredient(String name, Integer quantity,
+                      int caloriesPerServing, String expirationDate) {
         this.name = name;
         this.quantity = quantity;
         this.caloriesPerServing = caloriesPerServing;
