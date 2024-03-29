@@ -25,8 +25,12 @@ public class PantryViewModel {
     private final FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
     private Calendar calendar;
     private MutableLiveData<ArrayList<String>> ingList = new MutableLiveData<>(new ArrayList<>());
+    private MutableLiveData<HashMap<String, Integer>> ingQuantity = new MutableLiveData<>(new HashMap<>());
     public LiveData<ArrayList<String>> getData() {
         return ingList;
+    }
+    public LiveData<HashMap<String, Integer>> getIngQuantity() {
+        return ingQuantity;
     }
     public void inputIngredient(Context context, EditText ingredientName,
                                 EditText quantity, EditText caloriesPerServing,
@@ -70,6 +74,28 @@ public class PantryViewModel {
         }
     }
 
+    public void readIngredientQuantities() {
+        FirebaseDatabase ingDB = FirebaseDatabase
+                .getInstance("https://recipeapp-1fba1-default-rtdb.firebaseio.com/");
+        DatabaseReference pantryDB = ingDB.getReference().child("pantry/"
+                + user.getUid());
+        pantryDB.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                HashMap<String, Integer> currQty = new HashMap<>();
+                for (DataSnapshot ingredient : snapshot.getChildren()) {
+                    String name = ingredient.child("name").getValue(String.class);
+                    int qty = ingredient.child("quantity").getValue(Integer.class);
+                    currQty.put(name, qty);
+                }
+                ingQuantity.setValue(currQty);
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Log.e("FirebaseError", "Error reading data from Firebase: " + error.getMessage());
+            }
+        });
+    }
     public void readIngredients(ArrayList<String> ingredientList) {
         FirebaseDatabase ingDB = FirebaseDatabase
                 .getInstance("https://recipeapp-1fba1-default-rtdb.firebaseio.com/");
@@ -96,6 +122,8 @@ public class PantryViewModel {
             }
         });
     }
+
+
 
     public void showDatePickerDialog(Context context, Button expDate) {
         calendar = Calendar.getInstance();
