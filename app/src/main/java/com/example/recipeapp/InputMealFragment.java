@@ -105,9 +105,6 @@ public class InputMealFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         super.onCreate(savedInstanceState);
 
-        Button input = view.findViewById(R.id.inputButton);
-        input.setOnClickListener(v -> vm.inputMeal(requireContext(), mealName, calories, mealDate));
-
         Button button1 = view.findViewById(R.id.button1);
         Button button2 = view.findViewById(R.id.button2);
 
@@ -124,9 +121,16 @@ public class InputMealFragment extends Fragment {
         ArrayList<Integer> calorieList = new ArrayList<>();
         vm.readMeals(data, calorieList);
 
+        Button input = view.findViewById(R.id.inputButton);
+        input.setOnClickListener(v -> {
+            HashMap<String, Integer> dataList = new HashMap<>();
+            ArrayList<Integer> cals = new ArrayList<>();
+            vm.readMeals(dataList, cals);
+            vm.inputMeal(requireContext(), mealName, calories, mealDate);
+        });
+
         // Set click listener for Button 1 for data visual 1
         button1.setOnClickListener(v -> {
-            System.out.println("HERE");
             try {
                 Intent intent1 = new Intent(getActivity(), Chart1Activity.class);
                 intent1.putStringArrayListExtra("dataKeys", dataKeys);

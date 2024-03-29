@@ -1,5 +1,4 @@
 package com.example.recipeapp.viewmodels;
-import static androidx.core.content.ContentProviderCompat.requireContext;
 import android.app.DatePickerDialog;
 import android.content.Context;
 import android.util.Log;
@@ -10,8 +9,6 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import com.example.recipeapp.model.Ingredient;
-import com.example.recipeapp.model.Meal;
-import com.example.recipeapp.model.Recipe;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -19,14 +16,12 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import java.text.ParseException;
+
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
 import java.util.Locale;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 public class PantryViewModel {
     private final FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
@@ -35,8 +30,9 @@ public class PantryViewModel {
     public LiveData<ArrayList<String>> getData() {
         return ingList;
     }
-    public void inputIngredient(Context context, EditText ingredientName,
+    public AtomicBoolean inputIngredient(Context context, EditText ingredientName,
                                 EditText quantity, EditText caloriesPerServing, Button expirationDate) {
+        AtomicBoolean successful = new AtomicBoolean(false);
         String ingredient_name = ingredientName.getText().toString();
         String strIngredient_quantity = quantity.getText().toString();
         String strIngredient_calories = caloriesPerServing.getText().toString();
@@ -64,14 +60,17 @@ public class PantryViewModel {
 
             pantryDB.push().setValue(newIngredient)
                     .addOnSuccessListener(success -> {
+                        successful.set(true);
                         Toast.makeText(context,
                                 "Ingredient inputted successfully!", Toast.LENGTH_SHORT).show();
                     })
                     .addOnFailureListener(failure -> {
+                        successful.set(false);
                         Toast.makeText(context,
                                 "Could not input ingredient", Toast.LENGTH_SHORT).show();
                     });
         }
+        return successful;
     }
 
     public void readIngredients(ArrayList<String> ingredientList) {
@@ -104,7 +103,6 @@ public class PantryViewModel {
         int year = calendar.get(Calendar.YEAR);
         int month = calendar.get(Calendar.MONTH);
         int day = calendar.get(Calendar.DAY_OF_MONTH);
-        System.out.println("mello");
         DatePickerDialog datePickerDialog = new DatePickerDialog(
                 context,
                 (view, year1, monthOfYear, day1) -> {
@@ -118,7 +116,6 @@ public class PantryViewModel {
                 month,
                 day
         );
-        System.out.println("hello");
         datePickerDialog.show();
     }
 }
