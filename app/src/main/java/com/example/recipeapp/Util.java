@@ -1,5 +1,7 @@
 package com.example.recipeapp;
 
+import java.util.List;
+
 public class Util {
     public boolean validateHeight(String height) {
         return !height.isEmpty();
@@ -22,6 +24,11 @@ public class Util {
     }
     public boolean validateCalories(String calories) {
         return !calories.isEmpty();
+    }
+
+    public boolean validateIngredients(List<String> ingredients, List<Integer> quantities) {
+        return ingredients != null && quantities != null && ingredients.size() > 0
+                && quantities.size() > 0 && ingredients.size() == quantities.size();
     }
 
 }
