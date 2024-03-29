@@ -21,6 +21,7 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.recipeapp.model.Recipe;
 import com.example.recipeapp.viewmodels.PantryViewModel;
@@ -100,6 +101,9 @@ public class RecipeFragment extends Fragment {
                 recipeName.setSpan(new StyleSpan(Typeface.BOLD), 0, 11,
                         Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
                 name.setText(recipeName);
+
+
+
                 TextView calories = cardView.findViewById(R.id.recipe_calories_textview);
                 SpannableString caloriesLabel = new SpannableString("Calories: " + r.getCalories());
                 caloriesLabel.setSpan(new StyleSpan(Typeface.BOLD), 0, 9,
@@ -128,9 +132,25 @@ public class RecipeFragment extends Fragment {
                 if (sufficient == true) {
                     available.setText("Sufficient Ingredients");
                     available.setTextColor(Color.GREEN);
+                    //set click listener for recipe name (yes case)
+                    name.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            //implement view recipe functionality
+                        }
+                    });
                 } else {
                     available.setText("Insufficient Ingredients");
                     available.setTextColor(Color.RED);
+                    //set click listener for recipe name (no case)
+                    name.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            Toast.makeText(getContext(), "You don't have enough ingredients" +
+                                    "to make this recipe.", Toast.LENGTH_SHORT).show();
+
+                        }
+                    });
                 }
 
                 LinearLayout ingredientsListLayout = cardView.findViewById(
