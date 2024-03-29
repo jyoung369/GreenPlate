@@ -10,7 +10,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import com.example.recipeapp.viewmodels.PantryViewModel;
 import java.util.ArrayList;
-import java.util.HashMap;
 
 public class IngredientFragment extends Fragment {
     private EditText ingredientName;
@@ -37,7 +36,8 @@ public class IngredientFragment extends Fragment {
 
         PantryViewModel vm = new PantryViewModel();
 
-        expirationDate.setOnClickListener(v -> vm.showDatePickerDialog(requireContext(), expirationDate));
+        expirationDate.setOnClickListener(v ->
+                vm.showDatePickerDialog(requireContext(), expirationDate));
 
         ArrayList<String> ingData = new ArrayList<>();
         vm.getData().observe(getViewLifecycleOwner(), info -> {
@@ -51,11 +51,12 @@ public class IngredientFragment extends Fragment {
 
         Button ingInput = view.findViewById(R.id.inputIngButton);
         ingInput.setOnClickListener(v -> {
-            String ingredient_name = ingredientName.getText().toString();
-            int ingredient_quantity = Integer.parseInt(ingredientQuantity.getText().toString());
-            if (!ingData.contains(ingredient_name)) {
-                vm.inputIngredient(requireContext(), ingredientName, ingredientQuantity, caloriesPerServing, expirationDate);
-            } else if (ingredient_quantity <= 0) {
+            String ingredientName1 = ingredientName.getText().toString();
+            int ingredientQuantity1 = Integer.parseInt(ingredientQuantity.getText().toString());
+            if (!ingData.contains(ingredientName1)) {
+                vm.inputIngredient(requireContext(), ingredientName,
+                        ingredientQuantity, caloriesPerServing, expirationDate);
+            } else if (ingredientQuantity1 <= 0) {
                 ingredientQuantity.setError("Please enter a valid quantity!");
                 ingredientName.setError("Cannot accept duplicate ingredients!");
             } else {

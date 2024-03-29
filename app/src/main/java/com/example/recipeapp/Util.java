@@ -14,4 +14,14 @@ public class Util {
     public boolean validCalCount(String calories) {
         return calories != null;
     }
+    public boolean validateName(String name) {
+        return !name.isEmpty();
+    }
+    public boolean validateInstructions(String instr) {
+        return !instr.isEmpty();
+    }
+    public boolean validateCalories(String calories) {
+        return !calories.isEmpty();
+    }
+
 }

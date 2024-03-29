@@ -20,16 +20,6 @@ public class RecipeInputViewModal extends ViewModel {
     private MutableLiveData<String> recipeName = new MutableLiveData<>();
     private MutableLiveData<String> recipeInstructions = new MutableLiveData<>();
     private MutableLiveData<String> calorieCount = new MutableLiveData<>();
-
-    public boolean validateName(String name) {
-        return !name.isEmpty();
-    }
-    public boolean validateInstructions(String instr) {
-        return !instr.isEmpty();
-    }
-    public boolean validateCalories(String calories) {
-        return !calories.isEmpty();
-    }
     public void saveRecipe(String name, String instr,
                            String calories, List<Ingredient> ingredients) {
         Map<String, Object> recipeData = new HashMap<>();
