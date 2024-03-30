@@ -16,39 +16,47 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
+
 import java.util.Calendar;
 import java.util.Locale;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 public class PantryViewModel {
     private final FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
     private Calendar calendar;
     private MutableLiveData<ArrayList<String>> ingList = new MutableLiveData<>(new ArrayList<>());
     private MutableLiveData<HashMap<String, Integer>> ingQuantity = new MutableLiveData<>(new HashMap<>());
+    
     public LiveData<ArrayList<String>> getData() {
         return ingList;
     }
+  
     public LiveData<HashMap<String, Integer>> getIngQuantity() {
         return ingQuantity;
     }
-    public void inputIngredient(Context context, EditText ingredientName,
-                                EditText quantity, EditText caloriesPerServing,
-                                Button expirationDate) {
+  
+    public AtomicBoolean inputIngredient(Context context, EditText ingredientName,
+                                EditText quantity, EditText caloriesPerServing, Button expirationDate) {
+        AtomicBoolean successful = new AtomicBoolean(false);
         String ingredientName1 = ingredientName.getText().toString();
-        String strIngredientQuantity = quantity.getText().toString();
-        String strIngredientCalories = caloriesPerServing.getText().toString();
+        String strIngredient_quantity = quantity.getText().toString();
+        String strIngredient_calories = caloriesPerServing.getText().toString();
         String expDate = expirationDate.getText().toString();
         int ingredientQuantity = Integer.parseInt(quantity.getText().toString());
         int ingredientCalories = Integer.parseInt(caloriesPerServing.getText().toString());
         if (ingredientName1.isEmpty()) {
             ingredientName.setError("Please enter the name of your ingredient!");
-        } else if (strIngredientQuantity.isEmpty()) {
+        } else if (strIngredient_quantity.isEmpty()) {
             quantity.setError("Please enter the quantity of your ingredient!");
         } else if (ingredientQuantity <= 0) {
             quantity.setError("Please enter a valid quantity!");
-        } else if (strIngredientCalories.isEmpty()) {
+        } else if (strIngredient_calories.isEmpty()) {
             caloriesPerServing.setError(
                     "Please enter the calories per serving for this ingredient!");
         } else {
@@ -65,14 +73,17 @@ public class PantryViewModel {
 
             pantryDB.push().setValue(newIngredient)
                     .addOnSuccessListener(success -> {
+                        successful.set(true);
                         Toast.makeText(context,
                                 "Ingredient inputted successfully!", Toast.LENGTH_SHORT).show();
                     })
                     .addOnFailureListener(failure -> {
+                        successful.set(false);
                         Toast.makeText(context,
                                 "Could not input ingredient", Toast.LENGTH_SHORT).show();
                     });
         }
+        return successful;
     }
 
     public void readIngredientQuantities() {
@@ -124,14 +135,11 @@ public class PantryViewModel {
         });
     }
 
-
-
     public void showDatePickerDialog(Context context, Button expDate) {
         calendar = Calendar.getInstance();
         int year = calendar.get(Calendar.YEAR);
         int month = calendar.get(Calendar.MONTH);
         int day = calendar.get(Calendar.DAY_OF_MONTH);
-        System.out.println("mello");
         DatePickerDialog datePickerDialog = new DatePickerDialog(
                 context,
                 (view, year1, monthOfYear, day1) -> {
@@ -145,7 +153,6 @@ public class PantryViewModel {
                 month,
                 day
         );
-        System.out.println("hello");
         datePickerDialog.show();
     }
 }

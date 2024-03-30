@@ -97,7 +97,6 @@ public class MealViewModel {
 
         //get current day
         int currentDay = calendar.get(Calendar.DATE);
-        System.out.println(currentDay);
 
         mealsref.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override

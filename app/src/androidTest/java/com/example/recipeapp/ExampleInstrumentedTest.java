@@ -1,7 +1,11 @@
 package com.example.recipeapp;
 
 import android.content.Context;
+import android.widget.EditText;
 
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.test.platform.app.InstrumentationRegistry;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 
@@ -9,6 +13,11 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import static org.junit.Assert.*;
+
+import com.example.recipeapp.viewmodels.PantryViewModel;
+import com.example.recipeapp.views.MainActivity;
+
+import java.util.concurrent.atomic.AtomicBoolean;
 
 /**
  * Instrumented test, which will execute on an Android device.
