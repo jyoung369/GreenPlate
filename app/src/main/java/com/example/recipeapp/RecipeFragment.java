@@ -132,16 +132,6 @@ public class RecipeFragment extends Fragment {
                     available.setText("Insufficient Ingredients");
                     available.setTextColor(Color.RED);
                 }
-
-                LinearLayout ingredientsListLayout = cardView.findViewById(
-                        R.id.recipe_ingredients_layout);
-
-                for (int i = 0; i < r.getIngredients().size(); i++) {
-                    TextView ingredient = new TextView(requireContext());
-                    ingredient.setText(r.getIngredients().get(i) + ": "
-                            + r.getQuantities().get(i) + "g");
-                    ingredientsListLayout.addView(ingredient);
-                }
                 recipeListLayout.addView(cardView);
                 TextView spacer = new TextView(requireContext());
                 recipeListLayout.addView(spacer);
