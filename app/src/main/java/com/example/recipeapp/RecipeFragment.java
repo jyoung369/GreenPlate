@@ -26,7 +26,6 @@ import com.example.recipeapp.model.Recipe;
 import com.example.recipeapp.viewmodels.PantryViewModel;
 import com.example.recipeapp.viewmodels.RecipeViewModel;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 
 public class RecipeFragment extends Fragment {
@@ -109,7 +108,8 @@ public class RecipeFragment extends Fragment {
                 instructions.setText(r.getInstructions());
 
                 //Code to calculate and set whether sufficient ingredients
-                TextView available = cardView.findViewById(R.id.recipe_ingredients_available_textview);
+                TextView available = cardView.findViewById(
+                        R.id.recipe_ingredients_available_textview);
                 HashMap<String, Integer> pantryItems = pantryViewModel.getIngQuantity().getValue();
                 Boolean sufficient = true;
                 for (int i = 0; i < r.getIngredients().size(); i++) {
@@ -125,7 +125,7 @@ public class RecipeFragment extends Fragment {
                         }
                     }
                 }
-                if (sufficient == true) {
+                if (sufficient) {
                     available.setText("Sufficient Ingredients");
                     available.setTextColor(Color.GREEN);
                 } else {
@@ -138,12 +138,14 @@ public class RecipeFragment extends Fragment {
             }
         });
 
-        // Code to watch Pantry View Model and recalculate whether there are sufficient ingredients when a change is observed.
+        // Code to watch Pantry View Model and recalculate whether there are
+        // sufficient ingredients when a change is observed.
         pantryViewModel.getIngQuantity().observe(getViewLifecycleOwner(), pantryItems -> {
             int index = 0;
             for (Recipe r: recipeViewModel.getRecipeLiveData().getValue()) {
                 View currView = recipeListLayout.getChildAt(index);
-                TextView available = currView.findViewById(R.id.recipe_ingredients_available_textview);
+                TextView available = currView.findViewById(
+                        R.id.recipe_ingredients_available_textview);
                 Boolean sufficient = true;
                 for (int i = 0; i < r.getIngredients().size(); i++) {
                     String ing = r.getIngredients().get(i);
@@ -158,14 +160,14 @@ public class RecipeFragment extends Fragment {
                         }
                     }
                 }
-                if (sufficient == true) {
+                if (sufficient) {
                     available.setText("Sufficient Ingredients");
                     available.setTextColor(Color.GREEN);
                 } else {
                     available.setText("Insufficient Ingredients");
                     available.setTextColor(Color.RED);
                 }
-                index+=2;
+                index += 2;
             }
         });
 
