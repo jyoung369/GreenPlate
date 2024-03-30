@@ -10,7 +10,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import com.example.recipeapp.viewmodels.PantryViewModel;
 import java.util.ArrayList;
-import java.util.HashMap;
 
 public class IngredientFragment extends Fragment {
     private EditText ingredientName;
@@ -38,7 +37,8 @@ public class IngredientFragment extends Fragment {
 
         PantryViewModel vm = new PantryViewModel();
 
-        expirationDate.setOnClickListener(v -> vm.showDatePickerDialog(requireContext(), expirationDate));
+        expirationDate.setOnClickListener(v ->
+                vm.showDatePickerDialog(requireContext(), expirationDate));
 
         ArrayList<String> ingData = new ArrayList<>();
         vm.getData().observe(getViewLifecycleOwner(), info -> {
@@ -52,7 +52,7 @@ public class IngredientFragment extends Fragment {
 
         Button ingInput = view.findViewById(R.id.inputIngButton);
         ingInput.setOnClickListener(v -> {
-            ArrayList<String> ingList = new ArrayList<>();
+           ArrayList<String> ingList = new ArrayList<>();
             vm.readIngredients(ingList);
 
             String ingredient_name = ingredientName.getText().toString();

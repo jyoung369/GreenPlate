@@ -85,20 +85,21 @@ public class RecipeInput extends AppCompatActivity {
         }
     }
     private void saveRecipeInformation() {
+        Util u = new Util();
         String name = nameInput.getText().toString().trim();
         String instructions = instrInput.getText().toString().trim();
         String calories = calorieInput.getText().toString().trim();
-        if (!viewModel.validateName(name) || !viewModel.validateCalories(calories)
-                || !viewModel.validateInstructions(instructions) || l.isEmpty()) {
-            if (!viewModel.validateName(name)) {
+        if (!u.validateName(name) || !u.validateCalories(calories)
+                || !u.validateInstructions(instructions) || l.isEmpty()) {
+            if (!u.validateName(name)) {
                 nameInput.setError("Please enter a name for this recipe");
                 nameInput.requestFocus();
             }
-            if (!viewModel.validateInstructions(instructions)) {
+            if (!u.validateInstructions(instructions)) {
                 instrInput.setError("Please enter instructions for this recipe");
                 instrInput.requestFocus();
             }
-            if (!viewModel.validateCalories(calories)) {
+            if (!u.validateCalories(calories)) {
                 calorieInput.setError("Please enter the calories for this recipe");
                 calorieInput.requestFocus();
             }

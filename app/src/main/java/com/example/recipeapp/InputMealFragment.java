@@ -205,9 +205,6 @@ public class InputMealFragment extends Fragment {
             String genderTotal = (String) genderText.getText();
             String[] parsedGender = genderTotal.split(" ");
             String gender = parsedGender[1];
-            System.out.println(weight);
-            System.out.println(height);
-            System.out.println(gender);
             int finalCalories = calorieEquation(height, weight, gender);
             goalText.setVisibility(View.VISIBLE);
             goalText.setText("Min Daily Calorie Goal: " + finalCalories);
