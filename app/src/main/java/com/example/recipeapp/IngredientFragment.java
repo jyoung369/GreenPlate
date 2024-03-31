@@ -70,6 +70,7 @@ public class IngredientFragment extends Fragment {
             Intent intent = new Intent(requireContext(), IngredientList.class);
             startActivity(intent);
         });
+
         super.onViewCreated(view, savedInstanceState);
         super.onCreate(savedInstanceState);
     }
