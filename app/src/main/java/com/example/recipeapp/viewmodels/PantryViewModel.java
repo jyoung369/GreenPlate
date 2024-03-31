@@ -174,14 +174,19 @@ public class PantryViewModel {
 
                         if (toUpdate.getName().equals(ingredientName)) {
                             Log.d("TAG", toUpdate.getName() + "found in userId: " + user.getUid() + ", ingredientId: " + ingredientId);
-                            if (newQty == 0){
-                                
+                            if (newQty <= 0){
+                                List<Ingredient> currIngredients = ingredientList.getValue();
+                                pantryDB.child(ingredientId).removeValue()
+                                        .addOnSuccessListener(aVoid -> isSaveSuccessful.postValue(true))
+                                        .addOnFailureListener(e -> isSaveSuccessful.postValue(false));
+                                System.out.println("value removed");
+                                currIngredients.remove(toUpdate);
+                                ingredientList.setValue(currIngredients);
                             } else {
-
+                                pantryDB.child(ingredientId).setValue(updatedIngredient)
+                                        .addOnSuccessListener(aVoid -> isSaveSuccessful.postValue(true))
+                                        .addOnFailureListener(e -> isSaveSuccessful.postValue(false));
                             }
-                            pantryDB.child(ingredientId).setValue(updatedIngredient)
-                                    .addOnSuccessListener(aVoid -> isSaveSuccessful.postValue(true))
-                                    .addOnFailureListener(e -> isSaveSuccessful.postValue(false));;
                         }
                     }
                 } else {
