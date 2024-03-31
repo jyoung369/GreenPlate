@@ -129,28 +129,21 @@ public class RecipeFragment extends Fragment {
                         }
                     }
                 }
-                if (sufficient == true) {
+                if (sufficient) {
                     available.setText("Sufficient Ingredients");
                     available.setTextColor(Color.GREEN);
                     //set click listener for recipe name (yes case)
-                    name.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            //implement view recipe functionality
-                        }
+                    name.setOnClickListener(v -> {
+                        Intent intent = new Intent(getContext(), RecipeDetailsActivity.class);
+                        intent.putExtra("recipe", r);
+                        getContext().startActivity(intent);
                     });
                 } else {
                     available.setText("Insufficient Ingredients");
                     available.setTextColor(Color.RED);
                     //set click listener for recipe name (no case)
-                    name.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            Toast.makeText(getContext(), "You don't have enough ingredients" +
-                                    "to make this recipe.", Toast.LENGTH_SHORT).show();
-
-                        }
-                    });
+                    name.setOnClickListener(v -> Toast.makeText(getContext(), "You don't have"+
+                            "enough ingredients to make this recipe.", Toast.LENGTH_SHORT).show());
                 }
 
                 LinearLayout ingredientsListLayout = cardView.findViewById(
