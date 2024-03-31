@@ -82,7 +82,7 @@ public class IngredientFragment extends Fragment {
 
                         pantryViewModel.updateQuantity(ingredient, newQuantity);
 
-                        // You may also want to update the quantity displayed elsewhere, if needed
+                        ingredientQuantity.setText(ingredient.getQuantity().toString() + "g");
                     }
                 });
 

@@ -1,4 +1,6 @@
 package com.example.recipeapp.viewmodels;
+import static java.security.AccessController.getContext;
+
 import android.app.DatePickerDialog;
 import android.content.Context;
 import android.util.Log;
@@ -172,6 +174,11 @@ public class PantryViewModel {
 
                         if (toUpdate.getName().equals(ingredientName)) {
                             Log.d("TAG", toUpdate.getName() + "found in userId: " + user.getUid() + ", ingredientId: " + ingredientId);
+                            if (newQty == 0){
+                                
+                            } else {
+
+                            }
                             pantryDB.child(ingredientId).setValue(updatedIngredient)
                                     .addOnSuccessListener(aVoid -> isSaveSuccessful.postValue(true))
                                     .addOnFailureListener(e -> isSaveSuccessful.postValue(false));;
