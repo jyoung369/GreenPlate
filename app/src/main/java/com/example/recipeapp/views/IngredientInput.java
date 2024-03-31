@@ -1,5 +1,6 @@
 package com.example.recipeapp.views;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import android.widget.Button;
@@ -59,6 +60,8 @@ public class IngredientInput extends AppCompatActivity {
                     if (!ingData.contains(ingredientName1)) {
                         vm.inputIngredient(this, ingredientName, ingredientQuantity,
                                 caloriesPerServing, expirationDate);
+                        Intent intent = new Intent(this, WelcomeActivity.class);
+                        startActivity(intent);
                     } else {
                         ingredientName.setError("Cannot accept duplicate ingredients!");
                     }
