@@ -2,9 +2,10 @@ package com.example.recipeapp.model;
 
 import androidx.annotation.NonNull;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class Recipe {
+public class Recipe implements Serializable {
     private String name;
     private int calories;
     private String instructions;

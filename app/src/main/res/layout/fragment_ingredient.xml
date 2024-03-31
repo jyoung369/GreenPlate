@@ -78,6 +78,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Input!" />
+            <Button
+                android:id="@+id/viewIngredientListButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="View Ingredient list" />
 
         </LinearLayout>
     </androidx.cardview.widget.CardView>

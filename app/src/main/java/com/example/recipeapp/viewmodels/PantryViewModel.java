@@ -30,6 +30,10 @@ public class PantryViewModel {
     private final FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
     private Calendar calendar;
     private MutableLiveData<ArrayList<String>> ingList = new MutableLiveData<>(new ArrayList<>());
+
+    private MutableLiveData<HashMap<String, Integer>> ingQuantity =
+            new MutableLiveData<>(new HashMap<>());
+
     private MutableLiveData<HashMap<String, Integer>> ingQuantity = new MutableLiveData
             <>(new HashMap<>());
     
@@ -156,4 +160,5 @@ public class PantryViewModel {
         );
         datePickerDialog.show();
     }
+
 }

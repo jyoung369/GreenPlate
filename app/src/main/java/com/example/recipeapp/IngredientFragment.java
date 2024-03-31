@@ -1,4 +1,5 @@
 package com.example.recipeapp;
+import android.content.Intent;
 import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -13,6 +14,8 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import com.example.recipeapp.viewmodels.PantryViewModel;
+import com.example.recipeapp.views.IngredientList;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -71,6 +74,14 @@ public class IngredientFragment extends Fragment {
                 ingredientName.setError("Cannot accept duplicate ingredients!"); 
             }
         });
+
+        Button viewIngredientListButton = view.findViewById(R.id.viewIngredientListButton);
+        viewIngredientListButton.setOnClickListener(v -> {
+            Intent intent = new Intent(requireContext(), IngredientList.class);
+            startActivity(intent);
+        });
+
+        viewCopy = view;
 
         super.onViewCreated(view, savedInstanceState);
         super.onCreate(savedInstanceState);
