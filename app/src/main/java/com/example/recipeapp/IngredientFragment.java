@@ -74,15 +74,17 @@ public class IngredientFragment extends Fragment {
                 changeQtyButton.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        // Get the current quantity from the EditText
-                        int newQuantity = Integer.parseInt(newQty.getText().toString());
+                        String editTextString = newQty.getText().toString().trim();
 
-                        // Update the quantity of the ingredient object
-                        ingredient.setQuantity(newQuantity);
+                        if (!editTextString.isEmpty()) {
+                            int newQuantity = Integer.parseInt(editTextString);
+                            // Update the quantity of the ingredient object
+                            ingredient.setQuantity(newQuantity);
 
-                        pantryViewModel.updateQuantity(ingredient, newQuantity);
+                            pantryViewModel.updateQuantity(ingredient, newQuantity);
 
-                        ingredientQuantity.setText(ingredient.getQuantity().toString() + "g");
+                            ingredientQuantity.setText(ingredient.getQuantity().toString() + "g");
+                        }
                     }
                 });
 
