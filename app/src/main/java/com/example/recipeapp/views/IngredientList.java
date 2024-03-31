@@ -58,8 +58,6 @@ public class IngredientList extends AppCompatActivity {
                 spacer.setLayoutParams(layoutParams);
                 ingredientListLayout.addView(spacer);
             }
-
-
         });
     }
 }
