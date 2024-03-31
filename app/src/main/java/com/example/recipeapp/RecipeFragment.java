@@ -101,8 +101,6 @@ public class RecipeFragment extends Fragment {
                 caloriesLabel.setSpan(new StyleSpan(Typeface.BOLD), 0, 9,
                         Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
                 calories.setText(caloriesLabel);
-                TextView instructions = cardView.findViewById(R.id.recipe_instructions_textview);
-                instructions.setText(r.getInstructions());
 
                 //Code to calculate and set whether sufficient ingredients
                 TextView available = cardView.findViewById(
@@ -129,12 +127,20 @@ public class RecipeFragment extends Fragment {
                             + " enough ingredients to make this recipe.",
                             Toast.LENGTH_SHORT).show());
                 }
+                LinearLayout ingredientsListLayout = cardView.findViewById(
+                        R.id.recipe_ingredients_layout);
+
+                for (int i = 0; i < r.getIngredients().size(); i++) {
+                    TextView ingredient = new TextView(requireContext());
+                    ingredient.setText(r.getIngredients().get(i) + ": "
+                            + r.getQuantities().get(i) + "g");
+                    ingredientsListLayout.addView(ingredient);
+                }
                 recipeListLayout.addView(cardView);
                 TextView spacer = new TextView(requireContext());
                 recipeListLayout.addView(spacer);
             }
         });
-
 
         // Code to watch Pantry View Model and recalculate whether
         // there are sufficient ingredients when a change is observed.
@@ -152,7 +158,8 @@ public class RecipeFragment extends Fragment {
                             available.setText("Sufficient Ingredients");
                             available.setTextColor(Color.GREEN);
                             name.setOnClickListener(v -> {
-                                Intent intent = new Intent(getContext(), RecipeDetailsActivity.class);
+                                Intent intent = new Intent(
+                                        getContext(), RecipeDetailsActivity.class);
                                 intent.putExtra("recipe", r);
                                 requireContext().startActivity(intent);
                             });
@@ -160,7 +167,8 @@ public class RecipeFragment extends Fragment {
                             available.setText("Insufficient Ingredients");
                             available.setTextColor(Color.RED);
                             //set click listener for recipe name (no case)
-                            name.setOnClickListener(v -> Toast.makeText(getContext(), "You don't have"
+                            name.setOnClickListener(v -> Toast.makeText(getContext(), "You "
+                                            + "don't have"
                                             + " enough ingredients to make this recipe.",
                                     Toast.LENGTH_SHORT).show());
                         }
