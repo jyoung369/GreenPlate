@@ -29,7 +29,7 @@ public class Ingredient {
         return quantity;
     }
 
-    public void setQuantity(Integer newQty){
+    public void setQuantity(Integer newQty) {
         this.quantity = newQty;
     }
 

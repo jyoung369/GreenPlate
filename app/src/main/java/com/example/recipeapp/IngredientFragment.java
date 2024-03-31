@@ -5,8 +5,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,7 +17,6 @@ import com.example.recipeapp.model.Ingredient;
 import com.example.recipeapp.viewmodels.PantryViewModel;
 import com.example.recipeapp.views.IngredientInput;
 
-import java.util.ArrayList;
 
 public class IngredientFragment extends Fragment {
     private PantryViewModel pantryViewModel;

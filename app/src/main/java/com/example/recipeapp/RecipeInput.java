@@ -61,7 +61,8 @@ public class RecipeInput extends AppCompatActivity {
     private void addIngredientEditText() {
         String ingredientName = ingredientInput.getText().toString().trim();
         String ingredientQuantity = ingredientQuantityInput.getText().toString().trim();
-        if (ingredientName.isEmpty() || ingredientQuantity.isEmpty() || Integer.parseInt(ingredientQuantity) == 0) {
+        if (ingredientName.isEmpty() || ingredientQuantity.isEmpty()
+                || Integer.parseInt(ingredientQuantity) == 0) {
             if (ingredientName.isEmpty()) {
                 ingredientInput.setError("Please enter an ingredient for this recipe");
                 ingredientInput.requestFocus();
