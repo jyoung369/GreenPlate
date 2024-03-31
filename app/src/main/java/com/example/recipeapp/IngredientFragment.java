@@ -85,8 +85,6 @@ public class IngredientFragment extends Fragment {
             startActivity(intent);
         });
 
-        viewCopy = view;
-
         super.onViewCreated(view, savedInstanceState);
         super.onCreate(savedInstanceState);
     }
