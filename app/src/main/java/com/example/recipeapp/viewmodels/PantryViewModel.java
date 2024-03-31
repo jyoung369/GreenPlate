@@ -19,10 +19,12 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 
 import java.util.Calendar;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Locale;
 import java.util.concurrent.atomic.AtomicBoolean;
 
@@ -30,12 +32,19 @@ public class PantryViewModel {
     private final FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
     private Calendar calendar;
     private MutableLiveData<ArrayList<String>> ingList = new MutableLiveData<>(new ArrayList<>());
+    private MutableLiveData<HashMap<String, Integer>> ingQuantity = new MutableLiveData
+            <>(new HashMap<>());
 
-    private MutableLiveData<HashMap<String, Integer>> ingQuantity =
-            new MutableLiveData<>(new HashMap<>());
+    private List<Ingredient> allIngredients = new ArrayList<>();
+
+    private MutableLiveData<List<Ingredient>> ingredientList = new MutableLiveData<>();
     
     public LiveData<ArrayList<String>> getIngList() {
         return ingList;
+    }
+
+    public LiveData<List<Ingredient>> getIngredientData(){
+        return ingredientList;
     }
   
     public LiveData<HashMap<String, Integer>> getIngQuantity() {
@@ -110,7 +119,7 @@ public class PantryViewModel {
             }
         });
     }
-    public void readIngredients(ArrayList<String> ingredientList) {
+    public void readIngredients() {
         FirebaseDatabase ingDB = FirebaseDatabase
                 .getInstance("https://recipeapp-1fba1-default-rtdb.firebaseio.com/");
         DatabaseReference pantryDB = ingDB.getReference().child("pantry/"
@@ -122,14 +131,18 @@ public class PantryViewModel {
                     String ingredientName = dataSnapshot.child("name").getValue(String.class);
                     Integer ingredientQuantity = dataSnapshot.child("quantity")
                             .getValue(Integer.class);
+                    Integer calories = dataSnapshot.child("caloriesPerServing").getValue(Integer.class);
+                    String expirationDate = dataSnapshot.child("expirationDate").getValue(String.class);
                     if (ingredientQuantity > 0) {
-                        ingredientList.add(ingredientName);
+                        // ingredientList.add(ingredientName);
+                        allIngredients.add(new Ingredient(ingredientName, ingredientQuantity, calories, expirationDate));
                     }
                     Log.d("FirebaseData",
                             "Ingredient Name: " + ingredientName + ", Quantity: "
-                                    + ingredientQuantity);
+                                    + ingredientQuantity + ", Calories: " + calories + ", expirationDate: " + expirationDate);
                 }
-                ingList.setValue(ingredientList);
+                // ingList.setValue(ingredientList);
+                ingredientList.setValue(allIngredients);
             }
             public void onCancelled(@NonNull DatabaseError error) {
                 Log.e("FirebaseError", "Error reading data from Firebase: " + error.getMessage());
