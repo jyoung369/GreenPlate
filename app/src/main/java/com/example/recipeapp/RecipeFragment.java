@@ -21,6 +21,7 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.recipeapp.model.Cookbook;
 import com.example.recipeapp.model.Recipe;
@@ -101,6 +102,9 @@ public class RecipeFragment extends Fragment {
                 recipeName.setSpan(new StyleSpan(Typeface.BOLD), 0, 11,
                         Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
                 name.setText(recipeName);
+
+
+
                 TextView calories = cardView.findViewById(R.id.recipe_calories_textview);
                 SpannableString caloriesLabel = new SpannableString("Calories: "
                         + r.getCalories());
@@ -119,18 +123,33 @@ public class RecipeFragment extends Fragment {
                 if (sufficient) {
                     available.setText("Sufficient Ingredients");
                     available.setTextColor(Color.GREEN);
+                    //set click listener for recipe name (yes case)
+                    name.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            //implement view recipe functionality
+                        }
+                    });
                 } else {
                     available.setText("Insufficient Ingredients");
                     available.setTextColor(Color.RED);
+                    //set click listener for recipe name (no case)
+                    name.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            Toast.makeText(getContext(), "You don't have enough ingredients" +
+                                    "to make this recipe.", Toast.LENGTH_SHORT).show();
+
+                        }
+                    });
                 }
                 recipeListLayout.addView(cardView);
                 TextView spacer = new TextView(requireContext());
                 recipeListLayout.addView(spacer);
             }
         });
-
-        // Code to watch Pantry View Model and recalculate whether there are sufficient ingredients
-        // when a change is observed.
+        // Code to watch Pantry View Model and recalculate whether there are
+        // sufficient ingredients when a change is observed.
         pantryViewModel.getIngQuantity().observe(getViewLifecycleOwner(), pantryItems -> {
             int index = 0;
             for (Recipe r: recipeViewModel.getRecipeLiveData().getValue()) {
