@@ -123,5 +123,17 @@ public class Sprint3UnitTests {
         HashMap<String, Integer> pantry = new HashMap<>();
         assertFalse(book.sufficientIngredients(pantry, recipe));
     }
-
+    // Harini Sathu
+    @Test
+    public void checkValidIngredientName() {
+        Util u = new Util();
+        Ingredient i = new Ingredient("Rice", 500);
+        assertTrue("Ingredient name should not be empty", !i.getName().isEmpty());
+    }
+    @Test
+    public void checkValidAmountOfIngredient() {
+        Util u = new Util();
+        Ingredient i = new Ingredient("Rice", 500);
+        assertTrue("Ingredient quantity should be greater than 0", i.getQuantity() > 0);
+    }
 }
