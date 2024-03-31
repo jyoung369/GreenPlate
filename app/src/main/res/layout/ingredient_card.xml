@@ -39,6 +39,5 @@
             android:textStyle="bold"
             android:text="Calories: 200" />
 
-
     </LinearLayout>
 </androidx.cardview.widget.CardView>
