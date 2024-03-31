@@ -36,10 +36,7 @@ public class IngredientList extends AppCompatActivity {
         setContentView(R.layout.activity_ingredient_list);
 
         Button backButton = findViewById(R.id.viewIngredientPageButton);
-        backButton.setOnClickListener(v -> {
-            Intent intent = new Intent(IngredientList.this, IngredientFragment.class);
-            startActivity(intent);
-        });
+        backButton.setOnClickListener(v -> finish());
 
         pantryViewModel = new PantryViewModel();
         ArrayList<String> ingredientList = new ArrayList<>();
@@ -61,7 +58,7 @@ public class IngredientList extends AppCompatActivity {
                 // Set the name of the ingredient
                 name.setText(ingredient.getName());
                 System.out.println("Quantity: " + ingredient.getQuantity());
-                ingredientQuantity.setText(ingredient.getQuantity());
+                ingredientQuantity.setText(ingredient.getQuantity().toString() + "g");
                 // Add the card view to the layout
                 ingredientListLayout.addView(cardView);
                 // Add a spacer
