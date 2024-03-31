@@ -33,9 +33,6 @@ public class PantryViewModel {
 
     private MutableLiveData<HashMap<String, Integer>> ingQuantity =
             new MutableLiveData<>(new HashMap<>());
-
-    private MutableLiveData<HashMap<String, Integer>> ingQuantity = new MutableLiveData
-            <>(new HashMap<>());
     
 
     public LiveData<ArrayList<String>> getData() {
