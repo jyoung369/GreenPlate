@@ -95,8 +95,6 @@ public class RecipeFragment extends Fragment {
                         Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
                 name.setText(recipeName);
 
-
-
                 TextView calories = cardView.findViewById(R.id.recipe_calories_textview);
                 SpannableString caloriesLabel = new SpannableString("Calories: "
                         + r.getCalories());
@@ -147,14 +145,24 @@ public class RecipeFragment extends Fragment {
                         View currView = recipeListLayout.getChildAt(index);
                         TextView available = currView.findViewById(
                                 R.id.recipe_ingredients_available_textview);
+                        TextView name = currView.findViewById(R.id.recipe_name_textview);
                         Cookbook book = new Cookbook();
                         Boolean sufficient = book.sufficientIngredients(pantryItems, r);
                         if (sufficient) {
                             available.setText("Sufficient Ingredients");
                             available.setTextColor(Color.GREEN);
+                            name.setOnClickListener(v -> {
+                                Intent intent = new Intent(getContext(), RecipeDetailsActivity.class);
+                                intent.putExtra("recipe", r);
+                                requireContext().startActivity(intent);
+                            });
                         } else {
                             available.setText("Insufficient Ingredients");
                             available.setTextColor(Color.RED);
+                            //set click listener for recipe name (no case)
+                            name.setOnClickListener(v -> Toast.makeText(getContext(), "You don't have"
+                                            + " enough ingredients to make this recipe.",
+                                    Toast.LENGTH_SHORT).show());
                         }
                         index += 2;
                     }
@@ -168,20 +176,29 @@ public class RecipeFragment extends Fragment {
                 View currView = recipeListLayout.getChildAt(index);
                 TextView available = currView.findViewById(
                         R.id.recipe_ingredients_available_textview);
+                TextView name = currView.findViewById(R.id.recipe_name_textview);
                 Cookbook book = new Cookbook();
                 Boolean sufficient = book.sufficientIngredients(pantryItems, r);
                 if (sufficient) {
                     available.setText("Sufficient Ingredients");
                     available.setTextColor(Color.GREEN);
+                    //set click listener for recipe name (yes case)
+                    name.setOnClickListener(v -> {
+                        Intent intent = new Intent(getContext(), RecipeDetailsActivity.class);
+                        intent.putExtra("recipe", r);
+                        requireContext().startActivity(intent);
+                    });
                 } else {
                     available.setText("Insufficient Ingredients");
                     available.setTextColor(Color.RED);
+                    //set click listener for recipe name (no case)
+                    name.setOnClickListener(v -> Toast.makeText(getContext(), "You don't have"
+                                    + "enough ingredients to make this recipe.",
+                            Toast.LENGTH_SHORT).show());
                 }
                 index += 2;
             }
         });
-
-
         pantryViewModel.readIngredientQuantities();
     }
 }
