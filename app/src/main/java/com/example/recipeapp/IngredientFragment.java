@@ -51,12 +51,12 @@ public class IngredientFragment extends Fragment {
         });
 
         ArrayList<String> ingredientList = new ArrayList<>();
-        vm.readIngredients(ingredientList);
+        vm.readIngredients();
 
         Button ingInput = view.findViewById(R.id.inputIngButton);
         ingInput.setOnClickListener(v -> {
             ArrayList<String> ingList = new ArrayList<>();
-            vm.readIngredients(ingList);
+            vm.readIngredients();
 
             String ingredientName1 = ingredientName.getText().toString();
             int ingredientQuantity1 = Integer.parseInt(ingredientQuantity.getText().toString());
