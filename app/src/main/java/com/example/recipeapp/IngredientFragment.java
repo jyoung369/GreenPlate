@@ -42,7 +42,7 @@ public class IngredientFragment extends Fragment {
         pantryViewModel.readIngredientQuantities();
 
         LinearLayout ingredientListLayout = view.findViewById(R.id.ingredients_layout);
-        LayoutInflater inflater = LayoutInflater.from(this);
+        LayoutInflater inflater = LayoutInflater.from(getContext());
 
         pantryViewModel.getIngredientData().observe(getViewLifecycleOwner(), ingredients -> {
             ingredientListLayout.removeAllViews();
@@ -60,74 +60,16 @@ public class IngredientFragment extends Fragment {
                 // Add the card view to the layout
                 ingredientListLayout.addView(cardView);
                 // Add a spacer
-                View spacer = new View(this);
+                View spacer = new View(getContext());
                 LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, 16); // Adjust height as needed
                 spacer.setLayoutParams(layoutParams);
                 ingredientListLayout.addView(spacer);
             }
         });
-//        ingredientName = view.findViewById(R.id.ingredientName);
-//        ingredientQuantity = view.findViewById(R.id.ingredientQuantity);
-//        caloriesPerServing = view.findViewById(R.id.caloriesPerServing);
-//        expirationDate = view.findViewById(R.id.expirationDate);
-//
-//        PantryViewModel vm = new PantryViewModel();
-//
-//        expirationDate.setOnClickListener(v ->
-//                vm.showDatePickerDialog(requireContext(), expirationDate));
-//
-//
-//        ArrayList<String> ingData = new ArrayList<>();
-//        vm.getIngredientData().observe(getViewLifecycleOwner(), info -> {
-//            for (Ingredient ingredient : info) {
-//                ingData.add(ingredient.getName());
-//            }
-//        });
-//        // ArrayList<String> ingredientList = new ArrayList<>();
-//        vm.readIngredients();
-//        Button ingInput = view.findViewById(R.id.inputIngButton);
-//        ingInput.setOnClickListener(v -> {
-//            // ArrayList<String> ingList = new ArrayList<>();
-//            // vm.readIngredients();
-//            String ingredientName1 = ingredientName.getText().toString();
-//            String ingredientQuantityStr = ingredientQuantity.getText().toString();
-//            String calServingStr = caloriesPerServing.getText().toString();
-//            if (!ingredientQuantityStr.isEmpty() && !calServingStr.isEmpty()) {
-//                int ingredientQuantity1 = Integer.parseInt(ingredientQuantityStr);
-//                int calServing = Integer.parseInt(calServingStr);
-//                if (!ingredientName1.isEmpty() && ingredientQuantity1 > 0 && calServing >= 0) {
-//                    if (!ingData.contains(ingredientName1)) {
-//                        vm.inputIngredient(requireContext(), ingredientName, ingredientQuantity,
-//                                caloriesPerServing, expirationDate);
-//                    } else {
-//                        ingredientName.setError("Cannot accept duplicate ingredients!");
-//                    }
-//                } else {
-//                    if (ingredientName1.isEmpty()) {
-//                        ingredientName.setError("Please enter an ingredient name");
-//                    }
-//                    if (ingredientQuantity1 <= 0) {
-//                        ingredientQuantity.setError("Please enter a valid quantity!");
-//                    }
-//                    if (calServing < 0) {
-//                        caloriesPerServing.setError("Please enter a valid calories per serving.");
-//                    }
-//                }
-//            } else {
-//                if (ingredientQuantityStr.isEmpty()) {
-//                    ingredientQuantity.setError("Please enter an ingredient quantity.");
-//                }
-//                if (calServingStr.isEmpty()) {
-//                    caloriesPerServing.setError("Please enter calories per serving.");
-//                }
-//            }
-//        });
-//
-//        Button viewIngredientListButton = view.findViewById(R.id.viewIngredientListButton);
-//        viewIngredientListButton.setOnClickListener(v -> {
-//            Intent intent = new Intent(requireContext(), IngredientList.class);
-//            startActivity(intent);
-//        });
+        button.setOnClickListener(v -> {
+            Intent intent = new Intent(requireContext(), IngredientList.class);
+            startActivity(intent);
+        });
         super.onViewCreated(view, savedInstanceState);
         super.onCreate(savedInstanceState);
     }
