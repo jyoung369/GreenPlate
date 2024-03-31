@@ -9,6 +9,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+
+import com.example.recipeapp.model.Ingredient;
 import com.example.recipeapp.viewmodels.PantryViewModel;
 import com.example.recipeapp.views.IngredientList;
 
@@ -42,21 +44,23 @@ public class IngredientFragment extends Fragment {
 
         expirationDate.setOnClickListener(v ->
                 vm.showDatePickerDialog(requireContext(), expirationDate));
+        
 
         ArrayList<String> ingData = new ArrayList<>();
-        vm.getData().observe(getViewLifecycleOwner(), info -> {
-            for (String name : info) {
-                ingData.add(name);
+        vm.getIngredientData().observe(getViewLifecycleOwner(), info -> {
+            for (Ingredient ingredient : info) {
+                ingData.add(ingredient.getName());
             }
         });
 
-        ArrayList<String> ingredientList = new ArrayList<>();
+        // ArrayList<String> ingredientList = new ArrayList<>();
         vm.readIngredients();
 
         Button ingInput = view.findViewById(R.id.inputIngButton);
         ingInput.setOnClickListener(v -> {
-            ArrayList<String> ingList = new ArrayList<>();
-            vm.readIngredients();
+            // ArrayList<String> ingList = new ArrayList<>();
+            // vm.readIngredients();
+            
 
             String ingredientName1 = ingredientName.getText().toString();
             int ingredientQuantity1 = Integer.parseInt(ingredientQuantity.getText().toString());
