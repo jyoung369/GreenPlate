@@ -32,7 +32,7 @@
             android:id="@+id/ingredientInputButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Input Recipe"
+            android:text="Input Ingredient"
             android:textColor="@android:color/white" />
     </LinearLayout>
 
