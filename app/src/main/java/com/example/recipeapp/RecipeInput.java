@@ -61,13 +61,17 @@ public class RecipeInput extends AppCompatActivity {
     private void addIngredientEditText() {
         String ingredientName = ingredientInput.getText().toString().trim();
         String ingredientQuantity = ingredientQuantityInput.getText().toString().trim();
-        if (ingredientName.isEmpty() || ingredientQuantity.isEmpty()) {
+        if (ingredientName.isEmpty() || ingredientQuantity.isEmpty() || Integer.parseInt(ingredientQuantity) == 0) {
             if (ingredientName.isEmpty()) {
                 ingredientInput.setError("Please enter an ingredient for this recipe");
                 ingredientInput.requestFocus();
             }
             if (ingredientQuantity.isEmpty()) {
                 ingredientQuantityInput.setError("Please enter a quantity for this recipe");
+                ingredientQuantityInput.requestFocus();
+            }
+            if (Integer.parseInt(ingredientQuantity) == 0) {
+                ingredientQuantityInput.setError("Please enter a quantity greater than 0");
                 ingredientQuantityInput.requestFocus();
             }
         } else {

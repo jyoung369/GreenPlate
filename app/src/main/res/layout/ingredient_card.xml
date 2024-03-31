@@ -41,7 +41,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:hint="Enter new qty"
-                android:inputType="number"/>
+                android:inputType="number|numberSigned"/>
 
             <Button
                 android:id="@+id/changeQuantity_button"
