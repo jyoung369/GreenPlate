@@ -4,9 +4,6 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Lifecycle;
-import androidx.lifecycle.LifecycleOwner;
-import androidx.lifecycle.Observer;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,7 +16,6 @@ import com.example.recipeapp.viewmodels.PantryViewModel;
 import com.example.recipeapp.views.IngredientList;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 
 public class IngredientFragment extends Fragment {
     private EditText ingredientName;
@@ -56,26 +52,43 @@ public class IngredientFragment extends Fragment {
                 ingData.add(ingredient.getName());
             }
         });
-
         // ArrayList<String> ingredientList = new ArrayList<>();
         vm.readIngredients();
-
         Button ingInput = view.findViewById(R.id.inputIngButton);
         ingInput.setOnClickListener(v -> {
             // ArrayList<String> ingList = new ArrayList<>();
             // vm.readIngredients();
-            
-
             String ingredientName1 = ingredientName.getText().toString();
-            int ingredientQuantity1 = Integer.parseInt(ingredientQuantity.getText().toString());
-            if (!ingData.contains(ingredientName1)) {
-                vm.inputIngredient(requireContext(), ingredientName, ingredientQuantity,
-                        caloriesPerServing, expirationDate);
-            } else if (ingredientQuantity1 <= 0) {
-                ingredientQuantity.setError("Please enter a valid quantity!");
-                ingredientName.setError("Cannot accept duplicate ingredients!");
+            String ingredientQuantityStr = ingredientQuantity.getText().toString();
+            String calServingStr = caloriesPerServing.getText().toString();
+            if (!ingredientQuantityStr.isEmpty() && !calServingStr.isEmpty()) {
+                int ingredientQuantity1 = Integer.parseInt(ingredientQuantityStr);
+                int calServing = Integer.parseInt(calServingStr);
+                if (!ingredientName1.isEmpty() && ingredientQuantity1 > 0 && calServing >= 0) {
+                    if (!ingData.contains(ingredientName1)) {
+                        vm.inputIngredient(requireContext(), ingredientName, ingredientQuantity,
+                                caloriesPerServing, expirationDate);
+                    } else {
+                        ingredientName.setError("Cannot accept duplicate ingredients!");
+                    }
+                } else {
+                    if (ingredientName1.isEmpty()) {
+                        ingredientName.setError("Please enter an ingredient name");
+                    }
+                    if (ingredientQuantity1 <= 0) {
+                        ingredientQuantity.setError("Please enter a valid quantity!");
+                    }
+                    if (calServing < 0) {
+                        caloriesPerServing.setError("Please enter a valid calories per serving.");
+                    }
+                }
             } else {
-                ingredientName.setError("Cannot accept duplicate ingredients!"); 
+                if (ingredientQuantityStr.isEmpty()) {
+                    ingredientQuantity.setError("Please enter an ingredient quantity.");
+                }
+                if (calServingStr.isEmpty()) {
+                    caloriesPerServing.setError("Please enter calories per serving.");
+                }
             }
         });
 

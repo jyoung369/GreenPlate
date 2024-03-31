@@ -1,12 +1,7 @@
 package com.example.recipeapp.views;
 
-import static java.security.AccessController.getContext;
-
-import android.content.Intent;
 import android.os.Bundle;
-import android.text.Spannable;
-import android.text.SpannableString;
-import android.text.style.StyleSpan;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
@@ -15,17 +10,13 @@ import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.lifecycle.ViewModelProvider;
 
-import com.example.recipeapp.IngredientFragment;
 import com.example.recipeapp.R;
 import com.example.recipeapp.model.Ingredient;
 import com.example.recipeapp.viewmodels.PantryViewModel;
 
-import org.w3c.dom.Text;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class IngredientList extends AppCompatActivity {
     private PantryViewModel pantryViewModel;
