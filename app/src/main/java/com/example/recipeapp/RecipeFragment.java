@@ -147,20 +147,8 @@ public class RecipeFragment extends Fragment {
                         View currView = recipeListLayout.getChildAt(index);
                         TextView available = currView.findViewById(
                                 R.id.recipe_ingredients_available_textview);
-                        Boolean sufficient = true;
-                        for (int i = 0; i < r.getIngredients().size(); i++) {
-                            String ing = r.getIngredients().get(i);
-                            if (!(pantryItems.containsKey(ing))) {
-                                sufficient = false;
-                                break;
-                            } else {
-                                int qty = pantryItems.get(r.getIngredients().get(i));
-                                if (qty < r.getQuantities().get(i)) {
-                                    sufficient = false;
-                                    break;
-                                }
-                            }
-                        }
+                        Cookbook book = new Cookbook();
+                        Boolean sufficient = book.sufficientIngredients(pantryItems, r);
                         if (sufficient) {
                             available.setText("Sufficient Ingredients");
                             available.setTextColor(Color.GREEN);

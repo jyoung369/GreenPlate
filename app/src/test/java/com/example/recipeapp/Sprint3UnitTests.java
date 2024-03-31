@@ -3,6 +3,7 @@ package com.example.recipeapp;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
+import com.example.recipeapp.model.Ingredient;
 import com.example.recipeapp.model.Cookbook;
 import com.example.recipeapp.model.Recipe;
 
@@ -43,6 +44,27 @@ public class Sprint3UnitTests {
         assertFalse(u.validateIngredients(r.getIngredients(), r.getQuantities()));
     }
 
+    // Amritha Pramod
+    @Test
+    public void checkForDuplicateIngredients() {
+        Util u = new Util();
+        ArrayList<String> ings = new ArrayList<>();
+        ings.add("carrots");
+        ings.add("broccoli");
+        assertTrue(u.duplicateIngredients(ings, "broccoli"));
+    }
+
+
+
+    // Amritha Pramod
+    @Test
+    public void checkValidQuantities() {
+        Util u = new Util();
+        ArrayList<Integer> validIngs = new ArrayList<>();
+        validIngs.add(3);
+        validIngs.add(-1);
+        assertFalse(u.validateQuantities(validIngs));
+    }
 
     //Julie Young
     @Test
