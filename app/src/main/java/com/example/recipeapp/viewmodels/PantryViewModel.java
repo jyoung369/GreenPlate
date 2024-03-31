@@ -39,7 +39,7 @@ public class PantryViewModel {
 
     private MutableLiveData<List<Ingredient>> ingredientList = new MutableLiveData<>();
     
-    public LiveData<ArrayList<String>> getData() {
+    public LiveData<ArrayList<String>> getIngList() {
         return ingList;
     }
 

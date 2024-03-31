@@ -4,7 +4,6 @@ public class Ingredient {
     private String name;
     private Integer quantity;
     private int caloriesPerServing;
-
     private String expirationDate;
 
     public Ingredient(String name, Integer quantity,
