@@ -54,6 +54,8 @@ public class Sprint3UnitTests {
         assertTrue(u.duplicateIngredients(ings, "broccoli"));
     }
 
+
+
     // Amritha Pramod
     @Test
     public void checkValidQuantities() {
@@ -90,6 +92,8 @@ public class Sprint3UnitTests {
         pantry.put("Milk", 100);
         assertFalse(book.sufficientIngredients(pantry, r));
     }
+
+    //Simona Ivanov
     @Test
     public void checkSufficient() {
         Cookbook book = new Cookbook();
@@ -105,6 +109,19 @@ public class Sprint3UnitTests {
         pantry.put("Milk", 300);
         pantry.put("Eggs", 40);
         assertTrue(book.sufficientIngredients(pantry, r));
+    }
+    @Test
+    public void checkMissingQty() {
+        Cookbook book = new Cookbook();
+        ArrayList<String> ingredients = new ArrayList<>();
+        ingredients.add("Cereal");
+        ingredients.add("Milk");
+        ArrayList<Integer> qty = new ArrayList<>();
+        qty.add(50);
+        Recipe recipe = new Recipe("Cereal", 300, "Put cereal in milk",
+                ingredients, qty);
+        HashMap<String, Integer> pantry = new HashMap<>();
+        assertFalse(book.sufficientIngredients(pantry, recipe));
     }
 
 }
