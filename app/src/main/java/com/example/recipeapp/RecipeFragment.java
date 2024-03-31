@@ -29,6 +29,7 @@ import com.example.recipeapp.viewmodels.RecipeViewModel;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Objects;
 
 public class RecipeFragment extends Fragment {
 
@@ -136,7 +137,7 @@ public class RecipeFragment extends Fragment {
                     name.setOnClickListener(v -> {
                         Intent intent = new Intent(getContext(), RecipeDetailsActivity.class);
                         intent.putExtra("recipe", r);
-                        getContext().startActivity(intent);
+                        requireContext().startActivity(intent);
                     });
                 } else {
                     available.setText("Insufficient Ingredients");
