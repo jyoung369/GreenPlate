@@ -31,13 +31,24 @@
             android:textStyle="bold"
             android:text="Quantity:" />
 
-        <!-- Ingredient Calories TextView -->
-        <TextView
-            android:id="@+id/ingredient_calories_textview"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textStyle="bold"
-            android:text="Calories:" />
+            android:layout_height="wrap_content">
 
+            <EditText
+                android:id="@+id/changeQtyValue_edittext"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:hint="Enter new qty"/>
+
+            <Button
+                android:id="@+id/changeQuantity_button"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Change Quantity"/>
+
+        </LinearLayout>
     </LinearLayout>
 </androidx.cardview.widget.CardView>

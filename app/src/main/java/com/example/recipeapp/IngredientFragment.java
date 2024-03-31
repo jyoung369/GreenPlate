@@ -5,6 +5,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -36,7 +38,6 @@ public class IngredientFragment extends Fragment {
         Button button = view.findViewById(R.id.ingredientInputButton);
 
         pantryViewModel = new PantryViewModel();
-        ArrayList<String> ingredientList = new ArrayList<>();
         pantryViewModel.readIngredients();
         pantryViewModel.readIngredientQuantities();
 
@@ -65,6 +66,29 @@ public class IngredientFragment extends Fragment {
                         LinearLayout.LayoutParams.MATCH_PARENT, 16);
                 spacer.setLayoutParams(layoutParams);
                 ingredientListLayout.addView(spacer);
+
+                // listener for updating text
+                EditText newQty = cardView.findViewById(R.id.changeQtyValue_edittext);
+                Button changeQtyButton = cardView.findViewById(R.id.changeQuantity_button);
+
+                // Set up listener for the Change Quantity button
+                changeQtyButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        String editTextString = newQty.getText().toString().trim();
+
+                        if (!editTextString.isEmpty()) {
+                            int newQuantity = Integer.parseInt(editTextString);
+                            // Update the quantity of the ingredient object
+                            ingredient.setQuantity(newQuantity);
+
+                            pantryViewModel.updateQuantity(ingredient, newQuantity);
+
+                            ingredientQuantity.setText(ingredient.getQuantity().toString() + "g");
+                        }
+                    }
+                });
+
             }
         });
         button.setOnClickListener(v -> {
