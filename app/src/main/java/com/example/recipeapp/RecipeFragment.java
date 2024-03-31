@@ -128,7 +128,7 @@ public class RecipeFragment extends Fragment {
                     available.setTextColor(Color.RED);
                     //set click listener for recipe name (no case)
                     name.setOnClickListener(v -> Toast.makeText(getContext(), "You don't have"
-                            + "enough ingredients to make this recipe.",
+                            + " enough ingredients to make this recipe.",
                             Toast.LENGTH_SHORT).show());
                 }
                 recipeListLayout.addView(cardView);
