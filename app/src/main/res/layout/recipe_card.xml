@@ -35,16 +35,18 @@
             android:textColor="#FF0000"/>
 
         <TextView
-            android:id="@+id/recipe_instructions_label"
+            android:id="@+id/recipe_ingredients_textview"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Instructions:"
+            android:text="Ingredients:"
             android:textStyle="bold"/>
 
-        <TextView
-            android:id="@+id/recipe_instructions_textview"
+        <LinearLayout
+            android:id="@+id/recipe_ingredients_layout"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+        </LinearLayout>
 
     </LinearLayout>
 </androidx.cardview.widget.CardView>
