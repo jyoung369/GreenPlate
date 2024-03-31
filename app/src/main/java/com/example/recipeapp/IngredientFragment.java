@@ -3,6 +3,10 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Lifecycle;
+import androidx.lifecycle.LifecycleOwner;
+import androidx.lifecycle.Observer;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,13 +14,13 @@ import android.widget.Button;
 import android.widget.EditText;
 import com.example.recipeapp.viewmodels.PantryViewModel;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class IngredientFragment extends Fragment {
     private EditText ingredientName;
     private EditText ingredientQuantity;
     private EditText caloriesPerServing;
     private Button expirationDate;
-    private View viewCopy;
 
     public IngredientFragment() {
         // Required empty public constructor
@@ -41,7 +45,7 @@ public class IngredientFragment extends Fragment {
                 vm.showDatePickerDialog(requireContext(), expirationDate));
 
         ArrayList<String> ingData = new ArrayList<>();
-        vm.getData().observe(getViewLifecycleOwner(), info -> {
+        vm.getIngList().observe(getViewLifecycleOwner(), info -> {
             for (String name : info) {
                 ingData.add(name);
             }
@@ -67,8 +71,6 @@ public class IngredientFragment extends Fragment {
                 ingredientName.setError("Cannot accept duplicate ingredients!"); 
             }
         });
-
-        viewCopy = view;
 
         super.onViewCreated(view, savedInstanceState);
         super.onCreate(savedInstanceState);

@@ -1,5 +1,10 @@
 package com.example.recipeapp;
 
+import androidx.lifecycle.LiveData;
+
+import com.example.recipeapp.viewmodels.PantryViewModel;
+
+import java.util.ArrayList;
 import java.util.List;
 
 public class Util {
@@ -31,4 +36,21 @@ public class Util {
                 && quantities.size() > 0 && ingredients.size() == quantities.size();
     }
 
+    public boolean validateQuantities(ArrayList<Integer> validIngs) {
+        for (Integer quantity : validIngs) {
+            if (quantity <= 0) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    public boolean duplicateIngredients(ArrayList<String> ings, String newIng) {
+        for (String ing : ings) {
+            if (newIng.equals(ing)) {
+                return true;
+            }
+        }
+        return false;
+    }
 }
