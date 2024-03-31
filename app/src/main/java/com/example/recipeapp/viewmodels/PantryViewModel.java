@@ -41,7 +41,7 @@ public class PantryViewModel {
         return ingList;
     }
 
-    public LiveData<List<Ingredient>> getIngredientData(){
+    public LiveData<List<Ingredient>> getIngredientData() {
         return ingredientList;
     }
   
@@ -129,15 +129,19 @@ public class PantryViewModel {
                     String ingredientName = dataSnapshot.child("name").getValue(String.class);
                     Integer ingredientQuantity = dataSnapshot.child("quantity")
                             .getValue(Integer.class);
-                    Integer calories = dataSnapshot.child("caloriesPerServing").getValue(Integer.class);
-                    String expirationDate = dataSnapshot.child("expirationDate").getValue(String.class);
+                    Integer calories = dataSnapshot.child("caloriesPerServing")
+                            .getValue(Integer.class);
+                    String expirationDate = dataSnapshot.child("expirationDate")
+                            .getValue(String.class);
                     if (ingredientQuantity > 0) {
                         // ingredientList.add(ingredientName);
-                        allIngredients.add(new Ingredient(ingredientName, ingredientQuantity, calories, expirationDate));
+                        allIngredients.add(new Ingredient(ingredientName,
+                                ingredientQuantity, calories, expirationDate));
                     }
                     Log.d("FirebaseData",
                             "Ingredient Name: " + ingredientName + ", Quantity: "
-                                    + ingredientQuantity + ", Calories: " + calories + ", expirationDate: " + expirationDate);
+                                    + ingredientQuantity + ", Calories: "
+                                    + calories + ", expirationDate: " + expirationDate);
                 }
                 // ingList.setValue(ingredientList);
                 ingredientList.setValue(allIngredients);

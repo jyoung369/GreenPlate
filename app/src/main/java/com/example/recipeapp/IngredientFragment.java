@@ -9,13 +9,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.recipeapp.model.Ingredient;
 import com.example.recipeapp.viewmodels.PantryViewModel;
-import com.example.recipeapp.views.IngredientList;
+import com.example.recipeapp.views.IngredientInput;
 
 import java.util.ArrayList;
 
@@ -52,7 +51,8 @@ public class IngredientFragment extends Fragment {
                 System.out.println("Ingredient: " + ingredient);
                 View cardView = inflater.inflate(R.layout.ingredient_card, null);
                 TextView name = cardView.findViewById(R.id.ingredient_name_textview);
-                TextView ingredientQuantity = cardView.findViewById(R.id.ingredient_quantity_textview);
+                TextView ingredientQuantity = cardView.findViewById(
+                        R.id.ingredient_quantity_textview);
                 // Set the name of the ingredient
                 name.setText(ingredient.getName());
                 System.out.println("Quantity: " + ingredient.getQuantity());
@@ -61,13 +61,14 @@ public class IngredientFragment extends Fragment {
                 ingredientListLayout.addView(cardView);
                 // Add a spacer
                 View spacer = new View(getContext());
-                LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, 16); // Adjust height as needed
+                LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(
+                        LinearLayout.LayoutParams.MATCH_PARENT, 16);
                 spacer.setLayoutParams(layoutParams);
                 ingredientListLayout.addView(spacer);
             }
         });
         button.setOnClickListener(v -> {
-            Intent intent = new Intent(requireContext(), IngredientList.class);
+            Intent intent = new Intent(requireContext(), IngredientInput.class);
             startActivity(intent);
         });
 
