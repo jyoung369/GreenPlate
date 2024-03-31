@@ -1,9 +1,6 @@
 package com.example.recipeapp.viewmodels;
 
-import androidx.lifecycle.MutableLiveData;
 
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 
 public class IngredientViewModel {
 //    private final FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();

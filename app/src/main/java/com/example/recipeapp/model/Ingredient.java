@@ -37,8 +37,10 @@ public class Ingredient {
         return expirationDate;
     }
 
-    public String toString(){
+    public String toString() {
         return "Ingredient Name: " + this.getName() + ", Quantity: "
-                + this.getQuantity() + ", Calories: " + this.getCaloriesPerServing() + ", expirationDate: " + this.getExpirationDate();
+                + this.getQuantity() + ", Calories: "
+                + this.getCaloriesPerServing() + ", expirationDate: "
+                + this.getExpirationDate();
     }
 }
