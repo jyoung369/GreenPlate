@@ -60,7 +60,7 @@
 
 
         <activity
-            android:name=".views.IngredientList"
+            android:name=".views.IngredientInput"
             android:exported="true"/>
 
 
