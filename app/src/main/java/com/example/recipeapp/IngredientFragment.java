@@ -5,6 +5,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -37,7 +39,6 @@ public class IngredientFragment extends Fragment {
         Button button = view.findViewById(R.id.ingredientInputButton);
 
         pantryViewModel = new PantryViewModel();
-        ArrayList<String> ingredientList = new ArrayList<>();
         pantryViewModel.readIngredients();
         pantryViewModel.readIngredientQuantities();
 
@@ -64,6 +65,27 @@ public class IngredientFragment extends Fragment {
                 LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, 16); // Adjust height as needed
                 spacer.setLayoutParams(layoutParams);
                 ingredientListLayout.addView(spacer);
+
+                // listener for updating text
+                EditText newQty = cardView.findViewById(R.id.changeQtyValue_edittext);
+                Button changeQtyButton = cardView.findViewById(R.id.changeQuantity_button);
+
+                // Set up listener for the Change Quantity button
+                changeQtyButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        // Get the current quantity from the EditText
+                        int newQuantity = Integer.parseInt(newQty.getText().toString());
+
+                        // Update the quantity of the ingredient object
+                        ingredient.setQuantity(newQuantity);
+
+                        pantryViewModel.updateQuantity(ingredient, newQuantity);
+
+                        // You may also want to update the quantity displayed elsewhere, if needed
+                    }
+                });
+
             }
         });
         button.setOnClickListener(v -> {

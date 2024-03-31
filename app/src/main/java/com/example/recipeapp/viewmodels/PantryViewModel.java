@@ -24,22 +24,20 @@ import java.util.HashMap;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 public class PantryViewModel {
     private final FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
     private Calendar calendar;
-    private MutableLiveData<ArrayList<String>> ingList = new MutableLiveData<>(new ArrayList<>());
     private MutableLiveData<HashMap<String, Integer>> ingQuantity = new MutableLiveData
             <>(new HashMap<>());
 
     private List<Ingredient> allIngredients = new ArrayList<>();
 
     private MutableLiveData<List<Ingredient>> ingredientList = new MutableLiveData<>();
-    
-    public LiveData<ArrayList<String>> getIngList() {
-        return ingList;
-    }
+
+    private MutableLiveData<Boolean> isSaveSuccessful = new MutableLiveData<>();
 
     public LiveData<List<Ingredient>> getIngredientData(){
         return ingredientList;
@@ -146,6 +144,51 @@ public class PantryViewModel {
                 Log.e("FirebaseError", "Error reading data from Firebase: " + error.getMessage());
             }
         });
+    }
+
+    public void updateQuantity(Ingredient toUpdate, Integer newQty){
+
+        Map<String, Object> updatedIngredient = new HashMap<>();
+        updatedIngredient.put("name", toUpdate.getName());
+        updatedIngredient.put("quantity", newQty);
+        updatedIngredient.put("expirationDate", toUpdate.getExpirationDate());
+        updatedIngredient.put("caloriesPerServing", toUpdate.getCaloriesPerServing());
+
+        FirebaseDatabase ingDB = FirebaseDatabase
+                .getInstance("https://recipeapp-1fba1-default-rtdb.firebaseio.com/");
+        DatabaseReference pantryDB = ingDB.getReference().child("pantry/"
+                + user.getUid());
+
+        pantryDB.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                // Check if userId exists
+                System.out.println(toUpdate);
+                if (snapshot.exists()) {
+                    for (DataSnapshot ingredientSnapshot : snapshot.getChildren()) {
+                        // Access each ingredient under the userId
+                        String ingredientId = ingredientSnapshot.getKey();
+                        String ingredientName = ingredientSnapshot.child("name").getValue(String.class);
+
+                        if (toUpdate.getName().equals(ingredientName)) {
+                            Log.d("TAG", toUpdate.getName() + "found in userId: " + user.getUid() + ", ingredientId: " + ingredientId);
+                            pantryDB.child(ingredientId).setValue(updatedIngredient)
+                                    .addOnSuccessListener(aVoid -> isSaveSuccessful.postValue(true))
+                                    .addOnFailureListener(e -> isSaveSuccessful.postValue(false));;
+                        }
+                    }
+                } else {
+                    Log.d("TAG", "User ID not found in pantry");
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Log.e("FirebaseError", "Error reading data from Firebase: " + error.getMessage());
+            }
+        });
+
+
     }
 
     public void showDatePickerDialog(Context context, Button expDate) {
