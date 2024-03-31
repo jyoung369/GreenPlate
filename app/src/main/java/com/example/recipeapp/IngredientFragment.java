@@ -19,6 +19,7 @@ public class IngredientFragment extends Fragment {
     private EditText ingredientQuantity;
     private EditText caloriesPerServing;
     private Button expirationDate;
+    private View viewCopy;
 
     public IngredientFragment() {
         // Required empty public constructor
@@ -54,24 +55,31 @@ public class IngredientFragment extends Fragment {
 
         Button ingInput = view.findViewById(R.id.inputIngButton);
         ingInput.setOnClickListener(v -> {
+            ArrayList<String> ingList = new ArrayList<>();
+            vm.readIngredients(ingList);
+
             String ingredientName1 = ingredientName.getText().toString();
             int ingredientQuantity1 = Integer.parseInt(ingredientQuantity.getText().toString());
             if (!ingData.contains(ingredientName1)) {
-                vm.inputIngredient(requireContext(), ingredientName,
-                        ingredientQuantity, caloriesPerServing, expirationDate);
+                vm.inputIngredient(requireContext(), ingredientName, ingredientQuantity,
+                        caloriesPerServing, expirationDate);
             } else if (ingredientQuantity1 <= 0) {
                 ingredientQuantity.setError("Please enter a valid quantity!");
                 ingredientName.setError("Cannot accept duplicate ingredients!");
             } else {
-                ingredientName.setError("Cannot accept duplicate ingredients!");
+                ingredientName.setError("Cannot accept duplicate ingredients!"); 
             }
         });
+
 
         Button viewIngredientListButton = view.findViewById(R.id.viewIngredientListButton);
         viewIngredientListButton.setOnClickListener(v -> {
             Intent intent = new Intent(requireContext(), IngredientList.class);
             startActivity(intent);
         });
+
+        viewCopy = view;
+
 
         super.onViewCreated(view, savedInstanceState);
         super.onCreate(savedInstanceState);
