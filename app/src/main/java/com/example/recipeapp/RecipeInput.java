@@ -4,7 +4,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.annotation.SuppressLint;
-import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.EditText;
@@ -12,7 +11,6 @@ import android.widget.Toast;
 
 import com.example.recipeapp.model.Ingredient;
 import com.example.recipeapp.viewmodels.RecipeInputViewModal;
-import com.example.recipeapp.views.WelcomeActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -46,10 +44,7 @@ public class RecipeInput extends AppCompatActivity {
         ingredientInput = findViewById(R.id.etIngredientName);
         ingredientQuantityInput = findViewById(R.id.etIngredientAmount);
 
-        backButton.setOnClickListener(back -> {
-            Intent intent = new Intent(RecipeInput.this, WelcomeActivity.class);
-            startActivity(intent);
-        });
+        backButton.setOnClickListener(back -> finish());
         viewModel.getIsSaveSuccessful().observe(this, isSuccess -> {
             if (Boolean.TRUE.equals(isSuccess)) {
                 Toast.makeText(this, "Recipe saved successfully.", Toast.LENGTH_SHORT).show();
