@@ -139,6 +139,7 @@ public class Sprint3UnitTests {
 
     @Test
     public void checkValidIngredientNameForNumbers() {
+        // we want to make sure that there aren't any illegal numbers in the string
         Util u = new Util();
         String validName = "Tomato";
         assertFalse("Ingredient name should not contain numbers", u.containsNumber(validName));
