@@ -49,4 +49,8 @@ public class Util {
         }
         return false;
     }
+
+    public boolean containsNumber(String str) {
+        return str.matches(".*\\d+.*");
+    }
 }

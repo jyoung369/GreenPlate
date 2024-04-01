@@ -136,4 +136,13 @@ public class Sprint3UnitTests {
         Ingredient i = new Ingredient("Rice", 500);
         assertTrue("Ingredient quantity should be greater than 0", i.getQuantity() > 0);
     }
+
+    @Test
+    public void checkValidIngredientNameForNumbers() {
+        Util u = new Util();
+        String validName = "Tomato";
+        assertFalse("Ingredient name should not contain numbers", u.containsNumber(validName));
+        String invalidName = "Rice123";
+        assertTrue("Ingredient name should contain numbers", u.containsNumber(invalidName));
+    }
 }
