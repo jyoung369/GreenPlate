@@ -3,11 +3,15 @@ package com.example.recipeapp.model;
 public class Ingredient {
     private String name;
     private Integer quantity;
-    private int caloriesPerServing;
+    private Integer caloriesPerServing;
     private String expirationDate;
 
+    public Ingredient(){
+
+    }
+
     public Ingredient(String name, Integer quantity,
-                      int caloriesPerServing, String expirationDate) {
+                      Integer caloriesPerServing, String expirationDate) {
         this.name = name;
         this.quantity = quantity;
         this.caloriesPerServing = caloriesPerServing;
@@ -33,7 +37,7 @@ public class Ingredient {
         this.quantity = newQty;
     }
 
-    public int getCaloriesPerServing() {
+    public Integer getCaloriesPerServing() {
         return caloriesPerServing;
     }
 
