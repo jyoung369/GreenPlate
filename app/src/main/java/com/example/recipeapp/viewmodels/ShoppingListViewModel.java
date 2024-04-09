@@ -1,6 +1,8 @@
 package com.example.recipeapp.viewmodels;
 
+import android.app.DatePickerDialog;
 import android.util.Log;
+import android.widget.Button;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -18,11 +20,15 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import android.content.Context;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 
 public class ShoppingListViewModel extends ViewModel {
+    private Calendar calendar;
     private final FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
     private MutableLiveData<Boolean> isSaveSuccessful = new MutableLiveData<>();
@@ -151,5 +157,25 @@ public class ShoppingListViewModel extends ViewModel {
                 Log.e("FirebaseError", "Error reading data from Firebase: " + error.getMessage());
             }
         });
+    }
+    public void showDatePickerDialog(Context context, Button expDate) {
+        calendar = Calendar.getInstance();
+        int year = calendar.get(Calendar.YEAR);
+        int month = calendar.get(Calendar.MONTH);
+        int day = calendar.get(Calendar.DAY_OF_MONTH);
+        DatePickerDialog datePickerDialog = new DatePickerDialog(
+                context,
+                (view, year1, monthOfYear, day1) -> {
+                    calendar.set(year1, monthOfYear, day1);
+                    SimpleDateFormat dateFormat = new SimpleDateFormat(
+                            "dd-MM-yyyy", Locale.getDefault());
+                    String formattedDate = dateFormat.format(calendar.getTime());
+                    expDate.setText(formattedDate);
+                },
+                year,
+                month,
+                day
+        );
+        datePickerDialog.show();
     }
 }

@@ -55,13 +55,31 @@
                 android:inputType="text"
                 android:minHeight="48dp" />
 
+            <EditText
+                android:id="@+id/caloriesPerServing"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="20"
+                android:hint="calories per serving"
+                android:inputType="number"
+                android:minHeight="48dp" />
+
+            <Button
+                android:id="@+id/expirationDate"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="20"
+                android:hint="Click to input expiration date"
+                android:inputType="none"
+                android:minHeight="48dp" />
+
             <Button
                 android:id="@+id/inputIngButton"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Input!" />
             <Button
-                android:id="@+id/viewIngredientListButton"
+                android:id="@+id/viewShoppingListButton"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Back" />
