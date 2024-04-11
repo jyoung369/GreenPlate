@@ -22,11 +22,13 @@ public class ShoppingInputActivity extends AppCompatActivity {
     private EditText ingredientQuantity;
     private EditText caloriesPerServing;
     private Button expirationDate;
+    /** @noinspection checkstyle:OperatorWrap*/
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.fragment_shopping_input);
         ShoppingListViewModel vm = new ShoppingListViewModel();
+        PantryViewModel pm = new PantryViewModel();
         Button viewShoppingListButton = findViewById(R.id.viewShoppingListButton);
         viewShoppingListButton.setOnClickListener(v -> finish());
         ingredientName = findViewById(R.id.ingredientName);
@@ -37,30 +39,53 @@ public class ShoppingInputActivity extends AppCompatActivity {
 
         expirationDate.setOnClickListener(v ->
                 vm.showDatePickerDialog(this, expirationDate));
-
-
+        ArrayList<Ingredient> pantry = new ArrayList<Ingredient>();
         ArrayList<String> ingData = new ArrayList<>();
         vm.getShoppingList().observe(this, info -> {
             for (Ingredient ingredient : info) {
                 ingData.add(ingredient.getName());
             }
         });
+        pm.readIngredients();
+        pm.getIngredientData().observe(this, pantry::addAll);
+
         ingInput.setOnClickListener(v -> {
             String ingredientName1 = ingredientName.getText().toString();
             String ingredientQuantityStr = ingredientQuantity.getText().toString();
             String calServingStr = caloriesPerServing.getText().toString();
             String date = expirationDate.getText().toString();
+            int oldCalorieCount = -1;
+            String oldExpDate = "";
+            for (Ingredient ingredient : pantry) {
+                if (ingredient.getName().equals(ingredientName1)) {
+                    oldCalorieCount = ingredient.getCaloriesPerServing();
+                    oldExpDate = ingredient.getExpirationDate();
+                }
+            }
             if (!ingredientQuantityStr.isEmpty() && !calServingStr.isEmpty()) {
                 int ingredientQuantity1 = Integer.parseInt(ingredientQuantityStr);
                 int calServing = Integer.parseInt(calServingStr);
                 if (!ingredientName1.isEmpty() && ingredientQuantity1 > 0 && calServing >= 0) {
-                    if (!ingData.contains(ingredientName1)) {
+                    if ((oldCalorieCount == -1
+                            || oldCalorieCount == calServing && oldExpDate.equals(date))) {
                         vm.addItem(this, ingredientName1, ingredientQuantity1,
                                 calServing, date);
                         Intent intent = new Intent(this, WelcomeActivity.class);
                         startActivity(intent);
                     } else {
-                        ingredientName.setError("Cannot accept duplicate ingredients!");
+                        if (oldCalorieCount != calServing) {
+                            caloriesPerServing.setError("This ingredient already"
+                                    + " has a calorie count of " + oldCalorieCount);
+                        }
+                        if (!oldExpDate.equals(date)) {
+                            if (oldExpDate != "") {
+                                expirationDate.setError("This ingredient already has an exp date "
+                                        + oldExpDate);
+                            } else {
+                                expirationDate.setError("This ingredient "
+                                        + "does not have an exp date.");
+                            }
+                        }
                     }
                 } else {
                     if (ingredientName1.isEmpty()) {

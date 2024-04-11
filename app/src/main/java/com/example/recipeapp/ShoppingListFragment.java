@@ -6,16 +6,12 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.ViewModelProvider;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
-import com.example.recipeapp.model.Ingredient;
-import com.example.recipeapp.viewmodels.ShoppingListViewModel;
-import com.example.recipeapp.views.IngredientInput;
 import com.example.recipeapp.views.ShoppingInputActivity;
 
 public class ShoppingListFragment extends Fragment {
@@ -39,10 +35,12 @@ public class ShoppingListFragment extends Fragment {
             startActivity(intent);
         });
 
-//        ShoppingListViewModel shoppingListViewModel = new ViewModelProvider(this).get(ShoppingListViewModel.class);
-//        shoppingListViewModel.addItem(getContext(), "abc", 6, 1200, "10-04-2024");
-//        shoppingListViewModel.getShoppingList().observe(getViewLifecycleOwner(), list -> {
-//            System.out.println("final shopping list: " + shoppingListViewModel.getShoppingList().getValue());
-//        });
+        //        ShoppingListViewModel shoppingListViewModel = new
+        //        ViewModelProvider(this).get(ShoppingListViewModel.class);
+        //        shoppingListViewModel.addItem(getContext(), "abc", 6, 1200, "10-04-2024");
+        //        shoppingListViewModel.getShoppingList().observe(getViewLifecycleOwner(), list -> {
+        //            System.out.println("final shopping list: " +
+        //            shoppingListViewModel.getShoppingList().getValue());
+        //       });
     }
 }
