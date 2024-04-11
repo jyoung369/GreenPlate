@@ -1,6 +1,8 @@
 package com.example.recipeapp.viewmodels;
 
+import android.app.DatePickerDialog;
 import android.util.Log;
+import android.widget.Button;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -18,11 +20,14 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import android.content.Context;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.Calendar;
 import java.util.List;
+import java.util.Locale;
 
 public class ShoppingListViewModel extends ViewModel {
+    private Calendar calendar;
     private final FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
     private MutableLiveData<Boolean> isSaveSuccessful = new MutableLiveData<>();
@@ -30,7 +35,7 @@ public class ShoppingListViewModel extends ViewModel {
     private List<Ingredient> allIngredients = new ArrayList<>();
 
     private MutableLiveData<List<Ingredient>> shoppingList = new MutableLiveData<>();
-    public LiveData<List<Ingredient>> getShoppingList(){
+    public LiveData<List<Ingredient>> getShoppingList() {
         return shoppingList;
     }
 
@@ -38,7 +43,8 @@ public class ShoppingListViewModel extends ViewModel {
         // Initialize the shoppingList if needed
     }
 
-    public void addItem(Context context, String name, Integer quantity, Integer caloriesPerServing, String expirationDate){
+    public void addItem(Context context, String name, Integer quantity,
+                        Integer caloriesPerServing, String expirationDate) {
         FirebaseDatabase shoppinglistDB = FirebaseDatabase
                 .getInstance("https://recipeapp-1fba1-default-rtdb.firebaseio.com/");
         DatabaseReference shoppinglistRef = shoppinglistDB.getReference().child("shoppinglist/"
@@ -49,7 +55,8 @@ public class ShoppingListViewModel extends ViewModel {
                 boolean existsInList = false;
                 boolean shouldRemove = false;
                 String duplicateIngredientId = "";
-                Ingredient ingredient = new Ingredient(name, quantity, caloriesPerServing, expirationDate);
+                Ingredient ingredient = new Ingredient(name, quantity,
+                        caloriesPerServing, expirationDate);
                 Ingredient duplicateIngredient = ingredient;
                 allIngredients = new ArrayList<>();
                 for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
@@ -81,7 +88,7 @@ public class ShoppingListViewModel extends ViewModel {
                             .addOnFailureListener(
                                     e -> isSaveSuccessful.postValue(false));
                     List<Ingredient> currList = shoppingList.getValue();
-                    System.out.println("modify: previous ingredient: "+ duplicateIngredient);
+                    System.out.println("modify: previous ingredient: " + duplicateIngredient);
                     System.out.println("modify: new ingredient" + ingredient);
                     currList.remove(duplicateIngredient); // remove previous
                     currList.add(ingredient); // add new
@@ -95,7 +102,7 @@ public class ShoppingListViewModel extends ViewModel {
                                     e -> isSaveSuccessful.postValue(false));
                     List<Ingredient> currList = shoppingList.getValue();
                     currList.remove(duplicateIngredient);
-                    System.out.println("modify: previous ingredient: "+ duplicateIngredient);
+                    System.out.println("modify: previous ingredient: " + duplicateIngredient);
                     shoppingList.setValue(currList);
                 }
                 if (!existsInList && quantity > 0) {
@@ -103,14 +110,17 @@ public class ShoppingListViewModel extends ViewModel {
                     shoppinglistRef.push().setValue(ingredient)
                             .addOnSuccessListener(success -> {
                                 Toast.makeText(context,
-                                        "Ingredient inputted successfully!", Toast.LENGTH_SHORT).show();
+                                        "Ingredient inputted successfully!", Toast.LENGTH_SHORT)
+                                        .show();
                             })
                             .addOnFailureListener(failure -> {
                                 Toast.makeText(context,
                                         "Could not input ingredient", Toast.LENGTH_SHORT).show();
                             });
                 } else if (!existsInList && quantity <= 0) {
-                    Toast.makeText(context, "Cannot add negative or zero quantity of ingredient to list", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(context,
+                            "Cannot add negative or zero quantity of ingredient to list",
+                            Toast.LENGTH_SHORT).show();
                 }
             }
             public void onCancelled(@NonNull DatabaseError error) {
@@ -119,7 +129,7 @@ public class ShoppingListViewModel extends ViewModel {
         });
     }
 
-    public void readShoppingList(){
+    public void readShoppingList() {
         FirebaseDatabase shoppinglistDB = FirebaseDatabase
                 .getInstance("https://recipeapp-1fba1-default-rtdb.firebaseio.com/");
         DatabaseReference shoppinglistRef = shoppinglistDB.getReference().child("shoppinglist/"
@@ -151,5 +161,25 @@ public class ShoppingListViewModel extends ViewModel {
                 Log.e("FirebaseError", "Error reading data from Firebase: " + error.getMessage());
             }
         });
+    }
+    public void showDatePickerDialog(Context context, Button expDate) {
+        calendar = Calendar.getInstance();
+        int year = calendar.get(Calendar.YEAR);
+        int month = calendar.get(Calendar.MONTH);
+        int day = calendar.get(Calendar.DAY_OF_MONTH);
+        DatePickerDialog datePickerDialog = new DatePickerDialog(
+                context,
+                (view, year1, monthOfYear, day1) -> {
+                    calendar.set(year1, monthOfYear, day1);
+                    SimpleDateFormat dateFormat = new SimpleDateFormat(
+                            "dd-MM-yyyy", Locale.getDefault());
+                    String formattedDate = dateFormat.format(calendar.getTime());
+                    expDate.setText(formattedDate);
+                },
+                year,
+                month,
+                day
+        );
+        datePickerDialog.show();
     }
 }

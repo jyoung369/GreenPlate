@@ -6,7 +6,7 @@ public class Ingredient {
     private Integer caloriesPerServing;
     private String expirationDate;
 
-    public Ingredient(){
+    public Ingredient() {
 
     }
 
