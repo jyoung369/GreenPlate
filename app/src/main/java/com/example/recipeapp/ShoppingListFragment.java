@@ -29,10 +29,6 @@ public class ShoppingListFragment extends Fragment {
 
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         // testing purposes: delete if you're implementing actual logic
-        ShoppingListViewModel shoppingListViewModel = new ViewModelProvider(this).get(ShoppingListViewModel.class);
-        shoppingListViewModel.addItem(getContext(), "abc", 6, 1200, "10-04-2024");
-        shoppingListViewModel.getShoppingList().observe(getViewLifecycleOwner(), list -> {
-            System.out.println("final shopping list: " + shoppingListViewModel.getShoppingList().getValue());
-        });
+
     }
 }
