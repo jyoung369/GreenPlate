@@ -25,6 +25,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 
 public class ShoppingListViewModel extends ViewModel {
     private Calendar calendar;
@@ -181,5 +182,100 @@ public class ShoppingListViewModel extends ViewModel {
                 day
         );
         datePickerDialog.show();
+    }
+
+    public void updateQuantity(Ingredient toUpdate, Integer newQty) {
+        Map<String, Object> updatedIngredient = new HashMap<>();
+        updatedIngredient.put("name", toUpdate.getName());
+        updatedIngredient.put("quantity", newQty);
+        updatedIngredient.put("expirationDate", toUpdate.getExpirationDate());
+        updatedIngredient.put("caloriesPerServing", toUpdate.getCaloriesPerServing());
+
+        FirebaseDatabase shoppinglistDB = FirebaseDatabase
+                .getInstance("https://recipeapp-1fba1-default-rtdb.firebaseio.com/");
+        DatabaseReference shoppinglistRef = shoppinglistDB.getReference().child("shoppinglist/"
+                + user.getUid());
+
+        shoppinglistRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.exists()) {
+                    for (DataSnapshot ingredientSnapshot : snapshot.getChildren()) {
+                        // Access each ingredient under the userId
+                        String ingredientId = ingredientSnapshot.getKey();
+                        String ingredientName = ingredientSnapshot.child("name")
+                                .getValue(String.class);
+
+                        if (toUpdate.getName().equals(ingredientName)) {
+                            Log.d("TAG", toUpdate.getName() + "found in userId: "
+                                    + user.getUid() + ", ingredientId: " + ingredientId);
+                            if (newQty <= 0) {
+                                shoppinglistRef.child(ingredientId).removeValue()
+                                        .addOnSuccessListener(
+                                                aVoid -> isSaveSuccessful.postValue(true))
+                                        .addOnFailureListener(
+                                                e -> isSaveSuccessful.postValue(false));
+                                System.out.println("value removed");
+                                List<Ingredient> currIngredients = shoppingList.getValue();
+                                currIngredients.remove(toUpdate);
+                                shoppingList.setValue(currIngredients);
+                            } else {
+                                shoppinglistRef.child(ingredientId).setValue(updatedIngredient)
+                                        .addOnSuccessListener(
+                                                aVoid -> isSaveSuccessful.postValue(true))
+                                        .addOnFailureListener(
+                                                e -> isSaveSuccessful.postValue(false));
+                            }
+                        }
+                    }
+                } else {
+                    Log.d("TAG", "User ID not found in shopping list");
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Log.e("FirebaseError", "Error reading data from Firebase: " + error.getMessage());
+            }
+        });
+    }
+
+    public void removeSingleIngredient(Ingredient toRemove){
+        FirebaseDatabase shoppinglistDB = FirebaseDatabase
+                .getInstance("https://recipeapp-1fba1-default-rtdb.firebaseio.com/");
+        DatabaseReference shoppinglistRef = shoppinglistDB.getReference().child("shoppinglist/"
+                + user.getUid());
+
+        shoppinglistRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.exists()){
+                    for (DataSnapshot ingredientSnapshot : snapshot.getChildren()) {
+                        // Access each ingredient under the userId
+                        String ingredientId = ingredientSnapshot.getKey();
+                        String ingredientName = ingredientSnapshot.child("name")
+                                .getValue(String.class);
+
+                        if (toRemove.getName().equals(ingredientName)) {
+                            List<Ingredient> currIngredients = shoppingList.getValue();
+                            shoppinglistRef.child(ingredientId).removeValue()
+                                    .addOnSuccessListener(
+                                            aVoid -> isSaveSuccessful.postValue(true))
+                                    .addOnFailureListener(
+                                            e -> isSaveSuccessful.postValue(false));
+                            currIngredients.remove(toRemove);
+                            shoppingList.setValue(currIngredients);
+                        }
+                    }
+                } else {
+                    Log.d("TAG", "User ID not found in shopping list");
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
     }
 }
