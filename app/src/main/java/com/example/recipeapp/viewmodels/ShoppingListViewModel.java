@@ -58,7 +58,7 @@ public class ShoppingListViewModel extends ViewModel {
                 boolean shouldRemove = false;
                 String duplicateIngredientId = "";
                 Ingredient ingredient = new Ingredient(name, quantity,
-                        caloriesPerServing, expirationDate);
+                        caloriesPerServing, expirationDate, false);
                 Ingredient duplicateIngredient = ingredient;
                 allIngredients = new ArrayList<>();
                 for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
@@ -90,8 +90,8 @@ public class ShoppingListViewModel extends ViewModel {
                             .addOnFailureListener(
                                     e -> isSaveSuccessful.postValue(false));
                     List<Ingredient> currList = shoppingList.getValue();
-                    System.out.println("modify: previous ingredient: " + duplicateIngredient);
-                    System.out.println("modify: new ingredient" + ingredient);
+                    // System.out.println("modify: previous ingredient: " + duplicateIngredient);
+                    // System.out.println("modify: new ingredient" + ingredient);
                     currList.remove(duplicateIngredient); // remove previous
                     currList.add(ingredient); // add new
                     shoppingList.setValue(currList);
@@ -104,7 +104,7 @@ public class ShoppingListViewModel extends ViewModel {
                                     e -> isSaveSuccessful.postValue(false));
                     List<Ingredient> currList = shoppingList.getValue();
                     currList.remove(duplicateIngredient);
-                    System.out.println("modify: previous ingredient: " + duplicateIngredient);
+                    // System.out.println("modify: previous ingredient: " + duplicateIngredient);
                     shoppingList.setValue(currList);
                 }
                 if (!existsInList && quantity > 0) {
@@ -147,10 +147,12 @@ public class ShoppingListViewModel extends ViewModel {
                             .getValue(Integer.class);
                     String expirationDate = dataSnapshot.child("expirationDate")
                             .getValue(String.class);
+                    Boolean selected = dataSnapshot.child("selected")
+                            .getValue(Boolean.class);
                     if (ingredientQuantity > 0) {
                         // ingredientList.add(ingredientName);
                         allIngredients.add(new Ingredient(ingredientName,
-                                ingredientQuantity, calories, expirationDate));
+                                ingredientQuantity, calories, expirationDate, selected));
                     }
                     Log.d("FirebaseData",
                             "Ingredient Name: " + ingredientName + ", Quantity: "
@@ -185,6 +187,48 @@ public class ShoppingListViewModel extends ViewModel {
         );
         datePickerDialog.show();
     }
+    public void updateSelected(Ingredient toUpdate, Boolean selection) {
+        Map<String, Object> updatedIngredient = new HashMap<>();
+        updatedIngredient.put("name", toUpdate.getName());
+        updatedIngredient.put("quantity", toUpdate.getQuantity());
+        updatedIngredient.put("expirationDate", toUpdate.getExpirationDate());
+        updatedIngredient.put("caloriesPerServing", toUpdate.getCaloriesPerServing());
+        updatedIngredient.put("selected", selection);
+
+        FirebaseDatabase shoppinglistDB = FirebaseDatabase
+                .getInstance("https://recipeapp-1fba1-default-rtdb.firebaseio.com/");
+        DatabaseReference shoppinglistRef = shoppinglistDB.getReference().child("shoppinglist/"
+                + user.getUid());
+        shoppinglistRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.exists()) {
+                    for (DataSnapshot ingredientSnapshot : snapshot.getChildren()) {
+                        String ingredientId = ingredientSnapshot.getKey();
+                        String ingredientName = ingredientSnapshot.child("name")
+                                .getValue(String.class);
+
+                        if (toUpdate.getName().equals(ingredientName)) {
+                            Log.d("TAG", toUpdate.getName() + "found in userId: "
+                                    + user.getUid() + ", ingredientId: " + ingredientId);
+                            shoppinglistRef.child(ingredientId).setValue(updatedIngredient)
+                                        .addOnSuccessListener(
+                                                aVoid -> isSaveSuccessful.postValue(true))
+                                        .addOnFailureListener(
+                                                e -> isSaveSuccessful.postValue(false));
+                        }
+                    }
+                } else {
+                    Log.d("TAG", "User ID not found in shopping list");
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Log.e("FirebaseError", "Error reading data from Firebase: " + error.getMessage());
+            }
+        });
+    }
 
     public void updateQuantity(Ingredient toUpdate, Integer newQty) {
         Map<String, Object> updatedIngredient = new HashMap<>();
@@ -192,6 +236,7 @@ public class ShoppingListViewModel extends ViewModel {
         updatedIngredient.put("quantity", newQty);
         updatedIngredient.put("expirationDate", toUpdate.getExpirationDate());
         updatedIngredient.put("caloriesPerServing", toUpdate.getCaloriesPerServing());
+        updatedIngredient.put("selected", toUpdate.getSelected());
 
         FirebaseDatabase shoppinglistDB = FirebaseDatabase
                 .getInstance("https://recipeapp-1fba1-default-rtdb.firebaseio.com/");
@@ -242,7 +287,7 @@ public class ShoppingListViewModel extends ViewModel {
         });
     }
 
-    public void removeSingleIngredient(Ingredient toRemove){
+    public void removeSingleIngredient(Ingredient toRemove) {
         FirebaseDatabase shoppinglistDB = FirebaseDatabase
                 .getInstance("https://recipeapp-1fba1-default-rtdb.firebaseio.com/");
         DatabaseReference shoppinglistRef = shoppinglistDB.getReference().child("shoppinglist/"
@@ -251,7 +296,7 @@ public class ShoppingListViewModel extends ViewModel {
         shoppinglistRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if (snapshot.exists()){
+                if (snapshot.exists()) {
                     for (DataSnapshot ingredientSnapshot : snapshot.getChildren()) {
                         // Access each ingredient under the userId
                         String ingredientId = ingredientSnapshot.getKey();
@@ -279,5 +324,15 @@ public class ShoppingListViewModel extends ViewModel {
 
             }
         });
+    }
+    public void buyItems() {
+        List<Ingredient> currIngredients = shoppingList.getValue();
+        List<Ingredient> l = new ArrayList<>();
+        for (Ingredient i : currIngredients) {
+            if (i.getSelected()) {
+                l.add(i);
+            }
+        }
+        // implement additional logic here
     }
 }

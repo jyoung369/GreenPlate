@@ -1,7 +1,10 @@
 package com.example.recipeapp;
 
+import com.example.recipeapp.model.Ingredient;
+
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class Util {
     public boolean validateHeight(String height) {
@@ -48,6 +51,14 @@ public class Util {
             }
         }
         return false;
+    }
+
+    public boolean replaceSuccessful(Ingredient i, Ingredient j) {
+        if (i.getName().equals(j.getName())) {
+            j.setCaloriesPerServing(i.getCaloriesPerServing());
+            j.setExpirationDate(i.getExpirationDate());
+        }
+        return (Objects.equals(i.getCaloriesPerServing(), j.getCaloriesPerServing()));
     }
 
     public boolean containsNumber(String str) {
