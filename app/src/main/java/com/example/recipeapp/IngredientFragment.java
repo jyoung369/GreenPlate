@@ -70,23 +70,19 @@ public class IngredientFragment extends Fragment {
                 Button changeQtyButton = cardView.findViewById(R.id.changeQuantity_button);
 
                 // Set up listener for the Change Quantity button
-                changeQtyButton.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        String editTextString = newQty.getText().toString().trim();
+                changeQtyButton.setOnClickListener(v -> {
+                    String editTextString = newQty.getText().toString().trim();
 
-                        if (!editTextString.isEmpty()) {
-                            int newQuantity = Integer.parseInt(editTextString);
-                            // Update the quantity of the ingredient object
-                            ingredient.setQuantity(newQuantity);
+                    if (!editTextString.isEmpty()) {
+                        int newQuantity = Integer.parseInt(editTextString);
+                        // Update the quantity of the ingredient object
+                        ingredient.setQuantity(newQuantity);
 
-                            pantryViewModel.updateQuantity(ingredient, newQuantity);
+                        pantryViewModel.updateQuantity(ingredient, newQuantity);
 
-                            ingredientQuantity.setText(ingredient.getQuantity().toString() + "g");
-                        }
+                        ingredientQuantity.setText(ingredient.getQuantity().toString() + "g");
                     }
                 });
-
             }
         });
         button.setOnClickListener(v -> {

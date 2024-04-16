@@ -41,6 +41,7 @@ public class ShoppingInputActivity extends AppCompatActivity {
                 vm.showDatePickerDialog(this, expirationDate));
         ArrayList<Ingredient> pantry = new ArrayList<Ingredient>();
         ArrayList<String> ingData = new ArrayList<>();
+        vm.readShoppingList();
         vm.getShoppingList().observe(this, info -> {
             for (Ingredient ingredient : info) {
                 ingData.add(ingredient.getName());
@@ -62,7 +63,8 @@ public class ShoppingInputActivity extends AppCompatActivity {
                     oldExpDate = ingredient.getExpirationDate();
                 }
             }
-            if (!ingredientQuantityStr.isEmpty() && !calServingStr.isEmpty()) {
+            if (!ingData.contains(ingredientName1)
+                    && !ingredientQuantityStr.isEmpty() && !calServingStr.isEmpty()) {
                 int ingredientQuantity1 = Integer.parseInt(ingredientQuantityStr);
                 int calServing = Integer.parseInt(calServingStr);
                 if (!ingredientName1.isEmpty() && ingredientQuantity1 > 0 && calServing >= 0) {
@@ -99,6 +101,9 @@ public class ShoppingInputActivity extends AppCompatActivity {
                     }
                 }
             } else {
+                if (ingData.contains(ingredientName1)) {
+                    ingredientName.setError("This already exists in the cart");
+                }
                 if (ingredientQuantityStr.isEmpty()) {
                     ingredientQuantity.setError("Please enter an ingredient quantity.");
                 }
