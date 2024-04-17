@@ -125,8 +125,8 @@ public class InputMealFragment extends Fragment {
         input.setOnClickListener(v -> {
             HashMap<String, Integer> dataList = new HashMap<>();
             ArrayList<Integer> cals = new ArrayList<>();
-            vm.readMeals(dataList, cals);
             vm.inputMeal(requireContext(), mealName, calories, mealDate);
+            vm.readMeals(dataList, cals);
         });
 
         // Set click listener for Button 1 for data visual 1
