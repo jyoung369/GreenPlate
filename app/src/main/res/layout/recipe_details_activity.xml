@@ -51,6 +51,12 @@
         android:textSize="16sp"/>
 
         <Button
+            android:id="@+id/cookButton"
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:text="Cook" />
+
+        <Button
             android:id="@+id/backButton"
             android:layout_width="wrap_content"
             android:layout_height="50dp"

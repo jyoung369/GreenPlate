@@ -85,6 +85,25 @@ public class MealViewModel {
         }
     }
 
+    public void inputMeal(Context context, String mealName,
+                          String calories, String mealDate) {
+        Meal myMeal = new Meal(mealName, calories, mealDate);
+        FirebaseDatabase database = FirebaseDatabase
+                .getInstance("https://recipeapp-1fba1-default-rtdb.firebaseio.com/");
+        DatabaseReference mealsref = database.getReference().child("meals/"
+                + user.getUid());
+
+        mealsref.push().setValue(myMeal)
+                .addOnSuccessListener(success -> {
+                    Toast.makeText(context,
+                            "Meal inputted successfully!", Toast.LENGTH_SHORT).show();
+                })
+                .addOnFailureListener(failure -> {
+                    Toast.makeText(context,
+                            "Could not input meal", Toast.LENGTH_SHORT).show();
+                });
+    }
+
     public void readMeals(HashMap<String, Integer> data, ArrayList<Integer> calorieList) {
         FirebaseDatabase database = FirebaseDatabase
                 .getInstance("https://recipeapp-1fba1-default-rtdb.firebaseio.com/");
