@@ -41,6 +41,12 @@
             android:text="Ingredients:"
             android:textStyle="bold"/>
 
+        <Button
+            android:id="@+id/add_missing_ingredients_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Add Missing Ingredients" />
+
         <LinearLayout
             android:id="@+id/recipe_ingredients_layout"
             android:layout_width="match_parent"
