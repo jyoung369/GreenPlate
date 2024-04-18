@@ -9,8 +9,11 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.recipeapp.model.Ingredient;
+import com.example.recipeapp.model.Pantry;
 import com.example.recipeapp.model.Recipe;
 import com.example.recipeapp.viewmodels.MealViewModel;
+import com.example.recipeapp.viewmodels.PantryViewModel;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -37,6 +40,7 @@ public class RecipeDetailsActivity extends AppCompatActivity {
             calories.setText(calsWithLabel);
 
             List<String> ings = recipe.getIngredients();
+            List<Integer> quants = recipe.getQuantities();
             ArrayAdapter<String> adapter = new ArrayAdapter<>(this,
                     android.R.layout.simple_list_item_1, ings);
             ingredients.setAdapter(adapter);
@@ -62,9 +66,23 @@ public class RecipeDetailsActivity extends AppCompatActivity {
                         }
                     }
                     System.out.println(cals);
+                    PantryViewModel pvm = new PantryViewModel();
+                    pvm.readIngredients();
+                    pvm.readIngredientQuantities();
+
+                    for (int i = 0; i < ings.size(); i++) {
+                        for (Ingredient ingredient : pvm.getIngredientData().getValue()) {
+                            if (ings.get(i).equals(ingredient.getName())) {
+                                int newQ = ingredient.getQuantity() - quants.get(i);
+                                ingredient.setQuantity(newQ);
+                                pvm.updateQuantity(ingredient, newQ);
+                            }
+                        }
+                    }
 
                     vm.inputMeal(this, recipeNameText, cals, formattedToday);
                     vm.readDailyMeals();
+
                 } catch (Exception ex) {
                     Log.e("bro", "error" + ex.getMessage());
                     ex.printStackTrace();
