@@ -53,7 +53,9 @@
         <activity
             android:name=".views.PersonalInformationActivity"
             android:exported="true" />
-
+        <activity
+            android:name=".views.MissingIngredientActivity"
+            android:exported="true" />
         <activity
             android:name=".RecipeDetailsActivity"
             android:exported="true" />
