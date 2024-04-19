@@ -44,6 +44,7 @@ public class Sprint4UnitTests {
         assertFalse(u.canCook(ings, recipe));
     }
 
+    //Amritha Pramod
     @Test
     public void checkDailyCals() {
         Util u = new Util();
@@ -52,8 +53,8 @@ public class Sprint4UnitTests {
         meals.put("cake", 902);
         meals.put("pie", 503);
         meals.put("noodles", 670);
+
         assertFalse(u.updateDailyCalories(2075, meals));
         assertTrue(u.updateDailyCalories(1405, meals));
     }
-
 }
