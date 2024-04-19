@@ -45,6 +45,18 @@ public class ShoppingListViewModel extends ViewModel {
         // Initialize the shoppingList if needed
     }
 
+    public void addMissingItems(Map<String, Integer> items) {
+        FirebaseDatabase shoppinglistDB = FirebaseDatabase
+                .getInstance("https://recipeapp-1fba1-default-rtdb.firebaseio.com/");
+        DatabaseReference shoppinglistRef = shoppinglistDB.getReference().child("shoppinglist/"
+                + user.getUid());
+        for (String item : items.keySet()) {
+            Ingredient ingredient = new Ingredient(item, items.get(item), 0, "N/A");
+            shoppinglistRef.push().setValue(ingredient);
+        }
+        System.out.println("ADDED");
+    }
+
     public void addItem(Context context, String name, Integer quantity,
                         Integer caloriesPerServing, String expirationDate) {
         FirebaseDatabase shoppinglistDB = FirebaseDatabase
