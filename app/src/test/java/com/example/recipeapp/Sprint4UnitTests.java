@@ -43,4 +43,17 @@ public class Sprint4UnitTests {
         recipe.put("radish", 20);
         assertFalse(u.canCook(ings, recipe));
     }
+
+    @Test
+    public void checkDailyCals() {
+        Util u = new Util();
+        HashMap<String, Integer> meals = new HashMap<>();
+
+        meals.put("cake", 902);
+        meals.put("pie", 503);
+        meals.put("noodles", 670);
+        assertFalse(u.updateDailyCalories(2075, meals));
+        assertTrue(u.updateDailyCalories(1405, meals));
+    }
+
 }

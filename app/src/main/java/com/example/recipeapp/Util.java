@@ -81,4 +81,12 @@ public class Util {
         }
         return cook;
     }
+
+    public boolean updateDailyCalories(int dailyCals, HashMap<String, Integer> meals) {
+        int cals = 0;
+        for (HashMap.Entry<String, Integer> e1 : meals.entrySet()) {
+            cals += e1.getValue();
+        }
+        return dailyCals < cals;
+    }
 }
