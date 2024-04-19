@@ -7,6 +7,8 @@ import com.example.recipeapp.model.Ingredient;
 
 import org.junit.Test;
 
+import java.util.HashMap;
+
 public class Sprint4UnitTests {
     // Saniya Savla
     @Test
@@ -23,4 +25,35 @@ public class Sprint4UnitTests {
         Ingredient j = new Ingredient("nothing", 32, 20, "");
         assertFalse(u.replaceSuccessful(i, j));
     }
+
+    //Amritha Pramod
+    @Test
+    public void checkCook() {
+        Util u = new Util();
+        HashMap<String, Integer> ings = new HashMap<>();
+        HashMap<String, Integer> recipe = new HashMap<>();
+
+        ings.put("carrots", 80);
+        recipe.put("carrots", 50);
+        assertTrue(u.canCook(ings, recipe));
+
+        ings.put("lettuce", 67);
+        ings.put("cabbage", 90);
+        recipe.put("lettuce", 67);
+        recipe.put("radish", 20);
+        assertFalse(u.canCook(ings, recipe));
+    }
+
+    @Test
+    public void checkDailyCals() {
+        Util u = new Util();
+        HashMap<String, Integer> meals = new HashMap<>();
+
+        meals.put("cake", 902);
+        meals.put("pie", 503);
+        meals.put("noodles", 670);
+        assertFalse(u.updateDailyCalories(2075, meals));
+        assertTrue(u.updateDailyCalories(1405, meals));
+    }
+
 }

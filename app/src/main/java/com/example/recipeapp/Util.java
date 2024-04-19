@@ -3,6 +3,7 @@ package com.example.recipeapp;
 import com.example.recipeapp.model.Ingredient;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Objects;
 
@@ -63,5 +64,29 @@ public class Util {
 
     public boolean containsNumber(String str) {
         return str.matches(".*\\d+.*");
+    }
+
+    public boolean canCook(HashMap<String, Integer> ings, HashMap<String, Integer> recipe) {
+        boolean cook = false;
+        for (HashMap.Entry<String, Integer> e1 : recipe.entrySet()) {
+            if (ings.containsKey(e1.getKey())) {
+                if (ings.get(e1.getKey()) >= e1.getValue()) {
+                    cook = true;
+                } else {
+                    return false;
+                }
+            } else {
+                return false;
+            }
+        }
+        return cook;
+    }
+
+    public boolean updateDailyCalories(int dailyCals, HashMap<String, Integer> meals) {
+        int cals = 0;
+        for (HashMap.Entry<String, Integer> e1 : meals.entrySet()) {
+            cals += e1.getValue();
+        }
+        return dailyCals < cals;
     }
 }
