@@ -70,6 +70,10 @@ public class Ingredient {
         return selected;
     }
 
+    public void setSelected(Boolean currSelect) {
+        selected = currSelect;
+    }
+
     public String toString() {
         return "Ingredient Name: " + this.getName() + ", Quantity: "
                 + this.getQuantity() + ", Calories: "
