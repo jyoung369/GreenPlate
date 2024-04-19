@@ -28,6 +28,7 @@ import com.example.recipeapp.model.Cookbook;
 import com.example.recipeapp.model.Recipe;
 import com.example.recipeapp.viewmodels.PantryViewModel;
 import com.example.recipeapp.viewmodels.RecipeViewModel;
+import com.example.recipeapp.viewmodels.ShoppingListViewModel;
 import com.example.recipeapp.views.MissingIngredientActivity;
 
 import java.time.LocalDate;
@@ -137,6 +138,9 @@ public class RecipeFragment extends Fragment {
                             Intent intent = new Intent(getContext(), MissingIngredientActivity.class);
 
                             Map<String, Integer> missingIngredients = book.calculateMissingQuantities(r, pantryItems);
+                            System.out.println(missingIngredients);
+                            ShoppingListViewModel shopVM = new ShoppingListViewModel();
+                            shopVM.addMissingItems(missingIngredients);
                             // Put the recipe details into the Intent
                             intent.putExtra("recipe", r);
                             intent.putExtra("missingIngredients", new HashMap<>(missingIngredients));
