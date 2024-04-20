@@ -45,42 +45,6 @@ public class ShoppingListViewModel extends ViewModel {
         // Initialize the shoppingList if needed
     }
 
-    public void addMissingItems(Map<String, Integer> items) {
-        FirebaseDatabase shoppinglistDB = FirebaseDatabase
-                .getInstance("https://recipeapp-1fba1-default-rtdb.firebaseio.com/");
-        DatabaseReference shoppinglistRef = shoppinglistDB.getReference().child("shoppinglist/"
-                + user.getUid());
-        shoppinglistRef.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                // Check if userId exists
-                if (snapshot.exists()) {
-                    for (String item : items.keySet()) {
-                        boolean found = false;
-                        for (DataSnapshot ingredientSnapshot : snapshot.getChildren()) {
-                            String ingredientName = ingredientSnapshot.child("name")
-                                    .getValue(String.class);
-                            if (item.equals(ingredientName)) {
-                                found = true;
-                            }
-                        }
-                        if (!found) {
-                            Ingredient ingredient = new Ingredient(item, items.get(item), 0, "N/A");
-                            shoppinglistRef.push().setValue(ingredient);
-                        }
-                    }
-                } else {
-                    Log.d("TAG", "User ID not found in pantry");
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-                Log.e("FirebaseError", "Error reading data from Firebase: " + error.getMessage());
-            }
-        });
-    }
-
     public void addItem(Context context, String name, Integer quantity,
                         Integer caloriesPerServing, String expirationDate) {
         FirebaseDatabase shoppinglistDB = FirebaseDatabase
