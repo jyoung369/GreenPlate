@@ -130,4 +130,12 @@ public class Util {
         return true;
 
     }
+
+    public ArrayList<Boolean> isChecked(ArrayList<Ingredient> ingList) {
+        ArrayList<Boolean> res = new ArrayList<Boolean>();
+        for (Ingredient ingredient : ingList) {
+            res.add(ingredient.getSelected());
+        }
+        return(res);
+    }
 }

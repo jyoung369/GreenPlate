@@ -1,5 +1,6 @@
 package com.example.recipeapp;
 
+import static junit.framework.TestCase.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
@@ -7,6 +8,7 @@ import com.example.recipeapp.model.Ingredient;
 
 import org.junit.Test;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 public class Sprint4UnitTests {
@@ -82,5 +84,36 @@ public class Sprint4UnitTests {
         recipeStuff.put("milk", 20);
         recipeStuff.put("cereal", 15);
         assertTrue(u.checkForDeduction(ingredients, recipeStuff));
+    }
+
+    //Julie Young
+    @Test
+    public void checkSelectedTrue() {
+        Util u = new Util();
+        Ingredient i1 = new Ingredient("I1", 12, 12, "N/A", true);
+        Ingredient i2 = new Ingredient("I2", 12, 12, "N/A", true);
+        ArrayList<Ingredient> ingredientList = new ArrayList<>();
+        ingredientList.add(i1);
+        ingredientList.add(i2);
+        ArrayList<Boolean> res = u.isChecked(ingredientList);
+        ArrayList<Boolean> ans = new ArrayList<Boolean>();
+        ans.add(true);
+        ans.add(true);
+        assertEquals(res, ans);
+    }
+
+    @Test
+    public void checkSelectedFalse() {
+        Util u = new Util();
+        Ingredient i1 = new Ingredient("I1", 12, 12, "N/A", false);
+        Ingredient i2 = new Ingredient("I2", 12, 12, "N/A", false);
+        ArrayList<Ingredient> ingredientList = new ArrayList<>();
+        ingredientList.add(i1);
+        ingredientList.add(i2);
+        ArrayList<Boolean> res = u.isChecked(ingredientList);
+        ArrayList<Boolean> ans = new ArrayList<Boolean>();
+        ans.add(false);
+        ans.add(false);
+        assertEquals(res, ans);
     }
 }
