@@ -130,4 +130,10 @@ public class Util {
         return true;
 
     }
+    public void addMissingIngredient(HashMap<String, Integer> ingredients, String ingredientName, int initialQuantity) {
+        if (!ingredients.containsKey(ingredientName)) {
+            // If not present, add it with the initial quantity
+            ingredients.put(ingredientName, initialQuantity);
+        }
+    }
 }
