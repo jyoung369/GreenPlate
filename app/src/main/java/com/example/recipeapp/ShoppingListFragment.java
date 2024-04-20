@@ -21,6 +21,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.recipeapp.model.Ingredient;
+import com.example.recipeapp.viewmodels.PantryViewModel;
 import com.example.recipeapp.viewmodels.ShoppingListViewModel;
 import com.example.recipeapp.views.ShoppingInputActivity;
 import com.google.android.material.switchmaterial.SwitchMaterial;
@@ -41,16 +42,27 @@ public class ShoppingListFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         // testing purposes: delete if you're implementing actual logic
         ShoppingListViewModel vm = new ShoppingListViewModel();
+        PantryViewModel pantryVM = new PantryViewModel();
         Button button = view.findViewById(R.id.shoppingInputButton);
         Button submit = view.findViewById(R.id.buyButton);
         button.setOnClickListener(v -> {
             Intent intent = new Intent(requireContext(), ShoppingInputActivity.class);
             startActivity(intent);
         });
-        submit.setOnClickListener(v -> vm.buyItems());
+
+        submit.setOnClickListener(v -> {
+            for (Ingredient i : vm.getShoppingList().getValue()) {
+                if (i.getSelected()) {
+                    vm.removeSingleIngredient(i);
+                    pantryVM.addIngredient(i);
+                }
+            }
+        });
+
         vm.readShoppingList();
         LinearLayout layout = view.findViewById(R.id.shoppingListLayout);
         LayoutInflater inflater = LayoutInflater.from(getContext());
+
         vm.getShoppingList().observe(getViewLifecycleOwner(), items -> {
             layout.removeAllViews();
             for (Ingredient i : vm.getShoppingList().getValue()) {
@@ -88,9 +100,25 @@ public class ShoppingListFragment extends Fragment {
                     }
                 });
                 toggle.setOnCheckedChangeListener((buttonView, isChecked)
-                        -> vm.updateSelected(i, !i.getSelected()));
+                        -> {
+                    i.setSelected(!i.getSelected());
+                    vm.updateSelected(i, !i.getSelected());
+                    System.out.println("DID SOMETHINGK");
+                    System.out.println(i.getSelected());
+                });
             }
+
+            //Buy functionality
+//            for (int i = 0; i < layout.getChildCount(); i+=2) {
+//                View cardView = layout.getChildAt(i);
+//                SwitchMaterial toggle = cardView.findViewById(R.id.checkbox);
+//                toggle.setOnCheckedChangeListener((buttonView, isChecked) -> {
+//                    i.setSelected(isChecked);
+//                });
+//            }
         });
+
+
         //        ShoppingListViewModel shoppingListViewModel = new
         //        ViewModelProvider(this).get(ShoppingListViewModel.class);
         //        shoppingListViewModel.addItem(getContext(), "abc", 6, 1200, "10-04-2024");

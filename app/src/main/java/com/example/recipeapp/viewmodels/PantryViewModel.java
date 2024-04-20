@@ -94,6 +94,53 @@ public class PantryViewModel {
         return successful;
     }
 
+    //Adding ingredient from shopping list to pantry
+    public void addIngredient(Ingredient ingredient) {
+        FirebaseDatabase ingDB = FirebaseDatabase
+                .getInstance("https://recipeapp-1fba1-default-rtdb.firebaseio.com/");
+        DatabaseReference pantryDB = ingDB.getReference().child("pantry/"
+                + user.getUid());
+
+        pantryDB.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                // Check if userId exists
+                if (snapshot.exists()) {
+                    boolean found = false;
+                    for (DataSnapshot ingredientSnapshot : snapshot.getChildren()) {
+                        // Access each ingredient under the userId
+                        String ingredientId = ingredientSnapshot.getKey();
+                        String ingredientName = ingredientSnapshot.child("name")
+                                .getValue(String.class);
+                        int ingredientQty = ingredientSnapshot.child("quantity").getValue(Integer.class);
+
+                        if (ingredient.getName().equals(ingredientName)) {
+                            found = true;
+                            int newQty = ingredient.getQuantity() + ingredientQty;
+                            ingredient.setQuantity(newQty);
+                            pantryDB.child(ingredientId).setValue(ingredient)
+                                    .addOnSuccessListener(
+                                            aVoid -> isSaveSuccessful.postValue(true))
+                                    .addOnFailureListener(
+                                            e -> isSaveSuccessful.postValue(false));
+                    if (!found) {
+                        pantryDB.push().setValue(ingredient);
+                    }
+                        }
+                    }
+                } else {
+                    Log.d("TAG", "User ID not found in pantry");
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Log.e("FirebaseError", "Error reading data from Firebase: " + error.getMessage());
+            }
+        });
+    }
+
+
     public void readIngredientQuantities() {
         FirebaseDatabase ingDB = FirebaseDatabase
                 .getInstance("https://recipeapp-1fba1-default-rtdb.firebaseio.com/");
@@ -168,7 +215,6 @@ public class PantryViewModel {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 // Check if userId exists
-                System.out.println(toUpdate);
                 if (snapshot.exists()) {
                     for (DataSnapshot ingredientSnapshot : snapshot.getChildren()) {
                         // Access each ingredient under the userId
