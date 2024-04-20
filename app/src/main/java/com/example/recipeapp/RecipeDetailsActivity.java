@@ -69,15 +69,8 @@ public class RecipeDetailsActivity extends AppCompatActivity {
                     }
 
                     PantryViewModel pvm = new PantryViewModel();
-                    //List<Ingredient> ingreds = new ArrayList<>();
                     pvm.getIngredientData().observe(this, info -> {
-//                        for (int i = 0; i < info.size(); i++) {
-//                            System.out.println(info.get(i));
-//                            ingreds.add(info.get(i));
-//                        }
-                        System.out.println("HELLOOOOOOOOOOOOOOOOOOOOOOOOOO");
                         for (int i = 0; i < ings.size(); i++) {
-                            System.out.println("HIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII");
                             for (Ingredient ingredient : info) {
                                 System.out.println(ingredient.getQuantity());
                                 if (ings.get(i).equals(ingredient.getName())) {
@@ -89,13 +82,8 @@ public class RecipeDetailsActivity extends AppCompatActivity {
                             }
                         }
                     });
-//                    for (Ingredient i : ingreds) {
-//                        System.out.println(i.toString());
-//                    }
+
                     pvm.readIngredients();
-                    //pvm.readIngredientQuantities();
-
-
 
                     vm.inputMeal(this, recipeNameText, cals, formattedToday);
                     vm.readDailyMeals();
