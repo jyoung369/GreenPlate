@@ -123,10 +123,11 @@ public class PantryViewModel {
                                             aVoid -> isSaveSuccessful.postValue(true))
                                     .addOnFailureListener(
                                             e -> isSaveSuccessful.postValue(false));
-                    if (!found) {
-                        pantryDB.push().setValue(ingredient);
-                    }
                         }
+                    }
+                    if (!found) {
+                        System.out.println("NOT FOUND");
+                        pantryDB.push().setValue(ingredient);
                     }
                 } else {
                     Log.d("TAG", "User ID not found in pantry");
