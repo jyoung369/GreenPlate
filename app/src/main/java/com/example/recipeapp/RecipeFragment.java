@@ -138,11 +138,6 @@ public class RecipeFragment extends Fragment {
                             Intent intent = new Intent(getContext(), MissingIngredientActivity.class);
 
                             Map<String, Integer> missingIngredients = book.calculateMissingQuantities(r, pantryItems);
-                            ShoppingListViewModel shopVM = new ShoppingListViewModel();
-                            for (String item: missingIngredients.keySet()) {
-                                shopVM.addItem(getContext(), item, missingIngredients.get(item), 0, "N/A");
-                            }
-                            //shopVM.addMissingItems(missingIngredients);
                             // Put the recipe details into the Intent
                             intent.putExtra("recipe", r);
                             intent.putExtra("missingIngredients", new HashMap<>(missingIngredients));
@@ -197,14 +192,7 @@ public class RecipeFragment extends Fragment {
                         public void onClick(View v) {
                             // Create an Intent to start MissingIngredientsActivity
                             Intent intent = new Intent(getContext(), MissingIngredientActivity.class);
-
                             Map<String, Integer> missingIngredients = book.calculateMissingQuantities(r, pantryItems);
-                            ShoppingListViewModel shopVM = new ShoppingListViewModel();
-                            for (String item: missingIngredients.keySet()) {
-                                System.out.println("TRIED TO ADD");
-                                shopVM.addItem(getContext(), item, missingIngredients.get(item), 0, "N/A");
-                            }
-//                            shopVM.addMissingItems(missingIngredients);
                             // Put the recipe details into the Intent
                             intent.putExtra("recipe", r);
                             intent.putExtra("missingIngredients", new HashMap<>(missingIngredients));

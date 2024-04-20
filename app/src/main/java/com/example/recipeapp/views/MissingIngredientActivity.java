@@ -15,6 +15,7 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 import com.example.recipeapp.R;
 import com.example.recipeapp.viewmodels.PantryViewModel;
+import com.example.recipeapp.viewmodels.ShoppingListViewModel;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -47,15 +48,15 @@ public class MissingIngredientActivity extends AppCompatActivity {
                 String calories = caloriesInput.getText().toString();
 
                 if (!calories.isEmpty()) {
-                    PantryViewModel pantryViewModel = new PantryViewModel();
+                    ShoppingListViewModel shopVM = new ShoppingListViewModel();
                     EditText name = new EditText(getContext());
                     name.setText(ingredient);
                     EditText quantityInput = new EditText(getContext());
                     Integer quantity = missingIngredients.get(ingredient);
                     quantityInput.setText(quantity.toString());
-                    Button expirationDateButton = new Button(getContext());
-                    expirationDateButton.setText("01-01-2023");
-                    pantryViewModel.inputIngredient(getContext(), name, quantityInput, caloriesInput, expirationDateButton);
+                    for (String item: missingIngredients.keySet()) {
+                        shopVM.addItem(getContext(), item, missingIngredients.get(item), 0, "N/A");
+                    }
                     addButton.setText("Done!");
                 }
             });
