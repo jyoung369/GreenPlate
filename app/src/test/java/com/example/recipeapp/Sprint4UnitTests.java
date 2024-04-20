@@ -115,5 +115,30 @@ public class Sprint4UnitTests {
         ans.add(false);
         ans.add(false);
         assertEquals(res, ans);
+
+    // Reese Wang
+    @Test
+    public void checkNewShoppingListItemQuantity1(){
+        Util u = new Util();
+        HashMap<String, Integer> shoppingList = new HashMap<>();
+        shoppingList.put("milk", 20);
+        shoppingList.put("cereal", 20);
+        shoppingList.put("broccoli", 50);
+        Ingredient addToList = new Ingredient("milk", 300, 20, "10-28-2004", false);
+        int quantity = u.checkRepeatedListItems(shoppingList, addToList);
+        assertTrue(quantity == 20);
+    }
+
+    @Test
+    public void checkNewShoppingListItemQuantity2(){
+        Util u = new Util();
+        HashMap<String, Integer> shoppingList = new HashMap<>();
+        shoppingList.put("milk", 20);
+        shoppingList.put("cereal", 20);
+        shoppingList.put("broccoli", 50);
+        Ingredient addToList = new Ingredient("milk2", 300, 20, "10-28-2004", false);
+        int quantity = u.checkRepeatedListItems(shoppingList, addToList);
+        assertTrue(quantity == 300);
+
     }
 }
