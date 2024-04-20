@@ -74,12 +74,8 @@ public class RecipeDetailsActivity extends AppCompatActivity {
                             for (Ingredient ingredient : info) {
                                 if (ings.get(i).equals(ingredient.getName())) {
                                     int newQ = ingredient.getQuantity() - quants.get(i);
-                                    if (newQ == 0) {
-
-                                    } else {
-                                        ingredient.setQuantity(newQ);
-                                        pvm.updateQuantity(ingredient, newQ);
-                                    }
+                                    ingredient.setQuantity(newQ);
+                                    pvm.updateQuantity(ingredient, newQ);
                                 }
                             }
                         }
