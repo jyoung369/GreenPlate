@@ -130,10 +130,35 @@ public class Util {
         return true;
 
     }
+
     public void addMissingIngredient(HashMap<String, Integer> ingredients, String ingredientName, int initialQuantity) {
         if (!ingredients.containsKey(ingredientName)) {
             // If not present, add it with the initial quantity
             ingredients.put(ingredientName, initialQuantity);
+        }
+    }
+  
+    public ArrayList<Boolean> isChecked(ArrayList<Ingredient> ingList) {
+        ArrayList<Boolean> res = new ArrayList<Boolean>();
+        for (Ingredient ingredient : ingList) {
+            res.add(ingredient.getSelected());
+        }
+        return(res);
+    }
+  
+    // returns quantity of newly added item. if it already exists, return old quantity
+    public int checkRepeatedListItems(HashMap<String, Integer> currShoppingList, Ingredient newItem){
+        if (currShoppingList.containsKey(newItem.getName())){
+            for (String key : currShoppingList.keySet()){
+                if (key.equals(newItem.getName())){
+                    int oldQuantity = currShoppingList.get(key);
+                    currShoppingList.replace(key, newItem.getQuantity());
+                    return oldQuantity;
+                }
+            }
+            return -5000;
+        } else {
+            return newItem.getQuantity();
         }
     }
 }
