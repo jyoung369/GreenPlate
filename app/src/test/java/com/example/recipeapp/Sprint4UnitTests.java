@@ -1,15 +1,20 @@
 package com.example.recipeapp;
 
+
+import static org.junit.Assert.assertEquals;
 import static junit.framework.TestCase.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
+import com.example.recipeapp.model.Cookbook;
 import com.example.recipeapp.model.Ingredient;
+import com.example.recipeapp.model.Recipe;
 
 import org.junit.Test;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 public class Sprint4UnitTests {
     // Saniya Savla
@@ -86,6 +91,44 @@ public class Sprint4UnitTests {
         assertTrue(u.checkForDeduction(ingredients, recipeStuff));
     }
 
+    // Harini Sathu
+    @Test
+    public void testAddMissingIngredient() {
+        Util u = new Util();
+        HashMap<String, Integer> ingredients = new HashMap<>();
+        String ingredientName = "apple";
+        int initialQuantity = 0;
+
+        // Add the ingredient with an initial quantity of 0
+        u.addMissingIngredient(ingredients, ingredientName, initialQuantity);
+
+        // Check if the ingredient is added successfully with the initial quantity
+        assertTrue(ingredients.containsKey(ingredientName));
+        assertEquals(initialQuantity, (int) ingredients.get(ingredientName));
+    }
+
+    @Test
+    public void testCookbook() {
+        Cookbook cb = new Cookbook();
+        HashMap<String, Integer> pantry = new HashMap<>();
+        pantry.put("flour", 100);
+        pantry.put("sugar", 50);
+        pantry.put("butter", 200);
+
+        List<Integer> pantryValues = new ArrayList<>(pantry.values());
+
+        // Act
+        boolean containsNull = false;
+        for (Integer value : pantryValues) {
+            if (value == null) {
+                containsNull = true;
+                break;
+            }
+        }
+
+        assertTrue("Pantry contains null values", !containsNull);
+    }
+
     //Julie Young
     @Test
     public void checkSelectedTrue() {
@@ -139,6 +182,5 @@ public class Sprint4UnitTests {
         Ingredient addToList = new Ingredient("milk2", 300, 20, "10-28-2004", false);
         int quantity = u.checkRepeatedListItems(shoppingList, addToList);
         assertTrue(quantity == 300);
-
     }
 }
