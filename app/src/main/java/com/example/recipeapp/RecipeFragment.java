@@ -28,13 +28,9 @@ import com.example.recipeapp.model.Cookbook;
 import com.example.recipeapp.model.Recipe;
 import com.example.recipeapp.viewmodels.PantryViewModel;
 import com.example.recipeapp.viewmodels.RecipeViewModel;
-import com.example.recipeapp.viewmodels.ShoppingListViewModel;
 import com.example.recipeapp.views.MissingIngredientActivity;
 
-import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 public class RecipeFragment extends Fragment {
@@ -112,7 +108,8 @@ public class RecipeFragment extends Fragment {
                 HashMap<String, Integer> pantryItems = pantryViewModel.getIngQuantity().getValue();
                 Cookbook book = new Cookbook();
                 Boolean sufficient = book.sufficientIngredients(pantryItems, r);
-                Button addMissingIngredientsButton = cardView.findViewById(R.id.add_missing_ingredients_button);
+                Button addMissingIngredientsButton = cardView.findViewById(
+                        R.id.add_missing_ingredients_button);
 
                 if (sufficient) {
                     available.setText("Sufficient Ingredients");
@@ -135,12 +132,15 @@ public class RecipeFragment extends Fragment {
                         @Override
                         public void onClick(View v) {
                             // Create an Intent to start MissingIngredientsActivity
-                            Intent intent = new Intent(getContext(), MissingIngredientActivity.class);
+                            Intent intent = new Intent(getContext(),
+                                    MissingIngredientActivity.class);
 
-                            Map<String, Integer> missingIngredients = book.calculateMissingQuantities(r, pantryItems);
+                            Map<String, Integer> missingIngredients = book
+                                    .calculateMissingQuantities(r, pantryItems);
                             // Put the recipe details into the Intent
                             intent.putExtra("recipe", r);
-                            intent.putExtra("missingIngredients", new HashMap<>(missingIngredients));
+                            intent.putExtra("missingIngredients",
+                                    new HashMap<>(missingIngredients));
                             // Start the activity
                             requireContext().startActivity(intent);
 

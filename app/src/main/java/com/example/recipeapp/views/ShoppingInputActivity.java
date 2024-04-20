@@ -41,10 +41,12 @@ public class ShoppingInputActivity extends AppCompatActivity {
                 vm.showDatePickerDialog(this, expirationDate));
         ArrayList<Ingredient> pantry = new ArrayList<Ingredient>();
         ArrayList<String> ingData = new ArrayList<>();
+        ArrayList<Ingredient> shoppinglist = new ArrayList<Ingredient>();
         vm.readShoppingList();
         vm.getShoppingList().observe(this, info -> {
             for (Ingredient ingredient : info) {
                 ingData.add(ingredient.getName());
+                shoppinglist.add(ingredient);
             }
         });
         pm.readIngredients();
@@ -57,19 +59,26 @@ public class ShoppingInputActivity extends AppCompatActivity {
             String date = expirationDate.getText().toString();
             int oldCalorieCount = -1;
             String oldExpDate = "";
+            Ingredient i = null;
             for (Ingredient ingredient : pantry) {
                 if (ingredient.getName().equals(ingredientName1)) {
                     oldCalorieCount = ingredient.getCaloriesPerServing();
                     oldExpDate = ingredient.getExpirationDate();
                 }
             }
-            if (!ingData.contains(ingredientName1)
-                    && !ingredientQuantityStr.isEmpty() && !calServingStr.isEmpty()) {
+            for (Ingredient ingredient : shoppinglist) {
+                if (ingredient.getName().equals(ingredientName1)) {
+                    i = ingredient;
+                }
+            }
+            if (!ingredientQuantityStr.isEmpty() && !calServingStr.isEmpty()) {
                 int ingredientQuantity1 = Integer.parseInt(ingredientQuantityStr);
                 int calServing = Integer.parseInt(calServingStr);
-                if (!ingredientName1.isEmpty() && ingredientQuantity1 > 0 && calServing >= 0) {
-                    if ((oldCalorieCount == -1
-                            || oldCalorieCount == calServing && oldExpDate.equals(date))) {
+                if (i == null
+                    && !ingredientName1.isEmpty()
+                        && ingredientQuantity1 > 0 && calServing >= 0) {
+                    if (oldCalorieCount == -1
+                            || oldCalorieCount == calServing && oldExpDate.equals(date)) {
                         vm.addItem(this, ingredientName1, ingredientQuantity1,
                                 calServing, date);
                         Intent intent = new Intent(this, WelcomeActivity.class);
@@ -77,19 +86,24 @@ public class ShoppingInputActivity extends AppCompatActivity {
                     } else {
                         if (oldCalorieCount != calServing) {
                             caloriesPerServing.setError("This ingredient already"
-                                    + " has a calorie count of " + oldCalorieCount);
+                                        + " has a calorie count of " + oldCalorieCount);
                         }
                         if (!oldExpDate.equals(date)) {
-                            if (oldExpDate != "") {
+                            if (!oldExpDate.equals("")) {
                                 expirationDate.setError("This ingredient already has an exp date "
-                                        + oldExpDate);
+                                            + oldExpDate);
                             } else {
                                 expirationDate.setError("This ingredient "
-                                        + "does not have an exp date.");
+                                            + "does not have an exp date.");
                             }
                         }
                     }
                 } else {
+                    if (i != null) {
+                        vm.update(i, ingredientQuantity1, calServing, date);
+                        Intent intent = new Intent(this, WelcomeActivity.class);
+                        startActivity(intent);
+                    }
                     if (ingredientName1.isEmpty()) {
                         ingredientName.setError("Please enter an ingredient name");
                     }

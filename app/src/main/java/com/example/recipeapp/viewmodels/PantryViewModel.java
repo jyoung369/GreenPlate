@@ -112,7 +112,8 @@ public class PantryViewModel {
                         String ingredientId = ingredientSnapshot.getKey();
                         String ingredientName = ingredientSnapshot.child("name")
                                 .getValue(String.class);
-                        int ingredientQty = ingredientSnapshot.child("quantity").getValue(Integer.class);
+                        int ingredientQty = ingredientSnapshot.child("quantity")
+                                .getValue(Integer.class);
 
                         if (ingredient.getName().equals(ingredientName)) {
                             found = true;
