@@ -10,6 +10,7 @@ import com.example.recipeapp.model.Cookbook;
 import com.example.recipeapp.model.Ingredient;
 import com.example.recipeapp.model.Recipe;
 
+import org.junit.Assert;
 import org.junit.Test;
 
 import java.util.ArrayList;
@@ -142,7 +143,7 @@ public class Sprint4UnitTests {
         ArrayList<Boolean> ans = new ArrayList<Boolean>();
         ans.add(true);
         ans.add(true);
-        assertEquals(res, ans);
+        Assert.assertEquals(res, ans);
     }
 
     @Test
@@ -157,11 +158,11 @@ public class Sprint4UnitTests {
         ArrayList<Boolean> ans = new ArrayList<Boolean>();
         ans.add(false);
         ans.add(false);
-        assertEquals(res, ans);
-
+        Assert.assertEquals(res, ans);
+    }
     // Reese Wang
     @Test
-    public void checkNewShoppingListItemQuantity1(){
+    public void checkNewShoppingListItemQuantity(){
         Util u = new Util();
         HashMap<String, Integer> shoppingList = new HashMap<>();
         shoppingList.put("milk", 20);
