@@ -103,8 +103,6 @@ public class ShoppingListFragment extends Fragment {
                         -> {
                     i.setSelected(!i.getSelected());
                     vm.updateSelected(i, !i.getSelected());
-                    System.out.println("DID SOMETHINGK");
-                    System.out.println(i.getSelected());
                 });
             }
 
