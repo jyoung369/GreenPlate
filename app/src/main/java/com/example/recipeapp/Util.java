@@ -130,7 +130,13 @@ public class Util {
         return true;
 
     }
-
+    public ArrayList<Boolean> isChecked(ArrayList<Ingredient> ingList) {
+        ArrayList<Boolean> res = new ArrayList<Boolean>();
+        for (Ingredient ingredient : ingList) {
+            res.add(ingredient.getSelected());
+        }
+        return(res);
+  
     // returns quantity of newly added item. if it already exists, return old quantity
     public int checkRepeatedListItems(HashMap<String, Integer> currShoppingList, Ingredient newItem){
         if (currShoppingList.containsKey(newItem.getName())){
