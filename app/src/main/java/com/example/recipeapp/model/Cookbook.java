@@ -19,7 +19,8 @@ public class Cookbook {
         return (true);
     }
 
-    public Map<String, Integer> calculateMissingQuantities(Recipe recipe, Map<String, Integer> pantry) {
+    public Map<String, Integer> calculateMissingQuantities(Recipe recipe,
+                                                           Map<String, Integer> pantry) {
         Map<String, Integer> missingQuantities = new HashMap<>();
 
         for (int i = 0; i < recipe.getIngredients().size(); i++) {

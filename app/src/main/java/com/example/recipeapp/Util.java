@@ -133,9 +133,9 @@ public class Util {
 
     // returns quantity of newly added item. if it already exists, return old quantity
     public int checkRepeatedListItems(HashMap<String, Integer> currShoppingList, Ingredient newItem){
-        if (currShoppingList.containsKey(newItem.getName())){
-            for (String key : currShoppingList.keySet()){
-                if (key.equals(newItem.getName())){
+        if (currShoppingList.containsKey(newItem.getName())) {
+            for (String key : currShoppingList.keySet()) {
+                if (key.equals(newItem.getName())) {
                     int oldQuantity = currShoppingList.get(key);
                     currShoppingList.replace(key, newItem.getQuantity());
                     return oldQuantity;

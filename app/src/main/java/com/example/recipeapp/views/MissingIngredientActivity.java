@@ -14,7 +14,6 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import com.example.recipeapp.R;
-import com.example.recipeapp.viewmodels.PantryViewModel;
 import com.example.recipeapp.viewmodels.ShoppingListViewModel;
 
 import java.util.ArrayList;
@@ -22,9 +21,29 @@ import java.util.List;
 import java.util.Map;
 
 public class MissingIngredientActivity extends AppCompatActivity {
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_missing_ingredient);
+
+        Intent intent = getIntent();
+        Map<String, Integer> missingIngredients = (Map<String, Integer>)
+                intent.getSerializableExtra("missingIngredients");
+
+        ListView listView = findViewById(R.id.missing_ingredients_list);
+        ArrayList<String> missingIngredientsList = new ArrayList<>(
+                missingIngredients.keySet());
+        IngredientAdapter adapter = new IngredientAdapter(
+                this, missingIngredientsList, missingIngredients);
+        listView.setAdapter(adapter);
+
+        Button backButton = findViewById(R.id.back_button);
+        backButton.setOnClickListener(v -> finish());
+    }
     private class IngredientAdapter extends ArrayAdapter<String> {
         private final Map<String, Integer> missingIngredients;
-        IngredientAdapter(Context context, List<String> ingredients, Map<String, Integer> missingIngredients) {
+        IngredientAdapter(Context context, List<String> ingredients,
+                          Map<String, Integer> missingIngredients) {
             super(context, 0, ingredients);
             this.missingIngredients = missingIngredients;
         }
@@ -32,7 +51,8 @@ public class MissingIngredientActivity extends AppCompatActivity {
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
             if (convertView == null) {
-                convertView = LayoutInflater.from(getContext()).inflate(R.layout.list_item_missing_ingredient, parent, false);
+                convertView = LayoutInflater.from(getContext())
+                        .inflate(R.layout.list_item_missing_ingredient, parent, false);
             }
 
             String ingredient = getItem(position);
@@ -44,7 +64,8 @@ public class MissingIngredientActivity extends AppCompatActivity {
             ingredientName.setText(ingredient);
             addButton.setOnClickListener(v -> {
                 // Handle the add button click event here
-                // For example, you can get the number of calories entered by the user and add it to the ingredient
+                // For example, you can get the number
+                // of calories entered by the user and add it to the ingredient
                 String calories = caloriesInput.getText().toString();
 
                 if (!calories.isEmpty()) {
@@ -63,22 +84,5 @@ public class MissingIngredientActivity extends AppCompatActivity {
 
             return convertView;
         }
-    }
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_missing_ingredient);
-
-        Intent intent = getIntent();
-        Map<String, Integer> missingIngredients = (Map<String, Integer>) intent.getSerializableExtra("missingIngredients");
-
-        ListView listView = findViewById(R.id.missing_ingredients_list);
-        ArrayList<String> missingIngredientsList = new ArrayList<>(missingIngredients.keySet());
-        IngredientAdapter adapter = new IngredientAdapter(this, missingIngredientsList, missingIngredients);
-        listView.setAdapter(adapter);
-
-        Button backButton = findViewById(R.id.back_button);
-        backButton.setOnClickListener(v -> finish());
     }
 }

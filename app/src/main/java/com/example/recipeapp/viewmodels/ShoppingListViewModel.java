@@ -230,6 +230,50 @@ public class ShoppingListViewModel extends ViewModel {
         });
     }
 
+    public void update(Ingredient toUpdate, Integer quantity,
+                       Integer caloriesPerServing, String expirationDate) {
+        Map<String, Object> updatedIngredient = new HashMap<>();
+        updatedIngredient.put("name", toUpdate.getName());
+        updatedIngredient.put("quantity", quantity);
+        updatedIngredient.put("expirationDate", expirationDate);
+        updatedIngredient.put("caloriesPerServing", caloriesPerServing);
+        updatedIngredient.put("selected", false);
+
+        FirebaseDatabase shoppinglistDB = FirebaseDatabase
+                .getInstance("https://recipeapp-1fba1-default-rtdb.firebaseio.com/");
+        DatabaseReference shoppinglistRef = shoppinglistDB.getReference().child("shoppinglist/"
+                + user.getUid());
+        shoppinglistRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.exists()) {
+                    for (DataSnapshot ingredientSnapshot : snapshot.getChildren()) {
+                        String ingredientId = ingredientSnapshot.getKey();
+                        String ingredientName = ingredientSnapshot.child("name")
+                                .getValue(String.class);
+
+                        if (toUpdate.getName().equals(ingredientName)) {
+                            Log.d("TAG", toUpdate.getName() + "found in userId: "
+                                    + user.getUid() + ", ingredientId: " + ingredientId);
+                            shoppinglistRef.child(ingredientId).setValue(updatedIngredient)
+                                    .addOnSuccessListener(
+                                            aVoid -> isSaveSuccessful.postValue(true))
+                                    .addOnFailureListener(
+                                            e -> isSaveSuccessful.postValue(false));
+                        }
+                    }
+                } else {
+                    Log.d("TAG", "User ID not found in shopping list");
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Log.e("FirebaseError", "Error reading data from Firebase: " + error.getMessage());
+            }
+        });
+    }
+
     public void updateQuantity(Ingredient toUpdate, Integer newQty) {
         Map<String, Object> updatedIngredient = new HashMap<>();
         updatedIngredient.put("name", toUpdate.getName());
