@@ -72,12 +72,14 @@ public class RecipeDetailsActivity extends AppCompatActivity {
                     pvm.getIngredientData().observe(this, info -> {
                         for (int i = 0; i < ings.size(); i++) {
                             for (Ingredient ingredient : info) {
-                                System.out.println(ingredient.getQuantity());
                                 if (ings.get(i).equals(ingredient.getName())) {
                                     int newQ = ingredient.getQuantity() - quants.get(i);
-                                    System.out.println("hi");
-                                    ingredient.setQuantity(newQ);
-                                    pvm.updateQuantity(ingredient, newQ);
+                                    if (newQ == 0) {
+
+                                    } else {
+                                        ingredient.setQuantity(newQ);
+                                        pvm.updateQuantity(ingredient, newQ);
+                                    }
                                 }
                             }
                         }

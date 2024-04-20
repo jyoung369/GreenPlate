@@ -57,4 +57,30 @@ public class Sprint4UnitTests {
         assertFalse(u.updateDailyCalories(2075, meals));
         assertTrue(u.updateDailyCalories(1405, meals));
     }
+
+    //Simona Ivanov
+    @Test
+    public void checkDeletionIfQuantity0() {
+        Util u = new Util();
+        HashMap<String, Integer> ingredients = new HashMap<>();
+        ingredients.put("milk", 20);
+        ingredients.put("cereal", 30);
+        HashMap<String, Integer> recipeStuff = new HashMap<>();
+        recipeStuff.put("milk", 20);
+        recipeStuff.put("cereal", 15);
+        assertTrue(u.checkIngredientDeletion(ingredients, recipeStuff));
+    }
+
+    @Test
+    public void checkQuantitiesDeducted() {
+        Util u = new Util();
+        HashMap<String, Integer> ingredients = new HashMap<>();
+        ingredients.put("milk", 20);
+        ingredients.put("cereal", 30);
+        ingredients.put("broccoli", 500);
+        HashMap<String, Integer> recipeStuff = new HashMap<>();
+        recipeStuff.put("milk", 20);
+        recipeStuff.put("cereal", 15);
+        assertTrue(u.checkForDeduction(ingredients, recipeStuff));
+    }
 }
