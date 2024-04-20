@@ -5,6 +5,7 @@ import com.example.recipeapp.model.Ingredient;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 
 public class Util {
@@ -88,5 +89,45 @@ public class Util {
             cals += e1.getValue();
         }
         return dailyCals < cals;
+    }
+
+    public boolean checkIngredientDeletion(HashMap<String, Integer> ingredients,
+                                           HashMap<String, Integer> recipeStuff) {
+        String k = "";
+
+        for (HashMap.Entry<String, Integer> e : recipeStuff.entrySet()) {
+            if (ingredients.get(e.getKey()) == e.getValue()) {
+                k = e.getKey();
+                ingredients.remove(e.getKey());
+            } else {
+                ingredients.put(e.getKey(), ingredients.get(e.getKey()) - e.getValue());
+            }
+        }
+        //there shouldn't be ingredients with quantity of 0
+        for (HashMap.Entry<String, Integer> e : ingredients.entrySet()) {
+            if (e.getValue() == 0) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    public boolean checkForDeduction(HashMap<String, Integer> ingredients,
+                                                  HashMap<String, Integer> recipeStuff) {
+        HashMap<String, Integer> newMap = new HashMap<>(ingredients);
+        for (HashMap.Entry<String, Integer> e : recipeStuff.entrySet()) {
+            if (ingredients.get(e.getKey()) == e.getValue()) {
+                newMap.remove(e.getKey());
+            } else {
+                newMap.put(e.getKey(), ingredients.get(e.getKey()) - e.getValue());
+            }
+        }
+        for (HashMap.Entry<String, Integer> e : recipeStuff.entrySet()) {
+            if (ingredients.get(e.getKey()) == newMap.get(e.getKey())) {
+                return false;
+            }
+        }
+        return true;
+
     }
 }
