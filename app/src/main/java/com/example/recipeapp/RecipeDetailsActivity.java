@@ -9,10 +9,15 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.recipeapp.model.Ingredient;
+import com.example.recipeapp.model.Pantry;
 import com.example.recipeapp.model.Recipe;
 import com.example.recipeapp.viewmodels.MealViewModel;
+import com.example.recipeapp.viewmodels.PantryViewModel;
 
+import java.sql.SQLOutput;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -37,6 +42,7 @@ public class RecipeDetailsActivity extends AppCompatActivity {
             calories.setText(calsWithLabel);
 
             List<String> ings = recipe.getIngredients();
+            List<Integer> quants = recipe.getQuantities();
             ArrayAdapter<String> adapter = new ArrayAdapter<>(this,
                     android.R.layout.simple_list_item_1, ings);
             ingredients.setAdapter(adapter);
@@ -61,10 +67,39 @@ public class RecipeDetailsActivity extends AppCompatActivity {
                             cals += caloriesText.charAt(i);
                         }
                     }
-                    System.out.println(cals);
+
+                    PantryViewModel pvm = new PantryViewModel();
+                    //List<Ingredient> ingreds = new ArrayList<>();
+                    pvm.getIngredientData().observe(this, info -> {
+//                        for (int i = 0; i < info.size(); i++) {
+//                            System.out.println(info.get(i));
+//                            ingreds.add(info.get(i));
+//                        }
+                        System.out.println("HELLOOOOOOOOOOOOOOOOOOOOOOOOOO");
+                        for (int i = 0; i < ings.size(); i++) {
+                            System.out.println("HIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII");
+                            for (Ingredient ingredient : info) {
+                                System.out.println(ingredient.getQuantity());
+                                if (ings.get(i).equals(ingredient.getName())) {
+                                    int newQ = ingredient.getQuantity() - quants.get(i);
+                                    System.out.println("hi");
+                                    ingredient.setQuantity(newQ);
+                                    pvm.updateQuantity(ingredient, newQ);
+                                }
+                            }
+                        }
+                    });
+//                    for (Ingredient i : ingreds) {
+//                        System.out.println(i.toString());
+//                    }
+                    pvm.readIngredients();
+                    //pvm.readIngredientQuantities();
+
+
 
                     vm.inputMeal(this, recipeNameText, cals, formattedToday);
                     vm.readDailyMeals();
+
                 } catch (Exception ex) {
                     Log.e("bro", "error" + ex.getMessage());
                     ex.printStackTrace();
