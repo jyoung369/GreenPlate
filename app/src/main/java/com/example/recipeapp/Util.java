@@ -5,7 +5,6 @@ import com.example.recipeapp.model.Ingredient;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Objects;
 
 public class Util {
@@ -131,7 +130,9 @@ public class Util {
 
     }
 
-    public void addMissingIngredient(HashMap<String, Integer> ingredients, String ingredientName, int initialQuantity) {
+    public void addMissingIngredient(HashMap<String, Integer>
+                                             ingredients, String ingredientName,
+                                     int initialQuantity) {
         if (!ingredients.containsKey(ingredientName)) {
             // If not present, add it with the initial quantity
             ingredients.put(ingredientName, initialQuantity);
@@ -143,11 +144,12 @@ public class Util {
         for (Ingredient ingredient : ingList) {
             res.add(ingredient.getSelected());
         }
-        return(res);
+        return (res);
     }
   
     // returns quantity of newly added item. if it already exists, return old quantity
-    public int checkRepeatedListItems(HashMap<String, Integer> currShoppingList, Ingredient newItem){
+    public int checkRepeatedListItems(
+            HashMap<String, Integer> currShoppingList, Ingredient newItem) {
         if (currShoppingList.containsKey(newItem.getName())) {
             for (String key : currShoppingList.keySet()) {
                 if (key.equals(newItem.getName())) {

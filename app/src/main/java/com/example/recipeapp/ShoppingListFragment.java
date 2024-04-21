@@ -107,13 +107,13 @@ public class ShoppingListFragment extends Fragment {
             }
 
             //Buy functionality
-//            for (int i = 0; i < layout.getChildCount(); i+=2) {
-//                View cardView = layout.getChildAt(i);
-//                SwitchMaterial toggle = cardView.findViewById(R.id.checkbox);
-//                toggle.setOnCheckedChangeListener((buttonView, isChecked) -> {
-//                    i.setSelected(isChecked);
-//                });
-//            }
+            //            for (int i = 0; i < layout.getChildCount(); i+=2) {
+            //                View cardView = layout.getChildAt(i);
+            //                SwitchMaterial toggle = cardView.findViewById(R.id.checkbox);
+            //                toggle.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            //                    i.setSelected(isChecked);
+            //                });
+            //            }
         });
 
 
