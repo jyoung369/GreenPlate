@@ -84,9 +84,7 @@ public class RecipeDetailsActivity extends AppCompatActivity {
                             }
                         }
                     });
-
                     pvm.readIngredients();
-
                     vm.inputMeal(this, recipeNameText, cals, formattedToday);
                     vm.readDailyMeals();
 
