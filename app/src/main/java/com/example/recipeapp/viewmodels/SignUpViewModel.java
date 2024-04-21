@@ -40,7 +40,7 @@ public class SignUpViewModel extends ViewModel {
                     if (task.isSuccessful()) {
                         FirebaseUser loggedInUser = auth.getCurrentUser();
                         Map<String, Object> userData = new HashMap<>();
-//                        Map<String, Object> shoppingData = new HashMap<>();
+                        //Map<String, Object> shoppingData = new HashMap<>();
                         List<Ingredient> l = new ArrayList<Ingredient>();
                         userData.put("email", email);
                         userData.put("height", "");

@@ -369,15 +369,15 @@ public class ShoppingListViewModel extends ViewModel {
             }
         });
     }
-//    public void buyItems() {
-//        List<Ingredient> currIngredients = shoppingList.getValue();
-//        List<Ingredient> l = new ArrayList<>();
-//        for (Ingredient i : currIngredients) {
-//            if (i.getSelected()) {
-//                l.add(i);
-//            }
-//        }
-//        System.out.println(l);
-//    }
+    //    public void buyItems() {
+    //        List<Ingredient> currIngredients = shoppingList.getValue();
+    //        List<Ingredient> l = new ArrayList<>();
+    //        for (Ingredient i : currIngredients) {
+    //            if (i.getSelected()) {
+    //                l.add(i);
+    //            }
+    //        }
+    //        System.out.println(l);
+    //    }
 
 }

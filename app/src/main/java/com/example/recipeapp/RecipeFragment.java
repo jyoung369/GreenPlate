@@ -18,7 +18,6 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -45,7 +44,8 @@ public class RecipeFragment extends Fragment {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_recipe, container, false);
     }
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState)  {
+    public void onViewCreated(@NonNull View view,
+                              @Nullable Bundle savedInstanceState)  {
         Spinner filterSpinner = view.findViewById(R.id.FilterSpinner);
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(requireActivity(),
                 R.array.filter_options_array, android.R.layout.simple_spinner_item);
@@ -110,7 +110,6 @@ public class RecipeFragment extends Fragment {
                 Boolean sufficient = book.sufficientIngredients(pantryItems, r);
                 Button addMissingIngredientsButton = cardView.findViewById(
                         R.id.add_missing_ingredients_button);
-
                 if (sufficient) {
                     available.setText("Sufficient Ingredients");
                     available.setTextColor(Color.GREEN);
@@ -127,24 +126,15 @@ public class RecipeFragment extends Fragment {
                             + " enough ingredients to make this recipe.",
                             Toast.LENGTH_SHORT).show());
                     addMissingIngredientsButton.setVisibility(View.VISIBLE);
-
-                    addMissingIngredientsButton.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            // Create an Intent to start MissingIngredientsActivity
-                            Intent intent = new Intent(getContext(),
-                                    MissingIngredientActivity.class);
-
-                            Map<String, Integer> missingIngredients = book
-                                    .calculateMissingQuantities(r, pantryItems);
-                            // Put the recipe details into the Intent
-                            intent.putExtra("recipe", r);
-                            intent.putExtra("missingIngredients",
-                                    new HashMap<>(missingIngredients));
-                            // Start the activity
-                            requireContext().startActivity(intent);
-
-                        }
+                    addMissingIngredientsButton.setOnClickListener(v -> {
+                        Intent intent = new Intent(getContext(),
+                                MissingIngredientActivity.class);
+                        Map<String, Integer> missingIngredients = book
+                                .calculateMissingQuantities(r, pantryItems);
+                        intent.putExtra("recipe", r);
+                        intent.putExtra("missingIngredients",
+                                new HashMap<>(missingIngredients));
+                        requireContext().startActivity(intent);
                     });
                 }
                 LinearLayout ingredientsListLayout = cardView.findViewById(
@@ -169,7 +159,8 @@ public class RecipeFragment extends Fragment {
                 TextView name = currView.findViewById(R.id.recipe_name_textview);
                 Cookbook book = new Cookbook();
                 boolean sufficient = book.sufficientIngredients(pantryItems, r);
-                Button addMissingIngredientsButton = currView.findViewById(R.id.add_missing_ingredients_button);
+                Button addMissingIngredientsButton = currView
+                        .findViewById(R.id.add_missing_ingredients_button);
                 if (sufficient) {
                     available.setText("Sufficient Ingredients");
                     available.setTextColor(Color.GREEN);
@@ -186,20 +177,15 @@ public class RecipeFragment extends Fragment {
                                     + "enough ingredients to make this recipe.",
                             Toast.LENGTH_SHORT).show());
                     addMissingIngredientsButton.setVisibility(View.VISIBLE);
-
-                    addMissingIngredientsButton.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            // Create an Intent to start MissingIngredientsActivity
-                            Intent intent = new Intent(getContext(), MissingIngredientActivity.class);
-                            Map<String, Integer> missingIngredients = book.calculateMissingQuantities(r, pantryItems);
-                            // Put the recipe details into the Intent
-                            intent.putExtra("recipe", r);
-                            intent.putExtra("missingIngredients", new HashMap<>(missingIngredients));
-                            // Start the activity
-                            requireContext().startActivity(intent);
-
-                        }
+                    addMissingIngredientsButton.setOnClickListener(v -> {
+                        Intent intent = new Intent(getContext(),
+                                MissingIngredientActivity.class);
+                        Map<String, Integer> missingIngredients = book
+                                .calculateMissingQuantities(r, pantryItems);
+                        intent.putExtra("recipe", r);
+                        intent.putExtra("missingIngredients",
+                                new HashMap<>(missingIngredients));
+                        requireContext().startActivity(intent);
                     });
                 }
                 index += 2;
