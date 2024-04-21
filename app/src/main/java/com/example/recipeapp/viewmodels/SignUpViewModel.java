@@ -40,8 +40,8 @@ public class SignUpViewModel extends ViewModel {
                     if (task.isSuccessful()) {
                         FirebaseUser loggedInUser = auth.getCurrentUser();
                         Map<String, Object> userData = new HashMap<>();
-                        //Map<String, Object> shoppingData = new HashMap<>();
-                        List<Ingredient> l = new ArrayList<Ingredient>();
+                        List<Ingredient> l = new ArrayList<>();
+                        List<Ingredient> l2 = new ArrayList<>();
                         userData.put("email", email);
                         userData.put("height", "");
                         userData.put("weight", "");
@@ -50,7 +50,9 @@ public class SignUpViewModel extends ViewModel {
                         Ingredient i2 = new Ingredient("Potato", 10, 300, "10-19-2024", false);
                         l.add(i1);
                         l.add(i2);
-
+                        Ingredient i3 = new Ingredient("Please enter in an ingredient",
+                                0, 0, "", false);
+                        l2.add(i3);
                         FirebaseDatabase database = FirebaseDatabase.getInstance("https://recipeapp-1fba1-default-rtdb.firebaseio.com/");
                         DatabaseReference db = database.getReference();
                         if (loggedInUser != null) {
@@ -66,6 +68,16 @@ public class SignUpViewModel extends ViewModel {
                                     });
                             db.child("shoppinglist").child(loggedInUser.getUid())
                                     .setValue(l)
+                                    .addOnCompleteListener(userTask -> {
+                                        if (userTask.isSuccessful()) {
+                                            signUpSuccess.postValue(true);
+                                        } else {
+                                            signUpError.postValue(Objects.requireNonNull(
+                                                    userTask.getException()).getMessage());
+                                        }
+                                    });
+                            db.child("pantry").child(loggedInUser.getUid())
+                                    .setValue(l2)
                                     .addOnCompleteListener(userTask -> {
                                         if (userTask.isSuccessful()) {
                                             signUpSuccess.postValue(true);
