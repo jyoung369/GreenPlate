@@ -1,1 +1,2 @@
-# CS2340A_Team29
+# GreenPlate Application
+GreenPlate is a food management application aiming to simplify the meal planning process. It incorporates several key features including daily food tracking, recipe storage, and pantry inventory management. Through automatically comparing recipe ingredients with pantry stock, GreenPlate enables users to quickly determine the recipes that they can make with their current supplies, or populate shopping lists with missing ingredients. GreenPlate's intuitive interface centralizes the food management process into a singular location, making the proccess of meal selection as quick and easy as possible. 
